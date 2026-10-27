@@ -1,0 +1,4 @@
+export default {
+  zh: { name: 'PDF 叠加', description: '将另一个 PDF（信纸、印章、模板）叠加到目标 PDF 的每一页上方或下方，可调透明度与缩放。', base: '目标 PDF', overlay: '叠加 PDF（信纸/印章）', mapping: '叠加页', first: '始终使用第 1 页', cycle: '逐页对应（循环）', layer: '层级', foreground: '置于上方', background: '置于下方', fit: '缩放', stretch: '拉伸铺满', contain: '等比适应', none: '原始大小', opacity: '不透明度', run: '叠加并下载' },
+  en: { name: 'PDF Overlay', description: 'Place another PDF (letterhead, stamp, template) above or below every page of a target PDF, with opacity and scaling.', base: 'Target PDF', overlay: 'Overlay PDF (letterhead/stamp)', mapping: 'Overlay page', first: 'Always page 1', cycle: 'Page by page (cycling)', layer: 'Layer', foreground: 'Foreground', background: 'Background', fit: 'Scale', stretch: 'Stretch', contain: 'Contain', none: 'Original size', opacity: 'Opacity', run: 'Overlay & download' },
+}

@@ -1,0 +1,4 @@
+export default {
+  zh: { name: 'PDF 加密', description: '为 PDF 设置打开密码（AES-256）与权限限制（打印、复制、修改、注释），本地完成。', userPassword: '打开密码', ownerPassword: '权限密码（可选）', algorithm: '加密算法', permissions: '允许的操作', printing: '打印', copying: '复制内容', modifying: '修改/重组页面', annotating: '注释与填表', protect: '加密并下载', note: '权限限制依赖阅读器遵守；真正的保护来自打开密码。' },
+  en: { name: 'PDF Protect', description: 'Add an open password (AES-256) and permission restrictions (print, copy, modify, annotate) locally.', userPassword: 'Open password', ownerPassword: 'Permissions password (optional)', algorithm: 'Algorithm', permissions: 'Allowed actions', printing: 'Printing', copying: 'Copy content', modifying: 'Modify / assemble', annotating: 'Annotate & fill forms', protect: 'Encrypt & download', note: 'Permission flags rely on reader compliance; real protection comes from the open password.' },
+}

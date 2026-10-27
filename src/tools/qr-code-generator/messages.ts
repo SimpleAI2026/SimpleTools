@@ -1,0 +1,4 @@
+export default {
+  zh: { name: '二维码生成器', description: '为文本、网址、Wi-Fi、邮件、电话、短信生成二维码，导出 PNG/SVG。', types: { text: '文本', url: '网址', wifi: 'Wi-Fi', email: '邮件', phone: '电话', sms: '短信' }, content: '内容', subject: '主题', body: '正文', ssid: '网络名称（SSID）', password: '密码', security: '加密方式', hidden: '隐藏网络', size: '尺寸', margin: '边距', ecc: '纠错级别', fg: '前景色', bg: '背景色', png: '下载 PNG', svg: '下载 SVG', tooLong: '内容过长，无法生成二维码' },
+  en: { name: 'QR Code Generator', description: 'Create QR codes for text, URLs, Wi-Fi, email, phone and SMS; export PNG/SVG.', types: { text: 'Text', url: 'URL', wifi: 'Wi-Fi', email: 'Email', phone: 'Phone', sms: 'SMS' }, content: 'Content', subject: 'Subject', body: 'Body', ssid: 'Network name (SSID)', password: 'Password', security: 'Security', hidden: 'Hidden network', size: 'Size', margin: 'Margin', ecc: 'Error correction', fg: 'Foreground', bg: 'Background', png: 'Download PNG', svg: 'Download SVG', tooLong: 'Content too long for a QR code' },
+}

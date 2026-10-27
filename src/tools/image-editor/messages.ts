@@ -1,0 +1,4 @@
+export default {
+  zh: { name: '图片编辑器', description: '裁剪、旋转、翻转图片并调整亮度/对比度/饱和度，本地导出。', drop: '拖入或点击选择图片', crop: '裁剪', ratio: '比例', free: '自由', rotateLeft: '向左旋转', rotateRight: '向右旋转', flipH: '水平翻转', flipV: '垂直翻转', adjust: '调整', brightness: '亮度', contrast: '对比度', saturate: '饱和度', export: '导出', output: '输出 {w} × {h}', failed: '图片处理失败' },
+  en: { name: 'Image Editor', description: 'Crop, rotate, flip and adjust brightness/contrast/saturation, then export locally.', drop: 'Drop or click to choose an image', crop: 'Crop', ratio: 'Ratio', free: 'Free', rotateLeft: 'Rotate left', rotateRight: 'Rotate right', flipH: 'Flip horizontal', flipV: 'Flip vertical', adjust: 'Adjust', brightness: 'Brightness', contrast: 'Contrast', saturate: 'Saturation', export: 'Export', output: 'Output {w} × {h}', failed: 'Failed to process the image' },
+}

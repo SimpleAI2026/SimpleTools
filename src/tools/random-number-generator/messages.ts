@@ -1,0 +1,4 @@
+export default {
+  zh: { name: '随机数生成器', description: '用加密安全随机数生成指定范围的整数或小数，支持不重复与排序。', min: '最小值', max: '最大值', count: '数量', decimals: '小数位', unique: '不重复', sort: '排序', none: '不排序', asc: '升序', desc: '降序', errors: { invalid: '请输入有效数字', minGtMax: '最小值不能大于最大值', count: '数量需在 1–10000 之间', range: '范围过大', notEnough: '范围内可选数字不足以不重复抽取' } },
+  en: { name: 'Random Number Generator', description: 'Generate crypto-secure random integers or decimals in a range, unique and sorted if needed.', min: 'Min', max: 'Max', count: 'Count', decimals: 'Decimals', unique: 'Unique', sort: 'Sort', none: 'None', asc: 'Ascending', desc: 'Descending', errors: { invalid: 'Enter valid numbers', minGtMax: 'Min must not exceed max', count: 'Count must be 1–10000', range: 'Range too large', notEnough: 'Not enough distinct values in range' } },
+}

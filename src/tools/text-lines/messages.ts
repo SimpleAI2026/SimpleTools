@@ -1,0 +1,4 @@
+export default {
+  zh: { name: '行处理工具', description: '对文本按行排序、去重、反转、打乱、过滤、编号与加前后缀。', ops: { sortAsc: '升序', sortDesc: '降序', sortNatural: '自然排序', sortLength: '按长度', reverse: '反转', shuffle: '打乱', dedupe: '去重', removeEmpty: '删空行', trim: '去首尾空白', number: '编号', addPrefix: '加前后缀', filter: '过滤' }, caseInsensitive: '忽略大小写', prefix: '前缀', suffix: '后缀', filter: '包含文本', invert: '反向过滤', lines: '{n} 行' },
+  en: { name: 'Line Tools', description: 'Sort, dedupe, reverse, shuffle, filter, number and prefix lines of text.', ops: { sortAsc: 'Sort A→Z', sortDesc: 'Sort Z→A', sortNatural: 'Natural sort', sortLength: 'By length', reverse: 'Reverse', shuffle: 'Shuffle', dedupe: 'Dedupe', removeEmpty: 'Remove empty', trim: 'Trim', number: 'Number', addPrefix: 'Prefix/suffix', filter: 'Filter' }, caseInsensitive: 'Case-insensitive', prefix: 'Prefix', suffix: 'Suffix', filter: 'Contains', invert: 'Invert filter', lines: '{n} lines' },
+}

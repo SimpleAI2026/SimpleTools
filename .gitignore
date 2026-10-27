@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.yarn/*
+!.yarn/releases
+*.tsbuildinfo
+.DS_Store
+public/pdfjs/
+# Reference-only clone (~78MB); app must not depend on it
+thirdparty/

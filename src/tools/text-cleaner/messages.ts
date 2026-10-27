@@ -1,0 +1,4 @@
+export default {
+  zh: { name: '文本清理', description: '去除多余空格/空行、不可见字符、HTML 标签，转换全角与弯引号。', opts: { trimLines: '去除行首尾空白', collapseSpaces: '合并连续空格', removeEmptyLines: '删除所有空行', collapseEmptyLines: '合并连续空行', removeLineBreaks: '合并为一行', smartQuotes: '弯引号/破折号转直引号', removeInvisible: '移除不可见字符', fullwidthToHalfwidth: '全角转半角', stripHtml: '去除 HTML 标签', tabsToSpaces: 'Tab 转空格' } },
+  en: { name: 'Text Cleaner', description: 'Remove extra spaces/blank lines, invisible chars and HTML tags; normalize full-width and smart quotes.', opts: { trimLines: 'Trim lines', collapseSpaces: 'Collapse spaces', removeEmptyLines: 'Remove empty lines', collapseEmptyLines: 'Collapse empty lines', removeLineBreaks: 'Join into one line', smartQuotes: 'Smart quotes → straight', removeInvisible: 'Remove invisible chars', fullwidthToHalfwidth: 'Full-width → half-width', stripHtml: 'Strip HTML tags', tabsToSpaces: 'Tabs → spaces' } },
+}

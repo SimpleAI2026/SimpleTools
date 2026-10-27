@@ -1,0 +1,4 @@
+export default {
+  zh: { name: 'PDF 涂黑脱敏', description: '在页面上拖拽框选敏感区域进行真正的脱敏：被涂黑的页面会整页栅格化，原文字无法再被复制或提取。', hint: '在页面上按住拖拽绘制涂黑区域；点击列表中的 × 删除。', prev: '上一页', next: '下一页', page: '第 {n} / {total} 页', boxes: '涂黑区域（{n}）', dpi: '输出清晰度', color: '填充颜色', run: '脱敏并下载', clear: '清除本页', warn: '含涂黑区域的页面将转为图片（文字不可选中），其它页面保持原样；文档元数据会被清空。' },
+  en: { name: 'PDF Redact', description: 'Drag boxes over sensitive areas for true redaction: affected pages are flattened to images so the original text can no longer be copied or extracted.', hint: 'Drag on the page to draw redaction boxes; click × in the list to remove one.', prev: 'Previous', next: 'Next', page: 'Page {n} / {total}', boxes: 'Redaction boxes ({n})', dpi: 'Output resolution', color: 'Fill color', run: 'Redact & download', clear: 'Clear page', warn: 'Pages with redactions become images (text not selectable); other pages are untouched. Document metadata is cleared.' },
+}

@@ -1,0 +1,4 @@
+export default {
+  zh: { name: 'Unicode 花式字体', description: '把英文和数字转换为粗体、斜体、手写、双线、等宽等 Unicode 样式，可直接粘贴到社交平台。', placeholder: '输入英文文本…', styles: { bold: '粗体', italic: '斜体', boldItalic: '粗斜体', script: '手写体', boldScript: '粗手写体', fraktur: '哥特体', doubleStruck: '双线体', sansSerif: '无衬线', sansBold: '无衬线粗体', monospace: '等宽', fullwidth: '全角', circled: '圆圈', smallCaps: '小型大写', strike: '删除线', underline: '下划线' } },
+  en: { name: 'Unicode Text Styles', description: 'Convert letters and digits into bold, italic, script, double-struck, monospace and other Unicode styles.', placeholder: 'Type some text…', styles: { bold: 'Bold', italic: 'Italic', boldItalic: 'Bold italic', script: 'Script', boldScript: 'Bold script', fraktur: 'Fraktur', doubleStruck: 'Double-struck', sansSerif: 'Sans-serif', sansBold: 'Sans bold', monospace: 'Monospace', fullwidth: 'Full-width', circled: 'Circled', smallCaps: 'Small caps', strike: 'Strikethrough', underline: 'Underline' } },
+}

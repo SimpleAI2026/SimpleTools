@@ -1,0 +1,4 @@
+export default {
+  zh: { name: 'Gzip 压缩/解压', description: '本地 gzip / zlib / deflate 压缩与解压文本或文件，自动识别格式。', compress: '压缩', decompress: '解压', source: '来源', text: '文本', file: '文件', drop: '拖入或点击选择文件', level: '压缩级别', format: '格式', auto: '自动', run: '执行', result: '{from} → {to}（{ratio}）', detected: '识别为 {format}', base64: 'Base64 结果', textPreview: '文本内容', binary: '二进制内容，请下载查看', failed: '处理失败：数据不是有效的压缩格式' },
+  en: { name: 'Gzip Compress/Decompress', description: 'Compress or decompress text and files with gzip / zlib / deflate locally; format auto-detection.', compress: 'Compress', decompress: 'Decompress', source: 'Source', text: 'Text', file: 'File', drop: 'Drop or click to choose a file', level: 'Level', format: 'Format', auto: 'Auto', run: 'Run', result: '{from} → {to} ({ratio})', detected: 'Detected {format}', base64: 'Base64 result', textPreview: 'Text content', binary: 'Binary content — download to view', failed: 'Failed: input is not valid compressed data' },
+}

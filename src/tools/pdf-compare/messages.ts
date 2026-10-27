@@ -1,0 +1,4 @@
+export default {
+  zh: { name: 'PDF 对比', description: '对比两个 PDF：文字差异（按词或按行高亮增删）与逐页像素差异（红色标出变化区域）。', a: '原始 PDF（A）', b: '修改后 PDF（B）', text: '文字对比', visual: '视觉对比', words: '按词', lines: '按行', compare: '开始对比', identical: '两份文档文字完全相同。', summary: '新增 {added} 处，删除 {removed} 处', page: '页码', changed: '差异像素：{p}%', missing: '该页只存在于其中一个文档中。' },
+  en: { name: 'PDF Compare', description: 'Compare two PDFs: text differences (word or line level) and per-page pixel differences highlighted in red.', a: 'Original PDF (A)', b: 'Changed PDF (B)', text: 'Text', visual: 'Visual', words: 'Words', lines: 'Lines', compare: 'Compare', identical: 'The documents have identical text.', summary: '{added} additions, {removed} deletions', page: 'Page', changed: 'Changed pixels: {p}%', missing: 'This page exists in only one document.' },
+}

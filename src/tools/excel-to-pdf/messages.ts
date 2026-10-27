@@ -1,0 +1,4 @@
+export default {
+  zh: { name: 'Excel 转 PDF', description: '将 .xlsx / .csv 工作表排版为表格 PDF：自动列宽缩放、分页并重复表头（页面为图片，文字不可选）。', drop: '拖入或点击选择 .xlsx / .csv 文件', sheet: '工作表', allSheets: '全部工作表', pageSize: '纸张', landscape: '横向', fontSize: '字号', repeatHeader: '每页重复表头', gridlines: '网格线', convert: '生成 PDF', note: '为保证中文等字符正确显示，表格以高分辨率图片写入 PDF，文字不可选中/搜索。', pages: '共 {n} 页' },
+  en: { name: 'Excel to PDF', description: 'Lay out .xlsx / .csv sheets as a PDF table with auto column scaling, pagination and repeated headers (pages are images; text not selectable).', drop: 'Drop or click to choose an .xlsx / .csv file', sheet: 'Sheet', allSheets: 'All sheets', pageSize: 'Paper', landscape: 'Landscape', fontSize: 'Font size', repeatHeader: 'Repeat header', gridlines: 'Gridlines', convert: 'Create PDF', note: 'To render any script (e.g. CJK) correctly the table is embedded as high-resolution images; text is not selectable/searchable.', pages: '{n} page(s)' },
+}

@@ -1,0 +1,4 @@
+export default {
+  zh: { name: 'CIDR 子网计算器', description: '计算 IPv4 网段的网络地址、广播地址、掩码、可用主机范围并划分子网。', input: 'IP/前缀 或 IP 掩码', invalid: '无效的 CIDR', subnets: '划分为 /{n} 子网', fields: { network: '网络地址', broadcast: '广播地址', netmask: '子网掩码', wildcard: '通配符掩码', prefix: '前缀长度', firstHost: '首个主机', lastHost: '末个主机', totalAddresses: '地址总数', usableHosts: '可用主机数', ipClass: '地址类别', isPrivate: '私有地址' }, yes: '是', no: '否' },
+  en: { name: 'CIDR Calculator', description: 'Compute network, broadcast, netmask and usable host range for IPv4 CIDR blocks and split subnets.', input: 'IP/prefix or IP mask', invalid: 'Invalid CIDR', subnets: 'Split into /{n} subnets', fields: { network: 'Network', broadcast: 'Broadcast', netmask: 'Netmask', wildcard: 'Wildcard', prefix: 'Prefix', firstHost: 'First host', lastHost: 'Last host', totalAddresses: 'Total addresses', usableHosts: 'Usable hosts', ipClass: 'Class', isPrivate: 'Private' }, yes: 'Yes', no: 'No' },
+}

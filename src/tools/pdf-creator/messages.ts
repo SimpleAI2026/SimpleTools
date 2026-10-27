@@ -1,0 +1,4 @@
+export default {
+  zh: { name: 'PDF 创建器', description: '用简易 Markdown（标题、段落、列表、引用、分隔线、分页）编写并生成可选中文字的 PDF。', placeholder: '# 标题\n\n正文段落…\n\n- 列表项\n\n\\pagebreak', title: '文档标题', fontSize: '正文字号', margin: '边距', page: '纸张', family: '字体', customFont: '自定义字体（TTF/OTF，可选，中文推荐）', fontNote: '未上传字体时，中文行以高清图片嵌入（不可选中）。语法：# ## ###、- 列表、1. 列表、> 引用、--- 分隔线、\\pagebreak 分页。', run: '生成 PDF' },
+  en: { name: 'PDF Creator', description: 'Write simple Markdown (headings, paragraphs, lists, quotes, rules, page breaks) and generate a PDF with selectable text.', placeholder: '# Title\n\nParagraph…\n\n- list item\n\n\\pagebreak', title: 'Document title', fontSize: 'Body size', margin: 'Margin', page: 'Page size', family: 'Font', customFont: 'Custom font (TTF/OTF, optional; recommended for CJK)', fontNote: 'Without an uploaded font, CJK lines are embedded as images (not selectable). Syntax: # ## ###, - list, 1. list, > quote, --- rule, \\pagebreak.', run: 'Create PDF' },
+}

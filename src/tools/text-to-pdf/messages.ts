@@ -1,0 +1,4 @@
+export default {
+  zh: { name: '文本转 PDF', description: '把纯文本排版为 PDF：自动换行分页，可选字体、字号、纸张与边距；可上传 TTF 字体让中文保持可选中。', placeholder: '在此输入或粘贴文本，或拖入 .txt 文件…', openTxt: '打开 .txt', family: '字体', fontSize: '字号', margin: '边距', lineHeight: '行距', page: '纸张', customFont: '自定义字体（TTF/OTF，可选）', fontNote: '标准字体不含中文字形：未上传字体时，中文行以高清图片嵌入（不可选中）。', run: '生成 PDF' },
+  en: { name: 'Text to PDF', description: 'Typeset plain text into a PDF with wrapping and pagination; font, size, page and margin options; upload a TTF to keep CJK selectable.', placeholder: 'Type or paste text, or drop a .txt file…', openTxt: 'Open .txt', family: 'Font', fontSize: 'Font size', margin: 'Margin', lineHeight: 'Line height', page: 'Page size', customFont: 'Custom font (TTF/OTF, optional)', fontNote: 'Standard fonts lack CJK glyphs: without an uploaded font, such lines are embedded as high-res images (not selectable).', run: 'Create PDF' },
+}
