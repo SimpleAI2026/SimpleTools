@@ -1,10 +1,16 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import { i18n } from '@/i18n'
 import { getTool } from '@/registry'
 import { useUserStore } from '@/stores/user'
 
+/** Hash history for chrome-extension:// and VS Code webviews; history for normal web. */
+const history =
+  import.meta.env.VITE_ROUTER_MODE === 'hash'
+    ? createWebHashHistory(import.meta.env.BASE_URL)
+    : createWebHistory(import.meta.env.BASE_URL)
+
 export const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history,
   routes: [
     { path: '/', name: 'home', component: () => import('@/pages/HomePage.vue') },
     {

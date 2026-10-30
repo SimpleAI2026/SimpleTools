@@ -100,6 +100,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@bjorn3/browser_wasi_shim@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@bjorn3/browser_wasi_shim@npm:0.4.2"
+  checksum: 10c0/eb9c961f0c9e6d7a28c01bdfb5aa8ff6a3b7e8ffef7f9d1970f24389b2f71edb7c2c7f50583ec95adf2b68decb681cc996410bc119f669538354878b02655a2f
+  languageName: node
+  linkType: hard
+
 "@bramus/specificity@npm:^2.4.2":
   version: 2.4.3
   resolution: "@bramus/specificity@npm:2.4.3"
@@ -338,6 +345,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ffmpeg/core@npm:^0.12.10":
+  version: 0.12.10
+  resolution: "@ffmpeg/core@npm:0.12.10"
+  checksum: 10c0/099a739f0ac6419d638e8fde175307722dddf53a0dbab744a045475f0fa1b4bbb28036ab51c990298b6f88d2907d44612e0a02e57a72bb0beb36837ca742e7a2
+  languageName: node
+  linkType: hard
+
+"@ffmpeg/ffmpeg@npm:^0.12.15":
+  version: 0.12.15
+  resolution: "@ffmpeg/ffmpeg@npm:0.12.15"
+  dependencies:
+    "@ffmpeg/types": "npm:^0.12.4"
+  checksum: 10c0/80c44459ca31ec7596d5624572370fd4c6ecf31701c6b23ec52cce85b4bddabaaa68c3ad050adfbba4db3ae4956c5538828690c51e1c258930850fe1a182599e
+  languageName: node
+  linkType: hard
+
+"@ffmpeg/types@npm:^0.12.4":
+  version: 0.12.4
+  resolution: "@ffmpeg/types@npm:0.12.4"
+  checksum: 10c0/8dba8e728a11158fbee94baffd648bf3446ad891506f5e65ffc64f5510e8afc33dffc2dd4abcf2966736fbd7d3c4919e9ce9fcf71f7d22607015caae431b83dd
+  languageName: node
+  linkType: hard
+
+"@ffmpeg/util@npm:^0.12.2":
+  version: 0.12.2
+  resolution: "@ffmpeg/util@npm:0.12.2"
+  checksum: 10c0/a1c8ab735762f2b1e3174bf96125feb541be528327843c9719042012381603a17d511d01afd2c8c2e7349453a8001ae6bf1ba8769779d305342e7f42ed704a9d
+  languageName: node
+  linkType: hard
+
 "@floating-ui/core@npm:^1.8.0":
   version: 1.8.0
   resolution: "@floating-ui/core@npm:1.8.0"
@@ -414,6 +451,20 @@ __metadata:
   version: 0.4.3
   resolution: "@humanwhocodes/retry@npm:0.4.3"
   checksum: 10c0/3775bb30087d4440b3f7406d5a057777d90e4b9f435af488a4923ef249e93615fb78565a85f173a186a076c7706a81d0d57d563a2624e4de2c5c9c66c486ce42
+  languageName: node
+  linkType: hard
+
+"@hyzyla/pdfium@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@hyzyla/pdfium@npm:3.0.0"
+  checksum: 10c0/cecae16e7149102779c421542221fa95a6b28022dcba63617ecfd5a7dca0f74d68c40e6dc9c5bebe0114d9af7f3257d217adfa9a534d3f350f9aa1d347cd8d77
+  languageName: node
+  linkType: hard
+
+"@imagemagick/magick-wasm@npm:^0.0.45":
+  version: 0.0.45
+  resolution: "@imagemagick/magick-wasm@npm:0.0.45"
+  checksum: 10c0/1d70ecd3175539a3457c8c6dc3057c3dc8302ce1123f191b6f7583a639d338ec89116fb0dd7eb6a1a8fdee038db0d2081cd1a3ad369f37a1f91948c3bbd6735e
   languageName: node
   linkType: hard
 
@@ -1044,6 +1095,20 @@ __metadata:
   peerDependencies:
     vue: ^2.7.0 || ^3.0.0
   checksum: 10c0/9b83e74da2ed29ac6096b80cdaac56518d891f0e3a58052060efd43dca1cce59b2560b9a1ddd301a1f5f071da77e7c97c5dbf88cc5b8291bbe9b1eb5b85e8ecf
+  languageName: node
+  linkType: hard
+
+"@tesseract.js-data/chi_sim@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@tesseract.js-data/chi_sim@npm:1.0.0"
+  checksum: 10c0/b8d20e1f6885a0cee4fed0631bf709d61427a71b54f79f275136385bc2341377b3800ac3317e39db1cea864b59dcff65e90b564c59608854ea4ffa19073bed97
+  languageName: node
+  linkType: hard
+
+"@tesseract.js-data/eng@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@tesseract.js-data/eng@npm:1.0.0"
+  checksum: 10c0/0a133effb8944b5edeb52616668d33e4e5ac1393374ad17c8d01fc6c78dc4010424e4885b8e8204575c17af7654c763afb7ec5dc763a73089cd5905bc3ddbd22
   languageName: node
   linkType: hard
 
@@ -1935,6 +2000,13 @@ __metadata:
   version: 3.4.7
   resolution: "bluebird@npm:3.4.7"
   checksum: 10c0/ac7e3df09a433b985a0ba61a0be4fc23e3874bf62440ffbca2f275a8498b00c11336f1f633631f38419b2c842515473985f9c4aaa9e4c9b36105535026d94144
+  languageName: node
+  linkType: hard
+
+"bmp-js@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "bmp-js@npm:0.1.0"
+  checksum: 10c0/c651bd5936dcf8d67900050fac14dcbe30baf87c3d21c58f4934fcdf46172e152a87d8c0c3ca25caa2b4b2c7780ef3b5fcc6cd20afd8f0351856cadb1bef9694
   languageName: node
   linkType: hard
 
@@ -3364,6 +3436,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"idb-keyval@npm:^6.2.0":
+  version: 6.3.0
+  resolution: "idb-keyval@npm:6.3.0"
+  checksum: 10c0/d03db95199acb445c5d0ec4dfc93bbc92edc41112e2bedc901a4dc3d5c21b10d1ce7a9b766da9ca61f7ea4d09ed55591f2a997307c91b6e4a5318c0e071b849e
+  languageName: node
+  linkType: hard
+
 "ieee754@npm:^1.1.13":
   version: 1.2.1
   resolution: "ieee754@npm:1.2.1"
@@ -3670,6 +3749,13 @@ __metadata:
   version: 2.0.2
   resolution: "is-unsafe@npm:2.0.2"
   checksum: 10c0/3f92f6534e326ae13f4a4733d0d6b9f06f2b7ab80d99c1973eb32b33b00cf9bc7a8505e3260f36209c9109f56a46bb64cc6bd0a27e37fee08cd35892a2b6ae44
+  languageName: node
+  linkType: hard
+
+"is-url@npm:^1.2.4":
+  version: 1.2.4
+  resolution: "is-url@npm:1.2.4"
+  checksum: 10c0/0157a79874f8f95fdd63540e3f38c8583c2ef572661cd0693cda80ae3e42dfe8e9a4a972ec1b827f861d9a9acf75b37f7d58a37f94a8a053259642912c252bc3
   languageName: node
   linkType: hard
 
@@ -4485,6 +4571,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-fetch@npm:^2.6.9":
+  version: 2.7.0
+  resolution: "node-fetch@npm:2.7.0"
+  dependencies:
+    whatwg-url: "npm:^5.0.0"
+  peerDependencies:
+    encoding: ^0.1.0
+  peerDependenciesMeta:
+    encoding:
+      optional: true
+  checksum: 10c0/b55786b6028208e6fbe594ccccc213cab67a72899c9234eb59dba51062a299ea853210fcf526998eaa2867b0963ad72338824450905679ff0fa304b8c5093ae8
+  languageName: node
+  linkType: hard
+
 "node-gyp@npm:latest":
   version: 13.1.0
   resolution: "node-gyp@npm:13.1.0"
@@ -4599,6 +4699,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"opencollective-postinstall@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "opencollective-postinstall@npm:2.0.3"
+  bin:
+    opencollective-postinstall: index.js
+  checksum: 10c0/8a0104a218bc1afaae943f0af378461eeb2836f9848bad872bbd067ec5d1d9791636f307454ab77d0746f10341366f295384656a340ebdb87a2585058e8567e5
+  languageName: node
+  linkType: hard
+
 "option@npm:~0.2.1":
   version: 0.2.4
   resolution: "option@npm:0.2.4"
@@ -4679,6 +4788,15 @@ __metadata:
   version: 1.0.11
   resolution: "pako@npm:1.0.11"
   checksum: 10c0/86dd99d8b34c3930345b8bbeb5e1cd8a05f608eeb40967b293f72fe469d0e9c88b783a8777e4cc7dc7c91ce54c5e93d88ff4b4f060e6ff18408fd21030d9ffbe
+  languageName: node
+  linkType: hard
+
+"pandoc-wasm@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "pandoc-wasm@npm:1.1.0"
+  dependencies:
+    "@bjorn3/browser_wasi_shim": "npm:^0.4.2"
+  checksum: 10c0/a05afecb7774ba7ce42e007781e0221552f1afff8af1eba2eb035c11bcc74c99c8db3aaa7b7928d53cc8ebe34178b5ad2f59a21c57addd7e0cd4403bd86151ce
   languageName: node
   linkType: hard
 
@@ -5041,6 +5159,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"regenerator-runtime@npm:^0.13.3":
+  version: 0.13.11
+  resolution: "regenerator-runtime@npm:0.13.11"
+  checksum: 10c0/12b069dc774001fbb0014f6a28f11c09ebfe3c0d984d88c9bced77fdb6fedbacbca434d24da9ae9371bfbf23f754869307fb51a4c98a8b8b18e5ef748677ca24
+  languageName: node
+  linkType: hard
+
 "regexp.prototype.flags@npm:^1.5.4":
   version: 1.5.4
   resolution: "regexp.prototype.flags@npm:1.5.4"
@@ -5396,9 +5521,16 @@ __metadata:
   resolution: "simpletools@workspace:."
   dependencies:
     "@cantoo/pdf-lib": "npm:^2.11.1"
+    "@ffmpeg/core": "npm:^0.12.10"
+    "@ffmpeg/ffmpeg": "npm:^0.12.15"
+    "@ffmpeg/util": "npm:^0.12.2"
+    "@hyzyla/pdfium": "npm:^3.0.0"
+    "@imagemagick/magick-wasm": "npm:^0.0.45"
     "@intlify/message-compiler": "npm:11.4.16"
     "@pdf-lib/fontkit": "npm:^1.1.1"
     "@tailwindcss/vite": "npm:^4.3.3"
+    "@tesseract.js-data/chi_sim": "npm:^1.0.0"
+    "@tesseract.js-data/eng": "npm:^1.0.0"
     "@types/node": "npm:^26.6.5"
     "@types/papaparse": "npm:^5.5.2"
     "@types/qrcode": "npm:^1.5.6"
@@ -5426,6 +5558,7 @@ __metadata:
     lucide-vue-next: "npm:^1.0.0"
     mammoth: "npm:^1.13.0"
     marked: "npm:^18.1.1"
+    pandoc-wasm: "npm:^1.1.0"
     papaparse: "npm:^5.7.0"
     pdfjs-dist: "npm:^6.4.299"
     pinia: "npm:^4.1.0"
@@ -5437,6 +5570,7 @@ __metadata:
     sql-formatter: "npm:^15.9.0"
     tailwind-merge: "npm:^3.7.0"
     tailwindcss: "npm:^4.3.3"
+    tesseract.js: "npm:^7.0.0"
     turndown: "npm:^7.2.4"
     tw-animate-css: "npm:^1.4.0"
     typescript: "npm:~5.9.0"
@@ -5634,6 +5768,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tesseract.js-core@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "tesseract.js-core@npm:7.0.0"
+  checksum: 10c0/c1afee9f8aecf994bc4714fd879e57d04b995849345532872bdc3d8c82a59c4ebbb0acde14d2b24e6a3aec27cafee3d18931f2744496d603ae36241290108e17
+  languageName: node
+  linkType: hard
+
+"tesseract.js@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "tesseract.js@npm:7.0.0"
+  dependencies:
+    bmp-js: "npm:^0.1.0"
+    idb-keyval: "npm:^6.2.0"
+    is-url: "npm:^1.2.4"
+    node-fetch: "npm:^2.6.9"
+    opencollective-postinstall: "npm:^2.0.3"
+    regenerator-runtime: "npm:^0.13.3"
+    tesseract.js-core: "npm:^7.0.0"
+    wasm-feature-detect: "npm:^1.8.0"
+    zlibjs: "npm:^0.3.1"
+  checksum: 10c0/daf5b153a9a06e0ab3365b33f4cc323e375d3a8b86a7df98031c19047623451aa3bfb293c295b0ebecd5c0781e42e43469d93ed4e7ba8a868b7a457120e609a1
+  languageName: node
+  linkType: hard
+
 "tinybench@npm:^6.2.2":
   version: 6.2.2
   resolution: "tinybench@npm:6.2.2"
@@ -5707,6 +5865,13 @@ __metadata:
   dependencies:
     punycode: "npm:^2.3.1"
   checksum: 10c0/0491b14c41f62e420ce5115fde5eafe5dca33249a32b98794ad56056c726ea2ad393b3c7b00f1b14c69217c41f29b1a0f53c90bb5fb1f4324fddd455428cd22e
+  languageName: node
+  linkType: hard
+
+"tr46@npm:~0.0.3":
+  version: 0.0.3
+  resolution: "tr46@npm:0.0.3"
+  checksum: 10c0/047cb209a6b60c742f05c9d3ace8fa510bff609995c129a37ace03476a9b12db4dbf975e74600830ef0796e18882b2381fb5fb1f6b4f96b832c374de3ab91a11
   languageName: node
   linkType: hard
 
@@ -6252,6 +6417,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"wasm-feature-detect@npm:^1.8.0":
+  version: 1.9.0
+  resolution: "wasm-feature-detect@npm:1.9.0"
+  checksum: 10c0/d902be44b57fa963d8ff284cb86332f38c3c9b4af04e6c057b09904cf091a8da1c81ec9da7cd57cdf75afe45eeec449f11344fc66b62ea55314837041550f08f
+  languageName: node
+  linkType: hard
+
+"webidl-conversions@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "webidl-conversions@npm:3.0.1"
+  checksum: 10c0/5612d5f3e54760a797052eb4927f0ddc01383550f542ccd33d5238cfd65aeed392a45ad38364970d0a0f4fea32e1f4d231b3d8dac4a3bdd385e5cf802ae097db
+  languageName: node
+  linkType: hard
+
 "webidl-conversions@npm:^8.0.1":
   version: 8.0.1
   resolution: "webidl-conversions@npm:8.0.1"
@@ -6281,6 +6460,16 @@ __metadata:
     tr46: "npm:^7.0.0"
     webidl-conversions: "npm:^8.0.1"
   checksum: 10c0/865502309e64e3e46c6e68307da4e517b45630752479d4a117ea5c3bd6ce97be5d2a36072ae0e4ad5dc5fe80e1f00c5dc665e1f9a99c3bc9fd5b7d1127e965c8
+  languageName: node
+  linkType: hard
+
+"whatwg-url@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "whatwg-url@npm:5.0.0"
+  dependencies:
+    tr46: "npm:~0.0.3"
+    webidl-conversions: "npm:^3.0.0"
+  checksum: 10c0/1588bed84d10b72d5eec1d0faa0722ba1962f1821e7539c535558fb5398d223b0c50d8acab950b8c488b4ba69043fd833cc2697056b167d8ad46fac3995a55d5
   languageName: node
   linkType: hard
 
@@ -6521,5 +6710,12 @@ __metadata:
     compress-commons: "npm:^4.1.2"
     readable-stream: "npm:^3.6.0"
   checksum: 10c0/38f91ca116a38561cf184c29e035e9453b12c30eaf574e0993107a4a5331882b58c9a7f7b97f63910664028089fbde3296d0b3682d1ccb2ad96929e68f1b2b89
+  languageName: node
+  linkType: hard
+
+"zlibjs@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "zlibjs@npm:0.3.1"
+  checksum: 10c0/2d110bfcb0f8b8dbf225423f6556da9c5bca95c8b849c1218983676158a24b5cd0350357e0c4d504e27f8c7e18d471d9712576f35114a81a51bcf83453f02beb
   languageName: node
   linkType: hard

@@ -1,4 +1,4 @@
-import { ArrowRightLeft, Binary, Braces, FileCode, FileImage, FileJson, FileType, Image, Palette, Ruler, Scale, Sheet, Type } from 'lucide-vue-next'
+import { ArrowRightLeft, Binary, Braces, FileCode, FileImage, FileJson, FileType, Image, Palette, Ruler, Scale, Sheet, Type, BookOpen } from 'lucide-vue-next'
 import type { ToolMeta } from '../types'
 
 const tools: ToolMeta[] = [
@@ -16,4 +16,17 @@ const tools: ToolMeta[] = [
   { slug: 'toml-json', category: 'convert', icon: Braces, keywords: ['toml', 'json', 'config'], component: () => import('@/tools/toml-json/index.vue') },
   { slug: 'unit-converter', category: 'convert', icon: Scale, keywords: ['unit', 'length', 'weight', 'temperature', '单位', '换算'], component: () => import('@/tools/unit-converter/index.vue') },
 ]
+
+// Pandoc is web-only (~56MB wasm). Chrome/VS Code builds set VITE_ENABLE_PANDOC=false so this
+// branch is dead-code-eliminated and the tool chunk / pandoc-wasm-core dep are not bundled.
+if (import.meta.env.VITE_ENABLE_PANDOC !== 'false') {
+  tools.push({
+    slug: 'pandoc',
+    category: 'convert',
+    icon: BookOpen,
+    keywords: ['pandoc', 'wasm', 'markdown', 'docx', 'epub', 'odt', 'html', '转换'],
+    component: () => import('@/tools/pandoc/index.vue'),
+  })
+}
+
 export default tools

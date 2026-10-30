@@ -7,3 +7,21 @@ dist/
 public/pdfjs/
 # Reference-only clone (~78MB); app must not depend on it
 thirdparty/
+
+# Chrome / VS Code extension build outputs
+chrome-extension/dist/
+chrome-extension/*.zip
+vscode-extension/media/
+vscode-extension/out/
+vscode-extension/node_modules/
+vscode-extension/*.vsix
+dist-chrome/
+dist-vscode/
+
+# Web header download artifacts (refreshed by ./build.sh chrome|vscode|build)
+public/downloads/*.zip
+public/downloads/*.vsix
+!public/downloads/.gitkeep
+
+# Offline WASM / OCR assets (copied from node_modules at Vite buildStart)
+public/offline/

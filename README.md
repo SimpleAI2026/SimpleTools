@@ -8,6 +8,18 @@
 
 ![SimpleTools](./public/samples/simpletools.png)
 
+## 截图
+
+![截图 1](./docs/screenshots/1.png)
+
+![截图 2](./docs/screenshots/2.png)
+
+![截图 3](./docs/screenshots/3.png)
+
+![截图 4](./docs/screenshots/4.png)
+
+![截图 5](./docs/screenshots/5.png)
+
 ## 特性
 
 - **125 个工具**（以 `src/registry` 注册表为准，非 `src/tools` 目录计数）
@@ -45,6 +57,8 @@ corepack enable
 ./build.sh preview      # 本地预览 dist/
 ./build.sh lint         # ESLint + vue-tsc
 ./build.sh test         # Vitest 单测
+./build.sh chrome       # Chrome MV3 扩展 → chrome-extension/dist + .zip
+./build.sh vscode       # VS Code 扩展 → .vsix（webview）
 ```
 
 也可以直接使用 Yarn 脚本：`yarn dev` / `yarn build` / `yarn preview` / `yarn lint` / `yarn test`。
@@ -55,7 +69,9 @@ corepack enable
 
 ```
 SimpleTools/
-├── build.sh            # dev | build | preview | lint | test
+├── build.sh            # dev | build | preview | lint | test | chrome | vscode
+├── chrome-extension/   # Chrome MV3 打包脚本与清单
+├── vscode-extension/   # VS Code 扩展宿主与打包脚本
 ├── plan/               # 实施计划与调研笔记
 ├── public/             # 静态资源（favicon、样例图等）
 ├── src/
@@ -68,6 +84,13 @@ SimpleTools/
 │   └── ...
 └── thirdparty/         # 仅本地参考（已 gitignore，勿依赖）
 ```
+
+## 扩展版本
+
+- **Chrome**：`./build.sh chrome` → 在 `chrome://extensions` 开启开发者模式，加载 `chrome-extension/dist/`（详见 `chrome-extension/README.md`）。
+- **VS Code**：`./build.sh vscode` → `code --install-extension vscode-extension/simpletools-*.vsix`，命令面板运行 **SimpleTools: Open**（详见 `vscode-extension/README.md`）。
+- 扩展构建使用相对路径 `base: './'` + Hash 路由；网页版 `./build.sh build` 仍为 History 路由。
+- 网页右上角可下载安装包：`./build.sh chrome` / `./build.sh vscode` 会把产物同步到 `public/downloads/`（`simpletools-chrome.zip`、`simpletools-vscode.vsix`）。`./build.sh build` 仅在产物已存在时复制，不会强制重编扩展。
 
 ## 说明
 

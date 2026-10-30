@@ -8,6 +8,18 @@ Repository: https://github.com/SimpleAI2026/SimpleTools
 
 ![SimpleTools](./public/samples/simpletools.png)
 
+## Screenshots
+
+![Screenshot 1](./docs/screenshots/1.png)
+
+![Screenshot 2](./docs/screenshots/2.png)
+
+![Screenshot 3](./docs/screenshots/3.png)
+
+![Screenshot 4](./docs/screenshots/4.png)
+
+![Screenshot 5](./docs/screenshots/5.png)
+
 ## Features
 
 - **125 tools** (counted from the `src/registry` registry, not from `src/tools` folder count)
@@ -45,6 +57,8 @@ corepack enable
 ./build.sh preview      # Serve dist/ locally
 ./build.sh lint         # ESLint + vue-tsc
 ./build.sh test         # Vitest
+./build.sh chrome       # Chrome MV3 extension → chrome-extension/dist + .zip
+./build.sh vscode       # VS Code extension → .vsix (webview)
 ```
 
 Yarn scripts also work: `yarn dev` / `yarn build` / `yarn preview` / `yarn lint` / `yarn test`.
@@ -55,7 +69,9 @@ Intended deployment is a **local static site** (`vite preview` or any static hos
 
 ```
 SimpleTools/
-├── build.sh            # dev | build | preview | lint | test
+├── build.sh            # dev | build | preview | lint | test | chrome | vscode
+├── chrome-extension/   # Chrome MV3 packaging + build script
+├── vscode-extension/   # VS Code extension host + packaging
 ├── plan/               # Implementation plans and research notes
 ├── public/             # Static assets
 ├── src/
@@ -68,6 +84,13 @@ SimpleTools/
 │   └── ...
 └── thirdparty/         # Local reference only (gitignored; do not depend on it)
 ```
+
+## Extensions
+
+- **Chrome**: `./build.sh chrome` → enable Developer mode on `chrome://extensions` and Load unpacked `chrome-extension/dist/` (see `chrome-extension/README.md`).
+- **VS Code**: `./build.sh vscode` → `code --install-extension vscode-extension/simpletools-*.vsix`, then **SimpleTools: Open** from the Command Palette (see `vscode-extension/README.md`).
+- Extension builds use relative `base: './'` + hash routing; the web build (`./build.sh build`) keeps history routing.
+- The web header offers downloads: `./build.sh chrome` / `./build.sh vscode` sync artifacts into `public/downloads/` (`simpletools-chrome.zip`, `simpletools-vscode.vsix`). `./build.sh build` copies them only if already present (no forced extension rebuild).
 
 ## Notes
 

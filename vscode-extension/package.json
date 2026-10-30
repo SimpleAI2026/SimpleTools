@@ -1,0 +1,37 @@
+{
+  "name": "simpletools",
+  "displayName": "SimpleTools",
+  "description": "Offline-first developer toolbox in a VS Code webview. / 纯前端离线开发者工具箱。",
+  "version": "3.0.0",
+  "publisher": "SimpleAI2026",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:simpletools.open"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "simpletools.open",
+        "title": "SimpleTools: Open",
+        "category": "SimpleTools"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "~5.9.0"
+  }
+}

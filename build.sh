@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SimpleTools build entry point. Usage: ./build.sh <dev|build|preview|lint|test> [extra args]
+# SimpleTools build entry point. Usage: ./build.sh <dev|build|preview|lint|test|chrome|vscode> [extra args]
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -28,6 +28,8 @@ Commands:
   preview   Serve dist/ locally (builds first if dist/ is missing; HOST, PORT default 127.0.0.1:4173)
   lint      Run ESLint and vue-tsc type checking
   test      Run unit tests (Vitest)
+  chrome    Build Chrome MV3 extension → chrome-extension/dist + .zip (+ public/downloads/)
+  vscode    Build VS Code extension → .vsix (webview SPA in media/) (+ public/downloads/)
 
 Options:
   -h, --help  Show this help
@@ -98,9 +100,30 @@ cmd_dev() {
   exec "${YARN[@]}" vite --host "${HOST:-127.0.0.1}" --port "${PORT:-5173}" "$@"
 }
 
+# Copy extension packages into public/downloads when already built (no forced rebuild).
+sync_extension_downloads() {
+  local downloads="$ROOT/public/downloads"
+  mkdir -p "$downloads"
+  if [[ -f "$ROOT/chrome-extension/simpletools-chrome.zip" ]]; then
+    cp "$ROOT/chrome-extension/simpletools-chrome.zip" "$downloads/simpletools-chrome.zip"
+    info "Synced public/downloads/simpletools-chrome.zip"
+  else
+    warn "Chrome zip missing; run ./build.sh chrome to refresh public/downloads/simpletools-chrome.zip"
+  fi
+  local vsix
+  vsix="$(ls -1t "$ROOT"/vscode-extension/simpletools-*.vsix 2>/dev/null | head -1 || true)"
+  if [[ -n "$vsix" ]]; then
+    cp "$vsix" "$downloads/simpletools-vscode.vsix"
+    info "Synced public/downloads/simpletools-vscode.vsix from $(basename "$vsix")"
+  else
+    warn "VS Code vsix missing; run ./build.sh vscode to refresh public/downloads/simpletools-vscode.vsix"
+  fi
+}
+
 cmd_build() {
   info "Type-checking..."
   "${YARN[@]}" vue-tsc -b
+  sync_extension_downloads
   info "Building..."
   "${YARN[@]}" vite build "$@"
   ok "Build finished: ${ROOT}/dist ($(du -sh dist | cut -f1))"
@@ -126,6 +149,14 @@ cmd_test() {
   "${YARN[@]}" vitest run "$@"
 }
 
+cmd_chrome() {
+  exec bash "$ROOT/chrome-extension/build.sh" "$@"
+}
+
+cmd_vscode() {
+  exec bash "$ROOT/vscode-extension/build.sh" "$@"
+}
+
 main() {
   if [[ $# -eq 0 ]]; then
     usage >&2
@@ -138,7 +169,7 @@ main() {
       usage
       exit 0
       ;;
-    dev | build | preview | lint | test) ;;
+    dev | build | preview | lint | test | chrome | vscode) ;;
     *)
       error "Unknown command: ${cmd}"
       usage >&2

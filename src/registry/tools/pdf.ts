@@ -1,6 +1,6 @@
 import {
   RotateCw, Info, Lock, LockOpen, Eraser, Hash, Crop, Scaling, Layers, Layers2, Droplets, Images, FileText, FileType, FileImage, FileCode2, FileDown,
-  FilePlus2, EyeOff, ScanSearch, GitCompare, PenLine, Sheet, Presentation, FileType2,
+  FilePlus2, EyeOff, ScanSearch, GitCompare, PenLine, Sheet, Presentation, FileType2, ScanEye,
 } from 'lucide-vue-next'
 import type { ToolMeta } from '../types'
 
@@ -32,5 +32,6 @@ const tools: ToolMeta[] = [
   { slug: 'pdf-to-ppt', category: c, icon: Presentation, keywords: ['pdf', 'ppt', 'pptx', 'slides'], component: () => import('@/tools/pdf-to-ppt/index.vue') },
   { slug: 'pdf-to-text', category: c, icon: FileType, keywords: ['pdf', 'text', 'txt', 'extract', '提取'], component: () => import('@/tools/pdf-to-text/index.vue') },
   { slug: 'pdf-to-word', category: c, icon: FileText, keywords: ['pdf', 'word', 'docx'], component: () => import('@/tools/pdf-to-word/index.vue') },
+  { slug: 'pdfium-preview', category: c, icon: ScanEye, keywords: ['pdf', 'pdfium', 'wasm', 'preview', 'render', 'text', '预览'], component: () => import('@/tools/pdfium-preview/index.vue') },
 ]
 export default tools

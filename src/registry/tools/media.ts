@@ -1,4 +1,4 @@
-import { Crop, Grid3x3, ImageDown, Palette, Spline, Square, SquareDashed, Wand2 } from 'lucide-vue-next'
+import { Crop, Film, Grid3x3, ImageDown, Palette, ScanText, Sparkles, Spline, Square, SquareDashed, Wand2 } from 'lucide-vue-next'
 import type { ToolMeta } from '../types'
 
 const tools: ToolMeta[] = [
@@ -10,5 +10,8 @@ const tools: ToolMeta[] = [
   { slug: 'image-filters', category: 'media', icon: Wand2, keywords: ['image', 'filter', 'grayscale', 'sepia', '滤镜'], component: () => import('@/tools/image-filters/index.vue') },
   { slug: 'image-format-converter', category: 'media', icon: ImageDown, keywords: ['image', 'webp', 'png', 'jpg', 'convert', '格式'], component: () => import('@/tools/image-format-converter/index.vue') },
   { slug: 'image-splitter', category: 'media', icon: Grid3x3, keywords: ['image', 'split', 'grid', 'tiles', '切割', '九宫格'], component: () => import('@/tools/image-splitter/index.vue') },
+  { slug: 'imagemagick', category: 'media', icon: Sparkles, keywords: ['imagemagick', 'magick', 'wasm', 'convert', 'resize', 'compress', '图片'], component: () => import('@/tools/imagemagick/index.vue') },
+  { slug: 'image-ocr', category: 'media', icon: ScanText, keywords: ['ocr', 'tesseract', 'wasm', 'recognize', '文字识别', '中文'], component: () => import('@/tools/image-ocr/index.vue') },
+  { slug: 'ffmpeg', category: 'media', icon: Film, keywords: ['ffmpeg', 'wasm', 'video', 'audio', 'transcode', 'convert', 'trim', 'mp4', 'mp3', '音视频', '转码'], component: () => import('@/tools/ffmpeg/index.vue') },
 ]
 export default tools
