@@ -22,8 +22,7 @@ export const router = createRouter({
     },
     {
       path: '/agent',
-      name: 'agent',
-      component: () => import('@/pages/AgentPage.vue'),
+      redirect: { name: 'tool', params: { slug: 'agent' } },
     },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/pages/NotFoundPage.vue') },
   ],
@@ -36,8 +35,6 @@ router.afterEach((to) => {
     const slug = String(to.params.slug)
     useUserStore().addRecent(slug)
     document.title = `${t(`tools.${slug}.name`)} · SimpleTools`
-  } else if (to.name === 'agent') {
-    document.title = `${t('app.agentTitle')} · SimpleTools`
   } else {
     document.title = 'SimpleTools'
   }

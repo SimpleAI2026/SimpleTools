@@ -22,8 +22,6 @@ const en: MessageSchema = {
     loadError: 'Failed to load the tool. Please refresh.',
     privacy: 'Everything runs locally in your browser.',
     toolCount: '{n} tools',
-    agent: 'Agent',
-    agentTitle: 'SimpleTools Agent',
     extensions: {
       chrome: 'Chrome extension',
       vscode: 'VS Code extension',

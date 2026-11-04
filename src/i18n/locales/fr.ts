@@ -22,8 +22,6 @@ const fr: MessageSchema = {
     loadError: "Échec du chargement de l'outil. Veuillez actualiser.",
     privacy: "Tout s'exécute localement dans votre navigateur.",
     toolCount: "{n} outils",
-    agent: 'Agent',
-    agentTitle: 'SimpleTools Agent',
     extensions: {
       chrome: "Extension Chrome",
       vscode: "Extension du code VS",

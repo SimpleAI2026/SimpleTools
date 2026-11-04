@@ -22,8 +22,6 @@ const ptBR: MessageSchema = {
     loadError: "Falha ao carregar a ferramenta. Atualize.",
     privacy: "Tudo é executado localmente no seu navegador.",
     toolCount: "{n} ferramentas",
-    agent: 'Agent',
-    agentTitle: 'SimpleTools Agent',
     extensions: {
       chrome: "Extensão do Chrome",
       vscode: "Extensão do código VS",

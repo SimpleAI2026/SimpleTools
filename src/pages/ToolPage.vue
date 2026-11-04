@@ -5,8 +5,12 @@ import ToolLayout from '@/components/shared/ToolLayout.vue'
 import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import { i18n } from '@/i18n'
 
+/** Full-bleed tools that own their chrome (no ToolLayout title/favorite bar). */
+const IMMERSIVE_SLUGS = new Set(['agent'])
+
 const props = defineProps<{ slug: string }>()
 const tool = computed(() => getTool(props.slug))
+const immersive = computed(() => IMMERSIVE_SLUGS.has(props.slug))
 
 const ToolComponent = computed(() => {
   const t = tool.value
@@ -21,7 +25,13 @@ const ToolComponent = computed(() => {
 </script>
 
 <template>
-  <ToolLayout v-if="tool" :key="tool.slug" :tool="tool">
+  <component
+    :is="ToolComponent"
+    v-if="tool && immersive"
+    :key="tool.slug"
+    class="flex min-h-0 flex-1 flex-col"
+  />
+  <ToolLayout v-else-if="tool" :key="tool.slug" :tool="tool">
     <component :is="ToolComponent" />
   </ToolLayout>
 </template>

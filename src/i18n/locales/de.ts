@@ -22,8 +22,6 @@ const de: MessageSchema = {
     loadError: "Das Werkzeug konnte nicht geladen werden. Bitte aktualisieren.",
     privacy: "Alles läuft lokal in Ihrem Browser.",
     toolCount: "{n} Werkzeuge",
-    agent: 'Agent',
-    agentTitle: 'SimpleTools Agent',
     extensions: {
       chrome: "Chrome-Erweiterung",
       vscode: "VS Code-Erweiterung",

@@ -22,8 +22,6 @@ const ko: MessageSchema = {
     loadError: "도구를 로드하지 못했습니다. 새로고침하세요.",
     privacy: "모든 것이 브라우저에서 로컬로 실행됩니다.",
     toolCount: "{n} 도구",
-    agent: 'Agent',
-    agentTitle: 'SimpleTools Agent',
     extensions: {
       chrome: "크롬 확장 프로그램",
       vscode: "VS 코드 확장",

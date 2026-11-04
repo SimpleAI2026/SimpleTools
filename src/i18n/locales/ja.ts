@@ -22,8 +22,6 @@ const ja: MessageSchema = {
     loadError: "ツールのロードに失敗しました。リフレッシュしてください。",
     privacy: "すべてがブラウザ内でローカルに実行されます。",
     toolCount: "{n} ツール",
-    agent: 'Agent',
-    agentTitle: 'SimpleTools Agent',
     extensions: {
       chrome: "Chrome拡張機能",
       vscode: "VS コード拡張機能",

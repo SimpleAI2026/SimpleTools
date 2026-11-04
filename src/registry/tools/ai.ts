@@ -1,7 +1,14 @@
-import { Bot, Cable, Coins, EyeOff, FileCode2, ScanSearch, ShieldAlert, Wrench } from 'lucide-vue-next'
+import { Bot, Cable, Coins, EyeOff, FileCode2, MessageSquare, ScanSearch, ShieldAlert, Wrench } from 'lucide-vue-next'
 import type { ToolMeta } from '../types'
 
 const tools: ToolMeta[] = [
+  {
+    slug: 'agent',
+    category: 'ai',
+    icon: MessageSquare,
+    keywords: ['agent', 'chat', 'llm', 'byok', 'openai', 'claude', '助手', '对话', 'チャット'],
+    component: () => import('@/tools/agent/index.vue'),
+  },
   {
     slug: 'token-counter',
     category: 'ai',

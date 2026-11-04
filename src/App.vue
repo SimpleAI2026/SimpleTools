@@ -6,7 +6,9 @@ import { useSettingsStore } from '@/stores/settings'
 
 useSettingsStore()
 const route = useRoute()
-const isAgent = computed(() => route.name === 'agent')
+const isAgent = computed(
+  () => route.name === 'agent' || (route.name === 'tool' && route.params.slug === 'agent'),
+)
 </script>
 
 <template>

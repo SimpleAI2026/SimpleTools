@@ -20,8 +20,6 @@ const zhCN = {
     loadError: '工具加载失败，请刷新重试。',
     privacy: '所有处理均在本地浏览器中完成。',
     toolCount: '共 {n} 个工具',
-    agent: 'Agent',
-    agentTitle: 'SimpleTools Agent',
     extensions: {
       chrome: 'Chrome 插件',
       vscode: 'VS Code 插件',

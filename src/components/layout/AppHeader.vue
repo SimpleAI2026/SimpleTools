@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { Bot, Code2, Github, Languages, Moon, Puzzle, Sun, Wrench } from 'lucide-vue-next'
+import { Code2, Github, Languages, Moon, Puzzle, Sun, Wrench } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import InstallExtensionModal, { type ExtensionKind } from '@/components/layout/InstallExtensionModal.vue'
 import { LOCALE_META, SUPPORTED_LOCALES, type AppLocale } from '@/i18n'
@@ -9,7 +9,9 @@ import { useSettingsStore } from '@/stores/settings'
 
 const settings = useSettingsStore()
 const route = useRoute()
-const isAgent = computed(() => route.name === 'agent')
+const isAgent = computed(
+  () => route.name === 'agent' || (route.name === 'tool' && route.params.slug === 'agent'),
+)
 
 function onLocaleChange(event: Event) {
   settings.setLocale((event.target as HTMLSelectElement).value as AppLocale)
@@ -82,29 +84,6 @@ function openInstall(kind: ExtensionKind) {
             <Code2 />
           </Button>
         </template>
-        <Button
-          variant="ghost"
-          size="sm"
-          class="hidden sm:inline-flex"
-          as-child
-          data-testid="agent-entry"
-        >
-          <RouterLink to="/agent" :aria-label="$t('app.agent')">
-            <Bot />
-            <span>{{ $t('app.agent') }}</span>
-          </RouterLink>
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          class="sm:hidden"
-          as-child
-          data-testid="agent-entry-icon"
-        >
-          <RouterLink to="/agent" :aria-label="$t('app.agent')">
-            <Bot />
-          </RouterLink>
-        </Button>
         <Button
           variant="ghost"
           size="icon"
