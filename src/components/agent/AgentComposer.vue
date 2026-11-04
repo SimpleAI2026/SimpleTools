@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Send, Square } from 'lucide-vue-next'
+import { ArrowUp, Square } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { useAgentStore } from '@/stores/agent'
@@ -31,14 +31,14 @@ function onKeydown(e: KeyboardEvent) {
   <div class="border-t p-3 sm:p-4" data-testid="agent-composer">
     <div class="mx-auto max-w-3xl">
       <div
-        class="bg-background focus-within:border-ring focus-within:ring-ring/50 flex items-end gap-2 rounded-xl border p-2 shadow-xs focus-within:ring-[3px]"
+        class="bg-background focus-within:border-ring focus-within:ring-ring/50 flex min-h-[108px] items-end gap-2 rounded-2xl border p-3 shadow-xs focus-within:ring-[3px]"
       >
         <Textarea
           v-model="draft"
-          class="min-h-[44px] h-auto max-h-40 flex-1 resize-none border-0 bg-transparent px-2 py-1.5 font-sans shadow-none focus-visible:border-transparent focus-visible:ring-0"
+          class="min-h-[84px] h-auto max-h-48 flex-1 resize-none border-0 bg-transparent px-1 py-1 font-sans shadow-none focus-visible:border-transparent focus-visible:ring-0"
           :placeholder="$t('agent.placeholder')"
           :disabled="agent.streaming"
-          rows="2"
+          rows="3"
           data-testid="agent-composer-input"
           @keydown="onKeydown"
         />
@@ -46,23 +46,23 @@ function onKeydown(e: KeyboardEvent) {
           v-if="agent.streaming"
           variant="outline"
           size="icon"
-          class="mb-0.5 size-8 shrink-0"
+          class="mb-0.5 size-8 shrink-0 rounded-full"
           data-testid="agent-stop"
           :aria-label="$t('agent.stop')"
           @click="agent.stop()"
         >
-          <Square class="size-3.5 fill-current" />
+          <Square class="size-3 fill-current" />
         </Button>
         <Button
           v-else
           size="icon"
-          class="mb-0.5 size-8 shrink-0"
+          class="mb-0.5 size-8 shrink-0 rounded-full"
           data-testid="agent-send"
           :disabled="!canSend"
           :aria-label="$t('agent.send')"
           @click="submit"
         >
-          <Send class="size-4" />
+          <ArrowUp class="size-4" />
         </Button>
       </div>
     </div>
