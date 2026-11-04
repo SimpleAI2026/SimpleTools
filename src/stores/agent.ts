@@ -42,7 +42,7 @@ export const useAgentStore = defineStore('agent', () => {
     if (engine.value) return engine.value
     const store = indexedDbStore('simpletools-agent')
     const eng = new ChatEngine({
-      config: resolveAgentConfig(),
+      config: resolveAgentConfig(draftSettings.value),
       store,
     })
     for (const tool of createHostTools({ router, t: (k) => String(t(k)) })) {
@@ -72,7 +72,7 @@ export const useAgentStore = defineStore('agent', () => {
     if (ready.value) return
     const eng = ensureEngine()
     loadSettingsIntoDraft()
-    eng.updateConfig(resolveAgentConfig())
+    eng.updateConfig(resolveAgentConfig(draftSettings.value))
     await refreshThreads()
     if (!threads.value.length) {
       await eng.createThread()
@@ -86,9 +86,11 @@ export const useAgentStore = defineStore('agent', () => {
 
   function loadSettingsIntoDraft(): void {
     const stored = loadAgentSettings()
+    // When rememberKey is false, LS omits apiKey — keep in-memory session key.
+    const prevKey = draftSettings.value.apiKey
     draftSettings.value = {
       apiBaseUrl: stored?.apiBaseUrl ?? '',
-      apiKey: stored?.apiKey ?? '',
+      apiKey: stored?.apiKey ?? prevKey ?? '',
       model: stored?.model ?? '',
       systemPrompt: stored?.systemPrompt ?? '',
       rememberKey: stored?.rememberKey ?? true,
@@ -127,7 +129,8 @@ export const useAgentStore = defineStore('agent', () => {
 
   async function send(text: string): Promise<boolean> {
     const eng = ensureEngine()
-    const cfg = resolveAgentConfig()
+    // Always resolve with draft so rememberKey:false session apiKey still works.
+    const cfg = resolveAgentConfig(draftSettings.value)
     if (!cfg.apiBaseUrl || !cfg.apiKey || !cfg.model) {
       error.value = 'missing-settings'
       settingsOpen.value = true

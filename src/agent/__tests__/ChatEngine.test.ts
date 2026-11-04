@@ -205,5 +205,13 @@ describe('ChatEngine', () => {
     const errEv = collected.find((e) => e.type === 'error')
     expect(errEv).toBeTruthy()
     expect(errEv && errEv.type === 'error' ? errEv.error.message : '').toBe('Aborted')
+
+    const threadId = engine.currentThreadId
+    expect(threadId).toBeTruthy()
+    const msgs = await engine.getMessages(threadId!)
+    const assistant = msgs.filter((m) => m.role === 'assistant').at(-1)
+    expect(assistant).toBeTruthy()
+    // Must leave streaming so UI does not show "生成中" forever.
+    expect(assistant?.status).toBe('done')
   })
 })

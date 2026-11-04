@@ -43,6 +43,22 @@ describe('agent settings', () => {
     expect(resolveAgentConfig().model).toBe(DEFAULT_AGENT_MODEL)
   })
 
+  it('uses draft/session apiKey override when rememberKey is false', () => {
+    saveAgentSettings({
+      apiBaseUrl: 'https://api.example.com/v1',
+      apiKey: 'sk-secret',
+      model: 'gpt-4o-mini',
+      systemPrompt: '',
+      rememberKey: false,
+    })
+    expect(loadAgentSettings()?.apiKey).toBeUndefined()
+    expect(resolveAgentConfig().apiKey).toBe('')
+    // Store send() must pass draftSettings so the in-memory session key still resolves.
+    const cfg = resolveAgentConfig({ apiKey: 'sk-session' })
+    expect(cfg.apiKey).toBe('sk-session')
+    expect(cfg.apiBaseUrl).toBe('https://api.example.com/v1')
+  })
+
   it('uses scoped storage key', () => {
     expect(AGENT_STORAGE_KEY).toBe('simpletools-agent')
   })

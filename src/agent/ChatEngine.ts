@@ -225,6 +225,11 @@ export class ChatEngine {
       this.emit({ type: 'error', error: err })
       yield { type: 'error', error: err }
     } catch (err) {
+      // Belt-and-suspenders: clear any assistant still marked streaming (e.g. older path).
+      await this.finalizeStreamingAssistants(
+        thread.id,
+        signal.aborted ? 'done' : 'error',
+      )
       if (signal.aborted) {
         const aborted = new Error('Aborted')
         this.emit({ type: 'error', error: aborted })
@@ -236,6 +241,20 @@ export class ChatEngine {
       yield { type: 'error', error }
     } finally {
       this.abort = null
+    }
+  }
+
+  private async finalizeStreamingAssistants(
+    threadId: string,
+    status: 'done' | 'error',
+  ): Promise<void> {
+    const msgs = await this.store.getMessages(threadId)
+    for (const m of msgs) {
+      if (m.role === 'assistant' && m.status === 'streaming') {
+        const next = { ...m, status }
+        await this.store.updateMessage(next)
+        this.emit({ type: 'message', message: next })
+      }
     }
   }
 
@@ -266,50 +285,61 @@ export class ChatEngine {
     const toolAcc = new Map<number, AccumulatedToolCall>()
     let finishReason: string | null = null
 
-    for await (const ev of provider.stream({
-      config: this.config,
-      messages: openaiMessages,
-      tools,
-      signal,
-    })) {
-      if (ev.type === 'text-delta') {
-        assistantMessage.content += ev.delta
-        await this.store.updateMessage({ ...assistantMessage })
-        onEvent({
-          type: 'text-delta',
-          delta: ev.delta,
-          messageId: assistantId,
-        })
-      } else if (ev.type === 'tool-call-deltas') {
-        mergeToolCallDeltas(toolAcc, ev.deltas)
-      } else if (ev.type === 'finish') {
-        finishReason = ev.finishReason
+    try {
+      for await (const ev of provider.stream({
+        config: this.config,
+        messages: openaiMessages,
+        tools,
+        signal,
+      })) {
+        if (ev.type === 'text-delta') {
+          assistantMessage.content += ev.delta
+          await this.store.updateMessage({ ...assistantMessage })
+          onEvent({
+            type: 'text-delta',
+            delta: ev.delta,
+            messageId: assistantId,
+          })
+        } else if (ev.type === 'tool-call-deltas') {
+          mergeToolCallDeltas(toolAcc, ev.deltas)
+        } else if (ev.type === 'finish') {
+          finishReason = ev.finishReason
+        }
       }
-    }
 
-    let toolCalls: ToolCall[] = []
-    if (toolAcc.size) {
-      toolCalls = [...toolAcc.entries()]
-        .sort((a, b) => a[0] - b[0])
-        .map(([, v]) => ({
-          id: v.id || createId('call'),
-          name: v.name,
-          arguments: v.arguments || '{}',
-        }))
-      assistantMessage.toolCalls = toolCalls
-      for (const tc of toolCalls) {
-        onEvent({ type: 'tool-call', toolCall: tc, messageId: assistantId })
+      let toolCalls: ToolCall[] = []
+      if (toolAcc.size) {
+        toolCalls = [...toolAcc.entries()]
+          .sort((a, b) => a[0] - b[0])
+          .map(([, v]) => ({
+            id: v.id || createId('call'),
+            name: v.name,
+            arguments: v.arguments || '{}',
+          }))
+        assistantMessage.toolCalls = toolCalls
+        for (const tc of toolCalls) {
+          onEvent({ type: 'tool-call', toolCall: tc, messageId: assistantId })
+        }
+        if (!finishReason) finishReason = 'tool_calls'
       }
-      if (!finishReason) finishReason = 'tool_calls'
+
+      assistantMessage.status = 'done'
+      await this.store.updateMessage({ ...assistantMessage })
+      thread.updatedAt = Date.now()
+      await this.store.upsertThread(thread)
+      onEvent({ type: 'message', message: { ...assistantMessage } })
+
+      return { finishReason, toolCalls, assistantMessage }
+    } catch (err) {
+      // Abort/error can exit before status is flipped off 'streaming' — clear UI "生成中".
+      const aborted =
+        signal.aborted ||
+        (err instanceof Error && (err.name === 'AbortError' || err.message === 'Aborted'))
+      assistantMessage.status = aborted ? 'done' : 'error'
+      await this.store.updateMessage({ ...assistantMessage })
+      onEvent({ type: 'message', message: { ...assistantMessage } })
+      throw err
     }
-
-    assistantMessage.status = 'done'
-    await this.store.updateMessage({ ...assistantMessage })
-    thread.updatedAt = Date.now()
-    await this.store.upsertThread(thread)
-    onEvent({ type: 'message', message: { ...assistantMessage } })
-
-    return { finishReason, toolCalls, assistantMessage }
   }
 
   private toOpenAIMessages(
