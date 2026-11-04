@@ -153,7 +153,9 @@ export class ChatEngine {
     const userEv: ChatEvent = { type: 'message', message: userMsg }
     this.emit(userEv)
     yield userEv
-    this.emit({ type: 'thread', thread })
+    const threadEv: ChatEvent = { type: 'thread', thread }
+    this.emit(threadEv)
+    yield threadEv
 
     this.abort = new AbortController()
     const signal = this.abort.signal

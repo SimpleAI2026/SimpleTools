@@ -138,7 +138,9 @@ export const useAgentStore = defineStore('agent', () => {
     error.value = null
     try {
       for await (const ev of eng.send(text)) {
-        if (ev.type === 'message' || ev.type === 'text-delta' || ev.type === 'done') {
+        if (ev.type === 'text-delta') {
+          applyTextDelta(ev.messageId, ev.delta)
+        } else if (ev.type === 'message' || ev.type === 'done') {
           await refreshMessages()
         }
         if (ev.type === 'thread') await refreshThreads()
@@ -146,7 +148,10 @@ export const useAgentStore = defineStore('agent', () => {
           await refreshMessages()
         }
         if (ev.type === 'error') {
-          error.value = ev.error.message
+          // Intentional user stop — clear streaming without a failure banner.
+          if (!isIntentionalAbort(ev.error)) {
+            error.value = ev.error.message
+          }
         }
       }
     } finally {
@@ -154,6 +159,21 @@ export const useAgentStore = defineStore('agent', () => {
       await refreshThreads()
       await refreshMessages()
     }
+  }
+
+  function applyTextDelta(messageId: string, delta: string): void {
+    const idx = messages.value.findIndex((m) => m.id === messageId)
+    if (idx < 0) return
+    const cur = messages.value[idx]!
+    messages.value[idx] = {
+      ...cur,
+      content: cur.content + delta,
+      status: 'streaming',
+    }
+  }
+
+  function isIntentionalAbort(err: Error): boolean {
+    return err.message === 'Aborted' || err.name === 'AbortError'
   }
 
   function stop(): void {
