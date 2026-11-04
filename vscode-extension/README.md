@@ -16,12 +16,12 @@
 
 - `vscode-extension/media/` — Vite 构建的 SPA
 - `vscode-extension/out/extension.js` — 扩展宿主
-- `vscode-extension/simpletools-3.0.0.vsix` — 可安装包
+- `vscode-extension/simpletools-3.0.1.vsix` — 可安装包
 
 ## 安装
 
 ```bash
-code --install-extension vscode-extension/simpletools-3.0.0.vsix
+code --install-extension vscode-extension/simpletools-3.0.1.vsix
 ```
 
 或在 VS Code：扩展视图 → `…` → **Install from VSIX…**
