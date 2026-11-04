@@ -25,3 +25,9 @@ public/downloads/*.vsix
 
 # Offline WASM / OCR assets (copied from node_modules at Vite buildStart)
 public/offline/
+
+# i18n generation caches
+scripts/_gtx-cache.json
+scripts/_*-en.json
+scripts/_tool-messages-raw.json
+scripts/_translate-cache.json

@@ -3,9 +3,14 @@ import { ref } from 'vue'
 import { Code2, Github, Languages, Moon, Puzzle, Sun, Wrench } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import InstallExtensionModal, { type ExtensionKind } from '@/components/layout/InstallExtensionModal.vue'
+import { LOCALE_META, SUPPORTED_LOCALES, type AppLocale } from '@/i18n'
 import { useSettingsStore } from '@/stores/settings'
 
 const settings = useSettingsStore()
+
+function onLocaleChange(event: Event) {
+  settings.setLocale((event.target as HTMLSelectElement).value as AppLocale)
+}
 
 const GITHUB_URL = 'https://github.com/SimpleAI2026/SimpleTools'
 
@@ -90,16 +95,20 @@ function openInstall(kind: ExtensionKind) {
             <Github />
           </a>
         </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          :aria-label="$t('app.language')"
-          data-testid="locale-toggle"
-          @click="settings.setLocale(settings.locale === 'zh-CN' ? 'en' : 'zh-CN')"
-        >
-          <Languages />
-          {{ settings.locale === 'zh-CN' ? 'English' : '中文' }}
-        </Button>
+        <label class="relative inline-flex items-center gap-1">
+          <Languages class="pointer-events-none absolute left-2 size-4 opacity-70" />
+          <select
+            class="border-input bg-background hover:bg-accent h-8 max-w-[11rem] cursor-pointer appearance-none rounded-md border py-1 pr-7 pl-8 text-sm"
+            :aria-label="$t('app.language')"
+            data-testid="locale-select"
+            :value="settings.locale"
+            @change="onLocaleChange"
+          >
+            <option v-for="loc in SUPPORTED_LOCALES" :key="loc" :value="loc">
+              {{ LOCALE_META[loc].nativeLabel }}
+            </option>
+          </select>
+        </label>
         <Button variant="ghost" size="icon" :aria-label="$t('app.toggleTheme')" @click="settings.toggleTheme()">
           <Moon v-if="!settings.isDark" />
           <Sun v-else />
