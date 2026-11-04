@@ -22,6 +22,8 @@ const de: MessageSchema = {
     loadError: "Das Werkzeug konnte nicht geladen werden. Bitte aktualisieren.",
     privacy: "Alles läuft lokal in Ihrem Browser.",
     toolCount: "{n} Werkzeuge",
+    agent: 'Agent',
+    agentTitle: 'SimpleTools Agent',
     extensions: {
       chrome: "Chrome-Erweiterung",
       vscode: "VS Code-Erweiterung",
@@ -212,7 +214,31 @@ const de: MessageSchema = {
       notImage: "Bitte wählen Sie eine Bilddatei aus",
       failed: "Die Bildverarbeitung ist fehlgeschlagen"
     }
-  }
+  },
+  agent: {
+    newChat: 'New chat',
+    threads: 'Chats',
+    deleteThread: 'Delete chat',
+    placeholder: 'Type a message… (the model can call local tools)',
+    send: 'Send',
+    stop: 'Stop',
+    settings: 'Model settings',
+    settingsTitle: 'BYOK settings',
+    settingsDesc: 'Keys stay in localStorage on this device and are never uploaded to SimpleTools servers.',
+    apiBaseUrl: 'API Base URL',
+    apiKey: 'API Key',
+    model: 'Model',
+    systemPrompt: 'System prompt',
+    rememberKey: 'Remember API Key on this device',
+    save: 'Save',
+    cancel: 'Cancel',
+    empty: 'Send a message to start chatting. HostTools: list_tools / open_tool / run_offline_tool.',
+    missingSettings: 'Configure Base URL, API Key, and model first.',
+    toolCall: 'Tool call',
+    toolResult: 'Tool result',
+    streaming: 'Generating…',
+    error: 'Something went wrong',
+  },
 }
 
 export default de

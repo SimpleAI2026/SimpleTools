@@ -20,6 +20,11 @@ export const router = createRouter({
       props: true,
       beforeEnter: (to) => (getTool(String(to.params.slug)) ? true : { name: 'not-found', params: { pathMatch: to.path.slice(1).split('/') } }),
     },
+    {
+      path: '/agent',
+      name: 'agent',
+      component: () => import('@/pages/AgentPage.vue'),
+    },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/pages/NotFoundPage.vue') },
   ],
   scrollBehavior: () => ({ top: 0 }),
@@ -31,6 +36,8 @@ router.afterEach((to) => {
     const slug = String(to.params.slug)
     useUserStore().addRecent(slug)
     document.title = `${t(`tools.${slug}.name`)} · SimpleTools`
+  } else if (to.name === 'agent') {
+    document.title = `${t('app.agentTitle')} · SimpleTools`
   } else {
     document.title = 'SimpleTools'
   }
