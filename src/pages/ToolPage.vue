@@ -25,12 +25,14 @@ const ToolComponent = computed(() => {
 </script>
 
 <template>
-  <component
-    :is="ToolComponent"
-    v-if="tool && immersive"
-    :key="tool.slug"
-    class="flex min-h-0 flex-1 flex-col"
-  />
+  <!--
+    Immersive shell owns flex-col height fill. Do NOT put flex-col on the tool
+    root via fallthrough — AgentPage is a row flex (sidebar + chat); flex-col
+    + thread-list h-full pushed the composer outside overflow:hidden.
+  -->
+  <div v-if="tool && immersive" class="flex min-h-0 flex-1 flex-col">
+    <component :is="ToolComponent" :key="tool.slug" class="min-h-0 flex-1" />
+  </div>
   <ToolLayout v-else-if="tool" :key="tool.slug" :tool="tool">
     <component :is="ToolComponent" />
   </ToolLayout>
