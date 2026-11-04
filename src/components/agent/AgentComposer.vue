@@ -28,39 +28,43 @@ function onKeydown(e: KeyboardEvent) {
 </script>
 
 <template>
-  <div class="border-t p-3" data-testid="agent-composer">
-    <div class="mx-auto flex max-w-3xl items-end gap-2">
-      <Textarea
-        v-model="draft"
-        class="min-h-[72px] h-auto max-h-40 font-sans"
-        :placeholder="$t('agent.placeholder')"
-        :disabled="agent.streaming"
-        rows="2"
-        data-testid="agent-composer-input"
-        @keydown="onKeydown"
-      />
-      <Button
-        v-if="agent.streaming"
-        variant="outline"
-        size="icon"
-        class="shrink-0"
-        data-testid="agent-stop"
-        :aria-label="$t('agent.stop')"
-        @click="agent.stop()"
+  <div class="border-t p-3 sm:p-4" data-testid="agent-composer">
+    <div class="mx-auto max-w-3xl">
+      <div
+        class="bg-background focus-within:border-ring focus-within:ring-ring/50 flex items-end gap-2 rounded-xl border p-2 shadow-xs focus-within:ring-[3px]"
       >
-        <Square class="size-3.5 fill-current" />
-      </Button>
-      <Button
-        v-else
-        size="icon"
-        class="shrink-0"
-        data-testid="agent-send"
-        :disabled="!canSend"
-        :aria-label="$t('agent.send')"
-        @click="submit"
-      >
-        <Send class="size-4" />
-      </Button>
+        <Textarea
+          v-model="draft"
+          class="min-h-[44px] h-auto max-h-40 flex-1 resize-none border-0 bg-transparent px-2 py-1.5 font-sans shadow-none focus-visible:border-transparent focus-visible:ring-0"
+          :placeholder="$t('agent.placeholder')"
+          :disabled="agent.streaming"
+          rows="2"
+          data-testid="agent-composer-input"
+          @keydown="onKeydown"
+        />
+        <Button
+          v-if="agent.streaming"
+          variant="outline"
+          size="icon"
+          class="mb-0.5 size-8 shrink-0"
+          data-testid="agent-stop"
+          :aria-label="$t('agent.stop')"
+          @click="agent.stop()"
+        >
+          <Square class="size-3.5 fill-current" />
+        </Button>
+        <Button
+          v-else
+          size="icon"
+          class="mb-0.5 size-8 shrink-0"
+          data-testid="agent-send"
+          :disabled="!canSend"
+          :aria-label="$t('agent.send')"
+          @click="submit"
+        >
+          <Send class="size-4" />
+        </Button>
+      </div>
     </div>
   </div>
 </template>

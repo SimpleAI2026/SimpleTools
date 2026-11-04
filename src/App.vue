@@ -15,7 +15,7 @@ const isAgent = computed(() => route.name === 'agent')
     <main
       :class="
         isAgent
-          ? 'mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col px-0 sm:px-4'
+          ? 'mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col px-0 pt-2 sm:px-4 sm:pt-3 sm:pb-3'
           : 'mx-auto w-full max-w-6xl px-4 py-6'
       "
     >
