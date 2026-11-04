@@ -28,18 +28,3 @@ export async function canvasesToPdf(pages: RasterPage[], type: 'png' | 'jpeg' = 
   return doc.save()
 }
 
-/** Slice a tall canvas (e.g. a rendered HTML document) into page-sized canvases. */
-export function sliceCanvas(src: HTMLCanvasElement, sliceHeightPx: number): HTMLCanvasElement[] {
-  const out: HTMLCanvasElement[] = []
-  for (let y = 0; y < src.height; y += sliceHeightPx) {
-    const c = document.createElement('canvas')
-    c.width = src.width
-    c.height = sliceHeightPx
-    const ctx = c.getContext('2d')!
-    ctx.fillStyle = '#fff'
-    ctx.fillRect(0, 0, c.width, c.height)
-    ctx.drawImage(src, 0, y, src.width, Math.min(sliceHeightPx, src.height - y), 0, 0, src.width, Math.min(sliceHeightPx, src.height - y))
-    out.push(c)
-  }
-  return out
-}

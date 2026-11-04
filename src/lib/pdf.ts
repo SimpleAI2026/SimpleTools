@@ -70,10 +70,6 @@ export function joinTextItems(items: TextItemLite[]): string {
   return out.replace(/[ \t]+\n/g, '\n').trim()
 }
 
-export async function readFileBytes(f: Blob): Promise<Uint8Array> {
-  return new Uint8Array(await f.arrayBuffer())
-}
-
 export function pdfBlob(bytes: Uint8Array): Blob {
   return new Blob([bytes as BlobPart], { type: 'application/pdf' })
 }

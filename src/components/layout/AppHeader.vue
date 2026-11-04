@@ -9,9 +9,7 @@ import { useSettingsStore } from '@/stores/settings'
 
 const settings = useSettingsStore()
 const route = useRoute()
-const isAgent = computed(
-  () => route.name === 'agent' || (route.name === 'tool' && route.params.slug === 'agent'),
-)
+const isAgent = computed(() => route.name === 'tool' && route.params.slug === 'agent')
 
 function onLocaleChange(event: Event) {
   settings.setLocale((event.target as HTMLSelectElement).value as AppLocale)

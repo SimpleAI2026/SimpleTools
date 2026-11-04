@@ -64,16 +64,3 @@ export const DEFAULT_PRICING_MODELS: PricingModel[] = [
 /** Catalog entries suitable as Agent model presets (excludes the cost-UI "custom" row). */
 export const AGENT_MODEL_PRESETS: PricingModel[] = DEFAULT_PRICING_MODELS.filter((m) => m.id !== 'custom')
 
-/**
- * Best-effort tokenizer family for a model id / provider prefix.
- * Grok ≈ OpenAI o200k; Qwen ≈ cl100k/o200k (use o200k); Claude / Gemini / DeepSeek keep their heuristics.
- */
-export function tokenizerFamilyForModel(modelId: string): TokenizerFamily {
-  const id = (modelId || '').toLowerCase()
-  if (id.includes('claude') || id.includes('anthropic') || id.includes('fable')) return 'claude'
-  if (id.includes('gemini') || id.includes('argon')) return 'gemini'
-  if (id.includes('deepseek')) return 'deepseek'
-  if (id.includes('qwen')) return 'o200k'
-  if (id.includes('grok') || id.includes('gpt') || id.includes('o3') || id.includes('o4')) return 'o200k'
-  return 'o200k'
-}
