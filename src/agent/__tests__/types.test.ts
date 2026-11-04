@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { chatCompletionsUrl, createId, normalizeBaseUrl } from '../types'
+import { chatCompletionsUrl, createId } from '../types'
 import { MemoryStore } from '../MemoryStore'
 
 describe('chatCompletionsUrl', () => {
