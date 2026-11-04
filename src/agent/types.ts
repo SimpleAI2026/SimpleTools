@@ -51,7 +51,7 @@ export interface HostTool {
   name: string
   description: string
   parameters: object
-  handler: (args: any, ctx: ToolContext) => Promise<unknown> | unknown
+  handler: (args: unknown, ctx: ToolContext) => Promise<unknown> | unknown
 }
 
 export interface HistoryStore {

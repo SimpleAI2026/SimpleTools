@@ -237,6 +237,7 @@ const zhCN = {
     roleUser: '你',
     roleAssistant: '助手',
     roleTool: '工具',
+    chromeHostWarning: 'Chrome 插件版暂未申请 host 权限，扩展内直连云端 API 可能失败；请优先用网页版，或等待后续 optional host permissions。',
     streaming: '生成中…',
     error: '出错了',
   },

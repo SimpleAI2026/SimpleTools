@@ -28,6 +28,8 @@ function onCancel() {
   settingsOpen.value = false
 }
 
+const isChrome = import.meta.env.VITE_TARGET === 'chrome'
+
 function onSave() {
   agent.saveSettings()
 }
@@ -40,6 +42,14 @@ function onSave() {
         <DialogTitle>{{ $t('agent.settingsTitle') }}</DialogTitle>
         <DialogDescription>{{ $t('agent.settingsDesc') }}</DialogDescription>
       </DialogHeader>
+
+      <p
+        v-if="isChrome"
+        class="rounded-md border border-border bg-muted/50 px-3 py-2 text-sm text-muted-foreground"
+        data-testid="agent-settings-chrome-warning"
+      >
+        {{ $t('agent.chromeHostWarning') }}
+      </p>
 
       <div class="grid gap-3">
         <div class="grid gap-1.5">

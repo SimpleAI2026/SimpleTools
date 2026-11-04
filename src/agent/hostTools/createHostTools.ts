@@ -33,12 +33,13 @@ export function createHostTools(deps: HostToolDeps): HostTool[] {
         },
       },
     },
-    handler: (args: { category?: string; query?: string }) => {
+    handler: (args) => {
+      const a = (args ?? {}) as { category?: string; query?: string }
       let tools = TOOLS
-      if (args.category) {
-        tools = tools.filter((t) => t.category === args.category)
+      if (a.category) {
+        tools = tools.filter((t) => t.category === a.category)
       }
-      const q = (args.query ?? '').trim().toLowerCase()
+      const q = (a.query ?? '').trim().toLowerCase()
       if (q) {
         tools = tools.filter((t) => {
           const name = deps.t(`tools.${t.slug}.name`).toLowerCase()
@@ -69,8 +70,8 @@ export function createHostTools(deps: HostToolDeps): HostTool[] {
       },
       required: ['slug'],
     },
-    handler: async (args: { slug: string }) => {
-      const slug = String(args.slug || '').trim()
+    handler: async (args) => {
+      const slug = String((args as { slug?: string } | null)?.slug || '').trim()
       if (!getTool(slug)) {
         return { ok: false, error: `Unknown tool slug: ${slug}` }
       }
@@ -98,15 +99,16 @@ export function createHostTools(deps: HostToolDeps): HostTool[] {
       },
       required: ['slug', 'input'],
     },
-    handler: (args: { slug: string; input: Record<string, unknown> }) => {
-      const slug = String(args.slug || '').trim()
+    handler: (args) => {
+      const a = (args ?? {}) as { slug?: string; input?: Record<string, unknown> }
+      const slug = String(a.slug || '').trim()
       if (!isOfflineToolWhitelisted(slug)) {
         return {
           ok: false,
           error: `Slug not in offline whitelist: ${slug}. Allowed: token-counter, prompt-secret-redactor`,
         }
       }
-      const input = args.input ?? {}
+      const input = a.input ?? {}
       if (slug === 'token-counter') {
         const text = String(input.text ?? '')
         const family = (input.family as 'o200k' | 'cl100k' | 'claude' | 'gemini' | 'deepseek') || 'o200k'

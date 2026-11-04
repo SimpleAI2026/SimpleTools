@@ -21,7 +21,7 @@ describe('ToolRegistry', () => {
         properties: { text: { type: 'string' } },
         required: ['text'],
       },
-      handler: (args: { text: string }) => ({ text: args.text }),
+      handler: (args) => ({ text: String((args as { text?: string }).text ?? '') }),
     })
 
     const ok = await reg.run('echo', '{"text":"hi"}', {

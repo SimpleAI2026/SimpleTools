@@ -239,6 +239,7 @@ const de: MessageSchema = {
     roleUser: 'You',
     roleAssistant: 'Assistant',
     roleTool: 'Tool',
+    chromeHostWarning: 'The Chrome extension has no host permissions yet, so BYOK cloud API calls may fail. Prefer the web build, or wait for optional host permissions in a later release.',
     streaming: 'Generating…',
     error: 'Something went wrong',
   },
