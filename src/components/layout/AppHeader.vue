@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { Bot, Code2, Github, Languages, Moon, Puzzle, Sun, Wrench } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import InstallExtensionModal, { type ExtensionKind } from '@/components/layout/InstallExtensionModal.vue'
@@ -7,6 +8,8 @@ import { LOCALE_META, SUPPORTED_LOCALES, type AppLocale } from '@/i18n'
 import { useSettingsStore } from '@/stores/settings'
 
 const settings = useSettingsStore()
+const route = useRoute()
+const isAgent = computed(() => route.name === 'agent')
 
 function onLocaleChange(event: Event) {
   settings.setLocale((event.target as HTMLSelectElement).value as AppLocale)
@@ -29,7 +32,7 @@ function openInstall(kind: ExtensionKind) {
 
 <template>
   <header class="bg-background/80 sticky top-0 z-10 border-b backdrop-blur">
-    <div class="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
+    <div class="mx-auto flex h-14 items-center gap-3 px-4" :class="isAgent ? 'max-w-7xl' : 'max-w-6xl'">
       <RouterLink to="/" class="flex items-center gap-2 font-semibold">
         <Wrench class="size-5" />
         {{ $t('app.name') }}
