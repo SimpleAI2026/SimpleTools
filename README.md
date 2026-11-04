@@ -27,6 +27,7 @@
 - **注册表驱动**：搜索、分类、收藏、最近使用、按工具代码分割
 - **纯前端 / 可离线**：无业务后端；文件在浏览器内处理并下载
 - 技术栈：Vue 3、Vite、TypeScript、Tailwind CSS 4、shadcn-vue（reka-ui）、vue-i18n、Pinia、Yarn 4
+- **Agent（BYOK，实验）**：应用内 `/agent` 自带密钥的 OpenAI 兼容对话 + HostTools；密钥仅存本机。Chrome 插件版暂无 host 权限，扩展内直连云端 API 可能失败（优先网页版）。
 
 ## 工具分类
 

@@ -27,6 +27,7 @@ Repository: https://github.com/SimpleAI2026/SimpleTools
 - **Registry-driven** search, categories, favorites, recent tools, and per-tool code splitting
 - **No backend**: files are processed locally and downloaded from the browser
 - Stack: Vue 3, Vite, TypeScript, Tailwind CSS 4, shadcn-vue (reka-ui), vue-i18n, Pinia, Yarn 4
+- **Agent (BYOK, experimental):** in-app `/agent` OpenAI-compatible chat with your own key + HostTools; keys stay on-device. The Chrome extension has no host permissions yet, so direct cloud API calls may fail (prefer the web build).
 
 ## Categories
 

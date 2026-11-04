@@ -29,3 +29,8 @@
 - `permissions` 为空；仅访问扩展自身 `chrome-extension://` 页面
 - SPA 使用相对路径 `base: './'` + **Hash 路由**（`VITE_ROUTER_MODE=hash`）
 - 图标由 `public/favicon.svg` 生成（16 / 32 / 48 / 128）
+
+## Agent（BYOK，实验）
+
+应用内路由 `/agent` 提供自带密钥的 OpenAI 兼容对话，并可调用 HostTools 打开/运行白名单离线工具。
+密钥仅存本机。Chrome 插件版暂未申请 host 权限，扩展内直连云端 API 可能失败；请优先用网页版或等待后续 optional host permissions。
