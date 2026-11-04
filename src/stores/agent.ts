@@ -125,13 +125,13 @@ export const useAgentStore = defineStore('agent', () => {
     }
   }
 
-  async function send(text: string): Promise<void> {
+  async function send(text: string): Promise<boolean> {
     const eng = ensureEngine()
     const cfg = resolveAgentConfig()
     if (!cfg.apiBaseUrl || !cfg.apiKey || !cfg.model) {
       error.value = 'missing-settings'
       settingsOpen.value = true
-      return
+      return false
     }
     eng.updateConfig(cfg)
     streaming.value = true
@@ -159,6 +159,7 @@ export const useAgentStore = defineStore('agent', () => {
       await refreshThreads()
       await refreshMessages()
     }
+    return true
   }
 
   function applyTextDelta(messageId: string, delta: string): void {

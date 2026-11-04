@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import type { ChatMessage } from '@/agent'
 import AgentMarkdown from '@/components/agent/AgentMarkdown.vue'
 
 defineProps<{ message: ChatMessage }>()
 
+const { t } = useI18n()
+
 function roleLabel(role: ChatMessage['role']): string {
-  if (role === 'user') return 'You'
-  if (role === 'assistant') return 'Assistant'
-  if (role === 'tool') return 'Tool'
+  if (role === 'user') return t('agent.roleUser')
+  if (role === 'assistant') return t('agent.roleAssistant')
+  if (role === 'tool') return t('agent.roleTool')
   return role
 }
 

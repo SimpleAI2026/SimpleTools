@@ -14,7 +14,9 @@ async function submit() {
   const text = draft.value.trim()
   if (!text || agent.streaming) return
   draft.value = ''
-  await agent.send(text)
+  const accepted = await agent.send(text)
+  // Restore input if send rejected before starting (e.g. missing BYOK settings).
+  if (!accepted) draft.value = text
 }
 
 function onKeydown(e: KeyboardEvent) {
