@@ -47,3 +47,17 @@ export async function catchError<T>(error: Ref<string>, fn: () => Promise<T>, ma
     return undefined
   }
 }
+
+
+/**
+ * Flip `busy` around an async job without capturing errors.
+ * Exceptions still propagate (after busy is cleared) — for tools that only need the busy flag.
+ */
+export async function withBusy<T>(busy: Ref<boolean>, fn: () => Promise<T>): Promise<T> {
+  busy.value = true
+  try {
+    return await fn()
+  } finally {
+    busy.value = false
+  }
+}

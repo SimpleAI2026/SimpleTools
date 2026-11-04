@@ -12,6 +12,8 @@ import { downloadBlob, downloadText } from '@/lib/download'
 import { formatBytes } from '@/lib/format'
 import { terminateFfmpeg, runFfmpeg } from './engine'
 import { FF_FORMATS, parseExtraArgs, parseSeconds, type FfFormatId, type FfMode, type FfQuality } from './logic'
+import { runBusy } from '@/lib/runBusy'
+import { useObjectUrl } from '@/lib/useObjectUrl'
 
 const files = ref<File[]>([])
 const subFile = ref<File | null>(null)
@@ -19,7 +21,7 @@ const wmFile = ref<File | null>(null)
 const fontFile = ref<File | null>(null)
 const outBlob = ref<Blob | null>(null)
 const outName = ref('')
-const outUrl = ref<string | null>(null)
+const { url: outUrl, setObject: setOutUrl } = useObjectUrl()
 const busy = ref(false)
 const status = ref('')
 const progress = ref(0)
@@ -45,7 +47,6 @@ const o = reactive({
 
 onBeforeUnmount(() => {
   void terminateFfmpeg()
-  if (outUrl.value) URL.revokeObjectURL(outUrl.value)
 })
 
 function setFiles(fs: File[]) {
@@ -53,18 +54,15 @@ function setFiles(fs: File[]) {
   outBlob.value = null
   error.value = ''
   logText.value = ''
-  if (outUrl.value) URL.revokeObjectURL(outUrl.value)
-  outUrl.value = null
+  setOutUrl(null)
 }
 
 async function run() {
   if (!files.value.length) return
-  busy.value = true
-  error.value = ''
   progress.value = 0
   logText.value = ''
   status.value = 'loadingWasm'
-  try {
+  await runBusy({ busy, error }, async () => {
     const res = await runFfmpeg({
       file: files.value[0]!,
       files: files.value,
@@ -96,14 +94,9 @@ async function run() {
     outBlob.value = res.blob
     outName.value = res.filename
     if (res.log) logText.value = res.log
-    if (outUrl.value) URL.revokeObjectURL(outUrl.value)
-    outUrl.value = URL.createObjectURL(res.blob)
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-    status.value = ''
-  }
+    setOutUrl(res.blob)
+  }, { clearError: true, mapError: (e) => String(e) })
+  status.value = ''
 }
 
 const formatOptions = computed(() => FF_FORMATS.map((f) => [f.id, f.label] as [FfFormatId, string]))

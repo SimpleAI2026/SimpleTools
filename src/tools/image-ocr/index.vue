@@ -18,6 +18,7 @@ import { loadSampleImage } from '@/lib/sampleImage'
 import { zipBlobs } from '@/lib/zip'
 import { OCR_LANGS, PSM_OPTIONS, parseRoi, type OcrLangId, type OutputMode, type WordBox } from './logic'
 import { recognizeImage, terminateOcrWorker } from './ocr'
+import { runBusy } from '@/lib/runBusy'
 
 const { locale } = useI18n()
 const files = ref<File[]>([])
@@ -55,14 +56,9 @@ function setFiles(fs: File[]) {
 }
 
 async function loadSample() {
-  busy.value = true
-  try {
+  await runBusy({ busy, error }, async () => {
     setFiles([await loadSampleImage()])
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-  }
+  }, { mapError: (e) => String(e) })
 }
 
 async function drawOverlay() {
@@ -96,12 +92,10 @@ watch([words, previewUrl, overlay], () => {
 
 async function run() {
   if (!files.value.length) return
-  busy.value = true
-  error.value = ''
   progress.value = 0
   status.value = 'loadingWasm'
   batchOut.value = []
-  try {
+  await runBusy({ busy, error }, async () => {
     const rectangle = parseRoi(roi.left, roi.top, roi.width, roi.height)
     if (files.value.length === 1) {
       const res = await recognizeImage({
@@ -137,12 +131,8 @@ async function run() {
       }
       text.value = batchOut.value.map((b) => `===== ${b.name} =====\n${b.text}`).join('\n\n')
     }
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-    status.value = ''
-  }
+  }, { clearError: true, mapError: (e) => String(e) })
+  status.value = ''
 }
 
 async function downloadBatch() {

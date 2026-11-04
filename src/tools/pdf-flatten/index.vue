@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import PdfInput from '@/components/shared/PdfInput.vue'
 import RangeField from '@/components/shared/RangeField.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { flattenForms, flattenRaster } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { file, bytes, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const mode = ref<'forms' | 'raster'>('forms')
@@ -17,21 +17,17 @@ const fields = ref<number | null>(null)
 const working = ref(false)
 const progress = ref({ done: 0, total: 0 })
 async function run() {
-  if (!bytes.value) return
-  working.value = true
-  try {
+  const data = bytes.value
+  if (!data) return
+  await runBusy({ busy: working, error }, async () => {
     let out: Uint8Array
     if (mode.value === 'forms') {
-      const r = await flattenForms(bytes.value)
+      const r = await flattenForms(data)
       fields.value = r.fields
       out = r.bytes
-    } else out = await flattenRaster(bytes.value, dpi.value, (done, total) => (progress.value = { done, total }))
-    downloadBlob(pdfBlob(out), `${baseName()}-flattened.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    working.value = false
-  }
+    } else out = await flattenRaster(data, dpi.value, (done, total) => (progress.value = { done, total }))
+    downloadPdf(out, `${baseName()}-flattened.pdf`)
+  })
 }
 </script>
 

@@ -10,10 +10,11 @@ import PdfPageGrid from '@/components/shared/PdfPageGrid.vue'
 import RangeField from '@/components/shared/RangeField.vue'
 import { canvasToBlob, RASTER_EXT, type RasterFormat } from '@/lib/canvas'
 import { downloadBlob } from '@/lib/download'
-import { parsePageRanges, renderPage } from '@/lib/pdf'
+import {parsePageRanges, renderPage} from '@/lib/pdf'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { zipBlobs } from '@/lib/zip'
 import { clampScale, dpiScale, imageFileName } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { file, doc, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const range = ref('')
@@ -22,26 +23,22 @@ const dpi = ref(150)
 const quality = ref(0.9)
 const progress = ref('')
 async function run() {
-  if (!doc.value) return
-  busy.value = true
-  try {
+  const d = doc.value
+  if (!d) return
+  await runBusy({ busy, error }, async () => {
     const pages = parsePageRanges(range.value, numPages.value)
     const out: { name: string; blob: Blob }[] = []
     for (const [i, n] of pages.entries()) {
       progress.value = `${i + 1}/${pages.length}`
-      const vp = (await doc.value.getPage(n)).getViewport({ scale: 1 })
-      const c = await renderPage(doc.value, n, clampScale(vp.width, vp.height, dpiScale(dpi.value)))
+      const vp = (await d.getPage(n)).getViewport({ scale: 1 })
+      const c = await renderPage(d, n, clampScale(vp.width, vp.height, dpiScale(dpi.value)))
       out.push({ name: imageFileName(baseName(), n, numPages.value, RASTER_EXT[format.value]), blob: await canvasToBlob(c, format.value, quality.value) })
       c.width = c.height = 0
     }
     if (out.length === 1) downloadBlob(out[0]!.blob, out[0]!.name)
     else downloadBlob(await zipBlobs(out), `${baseName()}-images.zip`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-    progress.value = ''
-  }
+  })
+  progress.value = ''
 }
 </script>
 

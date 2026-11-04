@@ -6,9 +6,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import PdfInput from '@/components/shared/PdfInput.vue'
-import { pageText, renderPage } from '@/lib/pdf'
+import {pageText, renderPage} from '@/lib/pdf'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { pixelDiff, textDiff, type DiffPart } from './logic'
+import { withBusy } from '@/lib/runBusy'
 
 const A = usePdfFile()
 const B = usePdfFile()
@@ -57,12 +58,9 @@ async function compareVisual() {
 }
 async function run() {
   if (!da.value || !db.value) return
-  busy.value = true
-  try {
+  await withBusy(busy, async () => {
     await (mode.value === 'text' ? compareText() : compareVisual())
-  } finally {
-    busy.value = false
-  }
+  })
 }
 </script>
 

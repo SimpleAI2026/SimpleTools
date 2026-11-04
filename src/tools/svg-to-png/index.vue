@@ -13,6 +13,7 @@ import ModeToggle from '@/components/shared/ModeToggle.vue'
 import { canvasToBlob, makeCanvas, RASTER_EXT, type RasterFormat } from '@/lib/canvas'
 import { downloadBlob } from '@/lib/download'
 import { prepareSvg, svgSize } from './logic'
+import { catchError } from '@/lib/runBusy'
 
 const { t } = useI18n()
 const SAMPLE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120">
@@ -54,7 +55,7 @@ async function onFile(f: File) {
 }
 async function convert() {
   error.value = ''
-  try {
+  await catchError(error, async () => {
     const w = Math.max(1, Math.min(16384, Number(width.value) || 1))
     const h = Math.max(1, Math.min(16384, Number(height.value) || 1))
     const url = URL.createObjectURL(new Blob([prepareSvg(code.value, w, h)], { type: 'image/svg+xml' }))
@@ -71,9 +72,7 @@ async function convert() {
     }
     ctx.drawImage(img, 0, 0, w, h)
     downloadBlob(await canvasToBlob(c, format.value, 0.92), `${name.value}.${RASTER_EXT[format.value]}`)
-  } catch {
-    error.value = t('tools.svg-to-png.failed')
-  }
+  }, () => t('tools.svg-to-png.failed'))
 }
 </script>
 

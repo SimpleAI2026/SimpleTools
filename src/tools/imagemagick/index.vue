@@ -16,6 +16,8 @@ import { loadSampleImage } from '@/lib/sampleImage'
 import { zipBlobs } from '@/lib/zip'
 import { buildPipeline, IM_FORMATS, withFormatExt, type ImFormat } from './logic'
 import type { MagickResponse } from './magick.worker'
+import { runBusy } from '@/lib/runBusy'
+import { useObjectUrl } from '@/lib/useObjectUrl'
 
 type Tab = 'basic' | 'adjust' | 'crop' | 'watermark' | 'gif' | 'advanced'
 type Mode = 'single' | 'splitGif' | 'joinGif' | 'stats'
@@ -23,8 +25,8 @@ type Mode = 'single' | 'splitGif' | 'joinGif' | 'stats'
 const file = ref<File | null>(null)
 const wmFile = ref<File | null>(null)
 const extraFiles = ref<File[]>([])
-const previewUrl = ref<string | null>(null)
-const outUrl = ref<string | null>(null)
+const { url: previewUrl, setObject: setPreviewUrl } = useObjectUrl()
+const { url: outUrl, setObject: setOutUrl } = useObjectUrl()
 const outBlob = ref<Blob | null>(null)
 const outName = ref('')
 const outMeta = ref('')
@@ -91,8 +93,6 @@ function callWorker(msg: object, transfer: Transferable[] = []) {
 
 onBeforeUnmount(() => {
   worker?.terminate()
-  if (previewUrl.value) URL.revokeObjectURL(previewUrl.value)
-  if (outUrl.value) URL.revokeObjectURL(outUrl.value)
 })
 
 function setFile(f: File | null) {
@@ -101,21 +101,14 @@ function setFile(f: File | null) {
   outMeta.value = ''
   statsText.value = ''
   error.value = ''
-  if (previewUrl.value) URL.revokeObjectURL(previewUrl.value)
-  if (outUrl.value) URL.revokeObjectURL(outUrl.value)
-  previewUrl.value = f ? URL.createObjectURL(f) : null
-  outUrl.value = null
+  setPreviewUrl(f)
+  setOutUrl(null)
 }
 
 async function loadSample() {
-  busy.value = true
-  try {
+  await runBusy({ busy, error }, async () => {
     setFile(await loadSampleImage())
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-  }
+  }, { mapError: (e) => String(e) })
 }
 
 async function loadFormats() {
@@ -160,10 +153,8 @@ const formatOptions = computed(() => {
 async function run() {
   if (!file.value && mode.value !== 'joinGif') return
   if (mode.value === 'joinGif' && !file.value && !extraFiles.value.length) return
-  busy.value = true
-  error.value = ''
   status.value = 'loadingWasm'
-  try {
+  await runBusy({ busy, error }, async () => {
     if (!supported.value.length) await loadFormats()
     status.value = 'processing'
     const bytes = await (file.value ?? extraFiles.value[0]!).arrayBuffer()
@@ -208,14 +199,9 @@ async function run() {
     outName.value = withFormatExt(file.value?.name ?? 'output', o.format)
     outMeta.value = res.width && res.height ? `${res.width}×${res.height} · ${formatBytes(blob.size)}` : formatBytes(blob.size)
     statsText.value = res.stats ?? ''
-    if (outUrl.value) URL.revokeObjectURL(outUrl.value)
-    outUrl.value = URL.createObjectURL(blob)
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-    status.value = ''
-  }
+    setOutUrl(blob)
+  }, { clearError: true, mapError: (e) => String(e) })
+  status.value = ''
 }
 
 const tabs: [Tab, string][] = [

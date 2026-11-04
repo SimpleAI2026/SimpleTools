@@ -13,6 +13,7 @@ import { formatBytes } from '@/lib/format'
 import { zipBlobs } from '@/lib/zip'
 import { savings, type CompressFormat, type CompressResponse } from './logic'
 import { loadSampleImage } from '@/lib/sampleImage'
+import { withBusy } from '@/lib/runBusy'
 
 interface Item {
   file: File
@@ -39,35 +40,32 @@ function getWorker() {
 onBeforeUnmount(() => worker?.terminate())
 
 async function loadSample() {
-  busy.value = true
-  try {
+  await withBusy(busy, async () => {
     onFiles([await loadSampleImage()])
-  } finally {
-    busy.value = false
-  }
+  })
 }
 
 function onFiles(fs: File[]) {
   items.value.push(...fs.filter((f) => f.type.startsWith('image/')).map((file) => ({ file, status: 'pending' as const })))
 }
 async function run() {
-  busy.value = true
-  for (const it of items.value) {
-    const id = ++seq
-    const res = await new Promise<CompressResponse>((resolve) => {
-      pending.set(id, resolve)
-      getWorker().postMessage({ id, file: it.file, quality: o.quality / 100, maxWidth: Number(o.maxWidth) || 0, maxHeight: Number(o.maxHeight) || 0, format: o.format })
-    })
-    if (!res.ok) {
-      it.status = 'error'
-      continue
+  await withBusy(busy, async () => {
+    for (const it of items.value) {
+      const id = ++seq
+      const res = await new Promise<CompressResponse>((resolve) => {
+        pending.set(id, resolve)
+        getWorker().postMessage({ id, file: it.file, quality: o.quality / 100, maxWidth: Number(o.maxWidth) || 0, maxHeight: Number(o.maxHeight) || 0, format: o.format })
+      })
+      if (!res.ok) {
+        it.status = 'error'
+        continue
+      }
+      const larger = res.blob.size >= it.file.size && o.format === 'keep'
+      it.out = larger ? it.file : res.blob
+      it.name = larger ? it.file.name : withExt(it.file.name, RASTER_EXT[res.blob.type as RasterFormat] ?? 'img', '-min')
+      it.status = larger ? 'larger' : 'done'
     }
-    const larger = res.blob.size >= it.file.size && o.format === 'keep'
-    it.out = larger ? it.file : res.blob
-    it.name = larger ? it.file.name : withExt(it.file.name, RASTER_EXT[res.blob.type as RasterFormat] ?? 'img', '-min')
-    it.status = larger ? 'larger' : 'done'
-  }
-  busy.value = false
+  })
 }
 const totals = computed(() => {
   const done = items.value.filter((i) => i.out)

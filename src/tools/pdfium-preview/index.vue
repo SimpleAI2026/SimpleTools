@@ -17,13 +17,15 @@ import { loadSamplePdf } from '@/lib/samplePdf'
 import { zipBlobs } from '@/lib/zip'
 import { parsePageList } from './logic'
 import { destroyPdfium, extractEmbeddedImages, openPdfiumDoc, renderPdfiumPage, renderThumb, type PdfiumDoc } from './pdfium'
+import { runBusy } from '@/lib/runBusy'
+import { useObjectUrl } from '@/lib/useObjectUrl'
 
 const file = ref<File | null>(null)
 const password = ref('')
 const doc = ref<PdfiumDoc | null>(null)
 const pageCount = ref(0)
 const pageIndex = ref(0)
-const previewUrl = ref<string | null>(null)
+const { url: previewUrl, setObject: setPreviewUrl, revoke: revokePreviewUrl } = useObjectUrl()
 const pngBlob = ref<Blob | null>(null)
 const text = ref('')
 const allText = ref('')
@@ -53,8 +55,7 @@ onBeforeUnmount(async () => {
 })
 
 function revokePreview() {
-  if (previewUrl.value) URL.revokeObjectURL(previewUrl.value)
-  previewUrl.value = null
+  revokePreviewUrl()
   pngBlob.value = null
 }
 function revokeThumbs() {
@@ -85,23 +86,19 @@ async function setFile(f: File | null) {
 }
 
 async function openWithPassword() {
-  if (!file.value) return
-  busy.value = true
+  const f = file.value
+  if (!f) return
   status.value = 'loadingWasm'
-  try {
-    const bytes = new Uint8Array(await file.value.arrayBuffer())
+  await runBusy({ busy, error }, async () => {
+    const bytes = new Uint8Array(await f.arrayBuffer())
     const opened = await openPdfiumDoc(bytes, password.value || undefined)
     doc.value = opened.doc
     pageCount.value = opened.pageCount
     pageIndex.value = 0
     await renderCurrent()
     await loadThumbs()
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-    status.value = ''
-  }
+  }, { mapError: (e) => String(e) })
+  status.value = ''
 }
 
 async function loadSample() {
@@ -121,21 +118,16 @@ function renderOpts() {
 }
 
 async function renderCurrent() {
-  if (!doc.value) return
-  busy.value = true
-  error.value = ''
-  try {
-    const res = await renderPdfiumPage(doc.value, pageIndex.value, renderOpts())
+  const d = doc.value
+  if (!d) return
+  await runBusy({ busy, error }, async () => {
+    const res = await renderPdfiumPage(d, pageIndex.value, renderOpts())
     revokePreview()
     pngBlob.value = res.blob
-    previewUrl.value = URL.createObjectURL(res.blob)
+    setPreviewUrl(res.blob)
     text.value = res.text
     dims.value = `${res.width}×${res.height}`
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-  }
+  }, { clearError: true, mapError: (e) => String(e) })
 }
 
 async function loadThumbs() {
@@ -171,34 +163,30 @@ async function next() {
 }
 
 async function batchExport() {
-  if (!doc.value) return
-  busy.value = true
-  try {
+  const d = doc.value
+  if (!d) return
+  await runBusy({ busy, error }, async () => {
     const pages = parsePageList(range.value, pageCount.value)
     const entries: { name: string; blob: Blob }[] = []
     const ext = o.format === 'image/jpeg' ? 'jpg' : 'png'
     for (const [n, idx] of pages.entries()) {
       status.value = `${n + 1}/${pages.length}`
-      const res = await renderPdfiumPage(doc.value, idx, renderOpts())
+      const res = await renderPdfiumPage(d, idx, renderOpts())
       entries.push({ name: `page-${String(idx + 1).padStart(3, '0')}.${ext}`, blob: res.blob })
     }
     if (entries.length === 1) downloadBlob(entries[0]!.blob, entries[0]!.name)
     else downloadBlob(await zipBlobs(entries), 'pdfium-pages.zip')
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-    status.value = ''
-  }
+  }, { mapError: (e) => String(e) })
+  status.value = ''
 }
 
 async function exportAllText() {
-  if (!doc.value) return
-  busy.value = true
-  try {
+  const d = doc.value
+  if (!d) return
+  await runBusy({ busy, error }, async () => {
     const parts: string[] = []
     for (let i = 0; i < pageCount.value; i++) {
-      const page = await doc.value.getPage(i)
+      const page = await d.getPage(i)
       try {
         parts.push(`----- page ${i + 1} -----\n${(await page.getText()).trim()}`)
       } finally {
@@ -207,27 +195,18 @@ async function exportAllText() {
     }
     allText.value = parts.join('\n\n')
     downloadText(allText.value, 'pdfium-text.txt')
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-  }
+  }, { mapError: (e) => String(e) })
 }
 
 async function exportEmbeds() {
-  busy.value = true
-  try {
+  await runBusy({ busy, error }, async () => {
     const imgs = await extractEmbeddedImages(password.value || undefined)
     if (!imgs.length) {
       error.value = 'No embedded images found'
       return
     }
     downloadBlob(await zipBlobs(imgs), 'pdfium-embedded.zip')
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-  }
+  }, { mapError: (e) => String(e) })
 }
 </script>
 

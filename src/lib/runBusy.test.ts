@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { ref } from 'vue'
-import { catchError, errMessage, runBusy } from './runBusy'
+import { catchError, errMessage, runBusy, withBusy } from './runBusy'
 
 describe('errMessage', () => {
   it('reads Error.message and stringifies other values', () => {
@@ -60,5 +60,24 @@ describe('catchError', () => {
     const error = ref('')
     expect(await catchError(error, async () => 'ok')).toBe('ok')
     expect(error.value).toBe('')
+  })
+})
+
+describe('withBusy', () => {
+  it('clears busy and rethrows', async () => {
+    const busy = ref(false)
+    await expect(
+      withBusy(busy, async () => {
+        expect(busy.value).toBe(true)
+        throw new Error('x')
+      }),
+    ).rejects.toThrow('x')
+    expect(busy.value).toBe(false)
+  })
+
+  it('returns the value', async () => {
+    const busy = ref(false)
+    await expect(withBusy(busy, async () => 3)).resolves.toBe(3)
+    expect(busy.value).toBe(false)
   })
 })

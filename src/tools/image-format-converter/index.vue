@@ -11,6 +11,7 @@ import { formatBytes } from '@/lib/format'
 import { zipBlobs } from '@/lib/zip'
 import { INPUT_ACCEPT, isLossy, rasterSize, sizeChange } from './logic'
 import { loadSampleImage } from '@/lib/sampleImage'
+import { withBusy } from '@/lib/runBusy'
 
 interface Item {
   file: File
@@ -25,12 +26,9 @@ const bg = ref('#ffffff')
 const busy = ref(false)
 
 async function loadSample() {
-  busy.value = true
-  try {
+  await withBusy(busy, async () => {
     onFiles([await loadSampleImage()])
-  } finally {
-    busy.value = false
-  }
+  })
 }
 
 function onFiles(fs: File[]) {
@@ -53,9 +51,9 @@ async function convertOne(it: Item) {
   }
 }
 async function convertAll() {
-  busy.value = true
-  for (const it of items.value) await convertOne(it)
-  busy.value = false
+  await withBusy(busy, async () => {
+    for (const it of items.value) await convertOne(it)
+  })
 }
 async function downloadZip() {
   const done = items.value.filter((i) => i.out)

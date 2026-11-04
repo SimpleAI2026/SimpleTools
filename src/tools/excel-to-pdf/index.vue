@@ -9,13 +9,13 @@ import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
 import SheetTable from '@/components/shared/SheetTable.vue'
-import { downloadBlob } from '@/lib/download'
+import {downloadPdf} from '@/lib/download'
 import { SPREADSHEET_ACCEPT, type SheetData } from '@/lib/excel'
-import { pdfBlob } from '@/lib/pdf'
 import { canvasesToPdf, pageSize, type PageSizeName, type RasterPage } from '@/lib/rasterPdf'
 import { loadSampleExcel } from '@/lib/sampleExcel'
 import { useSpreadsheet } from '@/lib/useSpreadsheet'
 import { fitText, layoutTable } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { sheets, active, sheet, baseName, error, load } = useSpreadsheet()
 async function loadSample() {
@@ -80,17 +80,13 @@ function renderSheet(s: SheetData): RasterPage[] {
 }
 
 async function convert() {
-  if (!sheet.value) return
-  busy.value = true
-  try {
-    const pages = (o.all ? sheets.value : [sheet.value]).flatMap(renderSheet)
+  const s = sheet.value
+  if (!s) return
+  await runBusy({ busy, error }, async () => {
+    const pages = (o.all ? sheets.value : [s]).flatMap(renderSheet)
     pageCount.value = pages.length
-    downloadBlob(pdfBlob(await canvasesToPdf(pages, 'png', 1, baseName.value)), `${baseName.value}.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+    downloadPdf(await canvasesToPdf(pages, 'png', 1, baseName.value), `${baseName.value}.pdf`)
+  })
 }
 </script>
 

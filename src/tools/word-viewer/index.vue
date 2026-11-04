@@ -8,6 +8,7 @@ import FileDropzone from '@/components/shared/FileDropzone.vue'
 import { loadSampleDocx } from '@/lib/sampleDocx'
 import { docxToHtml, DOCX_ACCEPT } from '@/lib/word'
 import { addHeadingIds, countWords } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { t } = useI18n()
 const raw = ref('')
@@ -18,18 +19,12 @@ const busy = ref(false)
 const doc = computed(() => addHeadingIds(DOMPurify.sanitize(raw.value)))
 const words = computed(() => countWords(doc.value.html.replace(/<[^>]+>/g, ' ')))
 async function load(f: File) {
-  busy.value = true
-  error.value = ''
-  try {
+  await runBusy({ busy, error }, async () => {
     const r = await docxToHtml(await f.arrayBuffer())
     raw.value = r.html
     warnings.value = r.warnings
     name.value = f.name
-  } catch {
-    error.value = t('tools.word-viewer.failed')
-  } finally {
-    busy.value = false
-  }
+  }, { clearError: true, mapError: () => t('tools.word-viewer.failed') })
 }
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 async function loadSample() {

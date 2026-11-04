@@ -13,6 +13,7 @@ import RangeField from '@/components/shared/RangeField.vue'
 import { downloadBlob } from '@/lib/download'
 import { formatBytes } from '@/lib/format'
 import { compress, decompress, GZ_EXT, gzipName, looksLikeText, ratio, type GzFormat } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { t } = useI18n()
 const mode = ref<'compress' | 'decompress'>('compress')
@@ -44,8 +45,7 @@ const preview = computed(() => {
 async function run() {
   error.value = ''
   out.value = null
-  busy.value = true
-  try {
+  await runBusy({ busy, error }, async () => {
     let input: Uint8Array
     if (source.value === 'text' && mode.value === 'compress') input = new TextEncoder().encode(text.value)
     else if (source.value === 'text') input = Uint8Array.from(atob(text.value.replace(/\s+/g, '')), (c) => c.charCodeAt(0))
@@ -63,11 +63,7 @@ async function run() {
       outName.value = gzipName(input) ?? base.replace(/\.(gz|zz|deflate|z)$/i, '') ?? 'output.bin'
       if (outName.value === base) outName.value = `${base}.out`
     }
-  } catch {
-    error.value = t('tools.gzip-tool.failed')
-  } finally {
-    busy.value = false
-  }
+  }, { mapError: () => t('tools.gzip-tool.failed') })
 }
 function saveOut() {
   if (out.value) downloadBlob(new Blob([out.value as BlobPart]), outName.value)

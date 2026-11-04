@@ -8,9 +8,10 @@ import { Switch } from '@/components/ui/switch'
 import PdfInput from '@/components/shared/PdfInput.vue'
 import RangeField from '@/components/shared/RangeField.vue'
 import { downloadBlob } from '@/lib/download'
-import { pageText, parsePageRanges, renderPage } from '@/lib/pdf'
+import {pageText, parsePageRanges, renderPage} from '@/lib/pdf'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { buildPdfPptx, type SlidePage } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { file, doc, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const range = ref('')
@@ -18,26 +19,22 @@ const dpi = ref(144)
 const notes = ref(true)
 const progress = ref('')
 async function run() {
-  if (!doc.value) return
-  busy.value = true
-  try {
+  const d = doc.value
+  if (!d) return
+  await runBusy({ busy, error }, async () => {
     const pages = parsePageRanges(range.value, numPages.value)
     const slides: SlidePage[] = []
     for (const [i, n] of pages.entries()) {
       progress.value = `${i + 1}/${pages.length}`
-      const vp = (await doc.value.getPage(n)).getViewport({ scale: 1 })
-      const c = await renderPage(doc.value, n, dpi.value / 72)
-      slides.push({ image: c.toDataURL('image/jpeg', 0.9), widthPt: vp.width, heightPt: vp.height, notes: notes.value ? await pageText(doc.value, n) : undefined })
+      const vp = (await d.getPage(n)).getViewport({ scale: 1 })
+      const c = await renderPage(d, n, dpi.value / 72)
+      slides.push({ image: c.toDataURL('image/jpeg', 0.9), widthPt: vp.width, heightPt: vp.height, notes: notes.value ? await pageText(d, n) : undefined })
       c.width = c.height = 0
     }
     const out = await buildPdfPptx(slides, baseName())
     downloadBlob(new Blob([out as BlobPart], { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' }), `${baseName()}.pptx`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-    progress.value = ''
-  }
+  })
+  progress.value = ''
 }
 </script>
 

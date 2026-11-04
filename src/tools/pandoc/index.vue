@@ -14,6 +14,7 @@ import { formatBytes } from '@/lib/format'
 import { zipBlobs } from '@/lib/zip'
 import { listHighlightStyles, listPandocFormats, runPandoc } from './convert'
 import { FALLBACK_FORMATS, guessFormat, SAMPLE_BIB, SAMPLE_MARKDOWN } from './logic'
+import { runBusy, withBusy } from '@/lib/runBusy'
 
 const files = ref<File[]>([])
 const text = ref(SAMPLE_MARKDOWN)
@@ -51,18 +52,18 @@ onMounted(() => {
 })
 
 async function refreshFormats() {
-  busy.value = true
   status.value = 'loadingWasm'
   try {
-    const { input, output } = await listPandocFormats()
-    if (input.length) inputFormats.value = input
-    if (output.length) outputFormats.value = output
-    highlightStyles.value = await listHighlightStyles()
+    await withBusy(busy, async () => {
+      const { input, output } = await listPandocFormats()
+      if (input.length) inputFormats.value = input
+      if (output.length) outputFormats.value = output
+      highlightStyles.value = await listHighlightStyles()
+    })
   } catch (e) {
     // keep fallbacks
     console.warn(e)
   } finally {
-    busy.value = false
     status.value = ''
   }
 }
@@ -79,14 +80,12 @@ const fromOptions = computed(() => inputFormats.value.slice(0, 24).map((f) => [f
 const toOptions = computed(() => outputFormats.value.slice(0, 24).map((f) => [f, f] as [string, string]))
 
 async function run() {
-  busy.value = true
-  error.value = ''
   warnings.value = ''
   status.value = 'loadingWasm'
   outBlob.value = null
   outText.value = ''
   mediaFiles.value = []
-  try {
+  await runBusy({ busy, error }, async () => {
     status.value = 'processing'
     const res = await runPandoc({
       from: from.value,
@@ -113,12 +112,8 @@ async function run() {
     outText.value = res.text ?? ''
     warnings.value = res.warnings
     mediaFiles.value = res.media ?? []
-  } catch (e) {
-    error.value = String(e)
-  } finally {
-    busy.value = false
-    status.value = ''
-  }
+  }, { clearError: true, mapError: (e) => String(e) })
+  status.value = ''
 }
 
 function loadBibSample() {

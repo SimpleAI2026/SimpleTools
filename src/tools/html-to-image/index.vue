@@ -12,6 +12,7 @@ import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import { downloadBlob } from '@/lib/download'
 import { clampDimension, composeFragment, SANITIZE_CONFIG } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { t } = useI18n()
 const SAMPLE_HTML = `<div class="card">
@@ -61,25 +62,20 @@ function loadSample() {
 }
 
 async function exportImage() {
-  if (!stage.value) return
-  busy.value = true
-  error.value = ''
-  try {
+  const el = stage.value
+  if (!el) return
+  await runBusy({ busy, error }, async () => {
     const lib = await import('html-to-image')
     const opts = { pixelRatio: scale.value, backgroundColor: transparent.value && format.value !== 'jpeg' ? undefined : bg.value, cacheBust: true }
     if (format.value === 'svg') {
-      const dataUrl = await lib.toSvg(stage.value, opts)
+      const dataUrl = await lib.toSvg(el, opts)
       downloadBlob(await (await fetch(dataUrl)).blob(), 'html.svg')
     } else {
-      const blob = format.value === 'png' ? await lib.toBlob(stage.value, opts) : await (await fetch(await lib.toJpeg(stage.value, { ...opts, quality: 0.92 }))).blob()
+      const blob = format.value === 'png' ? await lib.toBlob(el, opts) : await (await fetch(await lib.toJpeg(el, { ...opts, quality: 0.92 }))).blob()
       if (!blob) throw new Error('empty')
       downloadBlob(blob, `html.${format.value === 'png' ? 'png' : 'jpg'}`)
     }
-  } catch {
-    error.value = t('tools.html-to-image.failed')
-  } finally {
-    busy.value = false
-  }
+  }, { clearError: true, mapError: () => t('tools.html-to-image.failed') })
 }
 </script>
 

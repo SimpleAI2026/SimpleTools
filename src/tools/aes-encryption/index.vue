@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import TextIO from '@/components/shared/TextIO.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import { decryptText, encryptText } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { t } = useI18n()
 const mode = ref<'enc' | 'dec'>('enc')
@@ -16,17 +17,16 @@ const output = ref('')
 const error = ref('')
 const busy = ref(false)
 async function run() {
-  busy.value = true
-  error.value = ''
   output.value = ''
-  try {
+  await runBusy({ busy, error }, async () => {
     output.value = mode.value === 'enc' ? await encryptText(input.value, password.value) : await decryptText(input.value, password.value)
-  } catch (e) {
-    const key = e instanceof Error ? e.message : 'bad-format'
-    error.value = t(`tools.aes-encryption.errors.${key}`)
-  } finally {
-    busy.value = false
-  }
+  }, {
+    clearError: true,
+    mapError: (e) => {
+      const key = e instanceof Error ? e.message : 'bad-format'
+      return t(`tools.aes-encryption.errors.${key}`)
+    },
+  })
 }
 </script>
 
