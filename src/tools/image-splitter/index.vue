@@ -10,7 +10,7 @@ import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import { canvasToBlob, fillIfOpaque, loadBitmap, makeCanvas, RASTER_EXT, type RasterFormat } from '@/lib/canvas'
 import { downloadBlob } from '@/lib/download'
-import { runBusy } from '@/lib/runBusy'
+import {runBusy, withBusy} from '@/lib/runBusy'
 import { useObjectUrl } from '@/lib/useObjectUrl'
 import { zipBlobs } from '@/lib/zip'
 import { gridTiles, sizeTiles, tileName } from './logic'
@@ -34,12 +34,9 @@ const tiles = computed(() => {
   return mode.value === 'grid' ? gridTiles(w, h, Number(rows.value) || 1, Number(cols.value) || 1) : sizeTiles(w, h, Number(tw.value) || 1, Number(th.value) || 1)
 })
 async function loadSample() {
-  busy.value = true
-  try {
+  await withBusy(busy, async () => {
     await onFile(await loadSampleImage())
-  } finally {
-    busy.value = false
-  }
+  })
 }
 
 async function onFile(f: File) {

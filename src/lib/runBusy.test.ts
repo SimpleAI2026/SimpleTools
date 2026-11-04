@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { ref } from 'vue'
-import { catchError, errMessage, runBusy, withBusy } from './runBusy'
+import { catchError, errMessage, runBusy, useRaceBusy, withBusy } from './runBusy'
 
 describe('errMessage', () => {
   it('reads Error.message and stringifies other values', () => {
@@ -78,6 +78,56 @@ describe('withBusy', () => {
   it('returns the value', async () => {
     const busy = ref(false)
     await expect(withBusy(busy, async () => 3)).resolves.toBe(3)
+    expect(busy.value).toBe(false)
+  })
+})
+
+describe('useRaceBusy', () => {
+  it('finally mode: only latest apply runs; stale leaves busy to the winner', async () => {
+    const busy = ref(false)
+    const { run } = useRaceBusy(busy)
+    const seen: number[] = []
+    let release!: () => void
+    const gate = new Promise<void>((r) => {
+      release = r
+    })
+    const first = run(async () => {
+      await gate
+      return 1
+    }, (v) => {
+      seen.push(v)
+    }, 'finally')
+    const second = run(async () => 2, (v) => {
+      seen.push(v)
+    }, 'finally')
+    await second
+    expect(seen).toEqual([2])
+    expect(busy.value).toBe(false)
+    release()
+    await first
+    expect(seen).toEqual([2])
+    expect(busy.value).toBe(false)
+  })
+
+  it('onApply mode: leaves busy true when fn throws', async () => {
+    const busy = ref(false)
+    const { run } = useRaceBusy(busy)
+    await expect(
+      run(async () => {
+        throw new Error('x')
+      }, () => undefined, 'onApply'),
+    ).rejects.toThrow('x')
+    expect(busy.value).toBe(true)
+  })
+
+  it('onApply mode: applies and clears when current', async () => {
+    const busy = ref(false)
+    const { run } = useRaceBusy(busy)
+    let got = 0
+    await run(async () => 9, (v) => {
+      got = v
+    }, 'onApply')
+    expect(got).toBe(9)
     expect(busy.value).toBe(false)
   })
 })

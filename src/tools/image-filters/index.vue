@@ -9,7 +9,7 @@ import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
 import { canvasToBlob, fillIfOpaque, loadBitmap, makeCanvas, RASTER_EXT, withExt, type RasterFormat } from '@/lib/canvas'
 import { downloadBlob } from '@/lib/download'
-import { runBusy } from '@/lib/runBusy'
+import {runBusy, withBusy} from '@/lib/runBusy'
 import { useObjectUrl } from '@/lib/useObjectUrl'
 import { applyFilters, cssFilter, FILTER_PRESETS, IDENTITY_FILTERS, type FilterSettings } from './logic'
 import { loadSampleImage } from '@/lib/sampleImage'
@@ -34,12 +34,9 @@ const sliders: [keyof FilterSettings, number, number, number, string][] = [
 const preview = computed(() => cssFilter(f))
 const applyPreset = (k: string) => Object.assign(f, IDENTITY_FILTERS, FILTER_PRESETS[k])
 async function loadSample() {
-  busy.value = true
-  try {
+  await withBusy(busy, async () => {
     onFile(await loadSampleImage())
-  } finally {
-    busy.value = false
-  }
+  })
 }
 
 function onFile(nf: File) {

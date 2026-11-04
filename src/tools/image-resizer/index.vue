@@ -9,7 +9,7 @@ import { Switch } from '@/components/ui/switch'
 import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import { downloadBlob } from '@/lib/download'
-import { runBusy } from '@/lib/runBusy'
+import {runBusy, withBusy} from '@/lib/runBusy'
 import { useObjectUrl } from '@/lib/useObjectUrl'
 import { formatBytes } from '@/lib/format'
 import { defaultFormat, fitAspect, outputFilename, resizeImage, scaleByPercent, type OutputFormat, type Size } from './logic'
@@ -28,12 +28,9 @@ const busy = ref(false)
 const lastOutput = ref<{ size: number; dims: Size } | null>(null)
 
 async function loadSample() {
-  busy.value = true
-  try {
+  await withBusy(busy, async () => {
     await onFile(await loadSampleImage())
-  } finally {
-    busy.value = false
-  }
+  })
 }
 
 async function onFile(f: File) {

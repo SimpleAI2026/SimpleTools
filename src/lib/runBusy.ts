@@ -61,3 +61,38 @@ export async function withBusy<T>(busy: Ref<boolean>, fn: () => Promise<T>): Pro
     busy.value = false
   }
 }
+
+export type RaceBusyClear = 'finally' | 'onApply'
+
+/**
+ * Race-safe busy runner for debounced/watched recompute loops.
+ * A monotonic generation id discards stale results: only the latest run may apply
+ * and (depending on `clear`) clear `busy`.
+ *
+ * - `'finally'`: clear busy in `finally` when still current (hash-generator). Exceptions propagate.
+ * - `'onApply'`: clear busy only with a successful apply (checksum-calculator). If `fn` throws,
+ *   busy stays true — matching the prior tools that had no try/finally.
+ */
+export function useRaceBusy(busy: Ref<boolean>) {
+  let seq = 0
+  async function run<T>(fn: () => Promise<T>, apply: (value: T) => void, clear: RaceBusyClear = 'finally'): Promise<void> {
+    const id = ++seq
+    busy.value = true
+    if (clear === 'finally') {
+      try {
+        const value = await fn()
+        if (id === seq) apply(value)
+      } finally {
+        if (id === seq) busy.value = false
+      }
+      return
+    }
+    const value = await fn()
+    if (id === seq) {
+      apply(value)
+      busy.value = false
+    }
+  }
+  return { run }
+}
+

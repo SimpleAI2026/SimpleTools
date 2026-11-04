@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea'
 import CopyButton from '@/components/shared/CopyButton.vue'
 import FileDropzone from '@/components/shared/FileDropzone.vue'
 import { formatBytes } from '@/lib/format'
+import { useRaceBusy } from '@/lib/runBusy'
 import { hashAll, HASH_ALGORITHMS, type HashAlgorithm } from './logic'
 
 const source = ref<'text' | 'file'>('text')
@@ -14,18 +15,19 @@ const text = ref(SAMPLE)
 const file = ref<File | null>(null)
 const hashes = ref<Record<HashAlgorithm, string> | null>(null)
 const busy = ref(false)
-let run = 0
+const { run: raceRun } = useRaceBusy(busy)
 
 async function compute() {
-  const id = ++run
-  busy.value = true
-  try {
-    const data = source.value === 'text' ? text.value : file.value ? await file.value.arrayBuffer() : null
-    const r = data === null ? null : await hashAll(data)
-    if (id === run) hashes.value = r
-  } finally {
-    if (id === run) busy.value = false
-  }
+  await raceRun(
+    async () => {
+      const data = source.value === 'text' ? text.value : file.value ? await file.value.arrayBuffer() : null
+      return data === null ? null : await hashAll(data)
+    },
+    (r) => {
+      hashes.value = r
+    },
+    'finally',
+  )
 }
 
 watchDebounced(text, compute, { debounce: 150 })

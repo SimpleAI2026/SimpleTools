@@ -8,7 +8,7 @@ import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
 import { canvasToBlob, loadBitmap, makeCanvas } from '@/lib/canvas'
 import { downloadPdf } from '@/lib/download'
-import { runBusy } from '@/lib/runBusy'
+import {runBusy, withBusy} from '@/lib/runBusy'
 import { imagesToPdf, type ImagePdfOptions, type PdfImage } from './logic'
 import { loadSampleImage } from '@/lib/sampleImage'
 
@@ -18,12 +18,9 @@ const o = reactive<ImagePdfOptions>({ page: 'a4', orientation: 'auto', margin: 2
 const error = ref('')
 const busy = ref(false)
 async function loadSample() {
-  busy.value = true
-  try {
+  await withBusy(busy, async () => {
     add([await loadSampleImage()])
-  } finally {
-    busy.value = false
-  }
+  })
 }
 
 function add(files: File[]) {

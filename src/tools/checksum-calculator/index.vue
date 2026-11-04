@@ -8,6 +8,7 @@ import CopyButton from '@/components/shared/CopyButton.vue'
 import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import { formatBytes } from '@/lib/format'
+import { useRaceBusy } from '@/lib/runBusy'
 import { ALGOS, checksums, findMatch, hmac, type Algo } from './logic'
 
 const SAMPLE = 'SimpleTools sample — offline-first developer toolbox.'
@@ -20,22 +21,25 @@ const expected = ref('')
 const key = ref('')
 const hmacHash = ref<'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512'>('SHA-256')
 const hmacOut = ref('')
-let run = 0
+const { run: raceRun } = useRaceBusy(busy)
 async function data(): Promise<Uint8Array | null> {
   if (src.value === 'text') return new TextEncoder().encode(text.value)
   return file.value ? new Uint8Array(await file.value.arrayBuffer()) : null
 }
 async function compute() {
-  const id = ++run
-  busy.value = true
-  const d = await data()
-  const s = d ? await checksums(d) : {}
-  const h = d && key.value ? await hmac(d, key.value, hmacHash.value) : ''
-  if (id === run) {
-    sums.value = s
-    hmacOut.value = h
-    busy.value = false
-  }
+  await raceRun(
+    async () => {
+      const d = await data()
+      const s = d ? await checksums(d) : {}
+      const h = d && key.value ? await hmac(d, key.value, hmacHash.value) : ''
+      return { s, h }
+    },
+    ({ s, h }) => {
+      sums.value = s
+      hmacOut.value = h
+    },
+    'onApply',
+  )
 }
 watchDebounced([text, key], compute, { debounce: 150 })
 watch([src, file, hmacHash], compute, { immediate: true })
