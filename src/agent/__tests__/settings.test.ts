@@ -17,17 +17,17 @@ describe('agent settings', () => {
     saveAgentSettings({
       apiBaseUrl: 'https://api.example.com/v1',
       apiKey: 'sk-secret',
-      model: 'gpt-4o-mini',
+      model: 'gpt-6.1-sol',
       systemPrompt: 'You are helpful.',
       rememberKey: true,
     })
     const loaded = loadAgentSettings()
     expect(loaded?.apiKey).toBe('sk-secret')
-    expect(loaded?.model).toBe('gpt-4o-mini')
+    expect(loaded?.model).toBe('gpt-6.1-sol')
 
     const cfg = resolveAgentConfig()
     expect(cfg.apiBaseUrl).toBe('https://api.example.com/v1')
-    expect(cfg.model).toBe('gpt-4o-mini')
+    expect(cfg.model).toBe('gpt-6.1-sol')
     expect(cfg.provider).toBe('openai')
   })
 
@@ -47,7 +47,7 @@ describe('agent settings', () => {
     saveAgentSettings({
       apiBaseUrl: 'https://api.example.com/v1',
       apiKey: 'sk-secret',
-      model: 'gpt-4o-mini',
+      model: 'gpt-6.1-sol',
       systemPrompt: '',
       rememberKey: false,
     })

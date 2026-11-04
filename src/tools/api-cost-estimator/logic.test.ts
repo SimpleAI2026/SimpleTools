@@ -23,7 +23,9 @@ describe('api-cost-estimator', () => {
   })
 
   it('finds preset models', () => {
-    expect(findModel('gpt-4o')?.provider).toBe('OpenAI')
+    expect(findModel('gpt-6.1-sol')?.provider).toBe('OpenAI')
+    expect(findModel('claude-sonnet-5-5')?.provider).toBe('Anthropic')
+    expect(findModel('grok-4.7')?.provider).toBe('xAI')
     expect(DEFAULT_PRICING_MODELS.length).toBeGreaterThan(5)
   })
 })

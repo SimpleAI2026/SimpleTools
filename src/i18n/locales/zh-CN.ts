@@ -226,6 +226,8 @@ const zhCN = {
     apiBaseUrl: 'API Base URL',
     apiKey: 'API Key',
     model: '模型',
+    modelCustom: '自定义…',
+    modelCustomHint: '可从目录选择预设，也可直接输入任意 OpenAI 兼容模型 ID。',
     systemPrompt: '系统提示',
     rememberKey: '在本机记住 API Key',
     save: '保存',

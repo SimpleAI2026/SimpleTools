@@ -5,9 +5,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { DEFAULT_PRICING_MODELS, estimateCost, formatUsd } from './logic'
 
-const SAMPLE = { modelId: 'gpt-4o', inputTokens: 10000, outputTokens: 2000, requests: 1000 }
+const SAMPLE = { modelId: 'gpt-6.1-sol', inputTokens: 10000, outputTokens: 2000, requests: 1000 }
 const modelId = ref(SAMPLE.modelId)
-const inputRate = ref(2.5)
+const inputRate = ref(2)
 const outputRate = ref(10)
 const inputTokens = ref(SAMPLE.inputTokens)
 const outputTokens = ref(SAMPLE.outputTokens)

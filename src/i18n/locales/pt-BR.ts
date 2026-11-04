@@ -228,6 +228,8 @@ const ptBR: MessageSchema = {
     apiBaseUrl: 'API Base URL',
     apiKey: 'API Key',
     model: 'Model',
+    modelCustom: 'Custom…',
+    modelCustomHint: 'Pick a catalog preset or type any OpenAI-compatible model id.',
     systemPrompt: 'System prompt',
     rememberKey: 'Remember API Key on this device',
     save: 'Save',

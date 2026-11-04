@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch } from 'vue'
+import { computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { Button } from '@/components/ui/button'
 import {
@@ -14,7 +14,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
+import { DEFAULT_AGENT_MODEL } from '@/agent/settings'
+import { AGENT_MODEL_PRESETS } from '@/tools/_shared/ai-models'
 import { useAgentStore } from '@/stores/agent'
+
+const CUSTOM_PRESET = '__custom__'
 
 const agent = useAgentStore()
 const { settingsOpen, draftSettings } = storeToRefs(agent)
@@ -32,6 +36,19 @@ const isChrome = import.meta.env.VITE_TARGET === 'chrome'
 
 function onSave() {
   agent.saveSettings()
+}
+
+const presetSelectValue = computed(() => {
+  const id = (draftSettings.value.model || '').trim()
+  if (id && AGENT_MODEL_PRESETS.some((m) => m.id === id)) return id
+  return CUSTOM_PRESET
+})
+
+function onPresetChange(event: Event) {
+  const value = (event.target as HTMLSelectElement).value
+  if (value && value !== CUSTOM_PRESET) {
+    draftSettings.value.model = value
+  }
 }
 </script>
 
@@ -72,13 +89,30 @@ function onSave() {
           />
         </div>
         <div class="grid gap-1.5">
-          <Label for="agent-model">{{ $t('agent.model') }}</Label>
+          <Label for="agent-model-preset">{{ $t('agent.model') }}</Label>
+          <select
+            id="agent-model-preset"
+            class="border-input bg-background h-9 w-full rounded-md border px-2 text-sm"
+            data-testid="agent-settings-model-preset"
+            :value="presetSelectValue"
+            @change="onPresetChange"
+          >
+            <option
+              v-for="m in AGENT_MODEL_PRESETS"
+              :key="m.id"
+              :value="m.id"
+            >
+              {{ m.provider }} · {{ m.label }}
+            </option>
+            <option :value="CUSTOM_PRESET">{{ $t('agent.modelCustom') }}</option>
+          </select>
           <Input
             id="agent-model"
             v-model="draftSettings.model"
             data-testid="agent-settings-model"
-            placeholder="gpt-4o-mini"
+            :placeholder="DEFAULT_AGENT_MODEL"
           />
+          <p class="text-muted-foreground text-xs">{{ $t('agent.modelCustomHint') }}</p>
         </div>
         <div class="grid gap-1.5">
           <Label for="agent-system-prompt">{{ $t('agent.systemPrompt') }}</Label>

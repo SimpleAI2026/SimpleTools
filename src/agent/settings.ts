@@ -3,7 +3,7 @@ import type { ChatProviderId, SimpleChatConfig } from './types'
 export const AGENT_STORAGE_KEY = 'simpletools-agent'
 export const AGENT_SETTINGS_LS_KEY = `${AGENT_STORAGE_KEY}:settings`
 /** Sensible default; user overrides in Settings Dialog */
-export const DEFAULT_AGENT_MODEL = 'gpt-4o-mini'
+export const DEFAULT_AGENT_MODEL = 'gpt-6.1-sol'
 
 export interface PersistedAgentSettings {
   apiBaseUrl?: string

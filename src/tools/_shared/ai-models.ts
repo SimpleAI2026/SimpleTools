@@ -1,4 +1,4 @@
-/** Shared model families / ballpark pricing for AI companion tools (2025–2026 approx). */
+/** Shared model families / ballpark pricing for AI companion tools (late-2026 public APIs). */
 
 export type TokenizerFamily = 'o200k' | 'cl100k' | 'claude' | 'gemini' | 'deepseek'
 
@@ -30,20 +30,50 @@ export interface PricingModel {
   outputPerMillion: number
 }
 
-/** Ballpark public list prices (USD / 1M tokens), mid-2025–2026. Editable in the UI. */
+/**
+ * Ballpark public list prices (USD / 1M tokens), late 2026.
+ * Editable in the API cost UI; Agent settings presets share this catalog.
+ */
 export const DEFAULT_PRICING_MODELS: PricingModel[] = [
-  { id: 'gpt-4o', label: 'GPT-4o', provider: 'OpenAI', inputPerMillion: 2.5, outputPerMillion: 10 },
-  { id: 'gpt-4o-mini', label: 'GPT-4o mini', provider: 'OpenAI', inputPerMillion: 0.15, outputPerMillion: 0.6 },
-  { id: 'gpt-4.1', label: 'GPT-4.1', provider: 'OpenAI', inputPerMillion: 2, outputPerMillion: 8 },
-  { id: 'gpt-4.1-mini', label: 'GPT-4.1 mini', provider: 'OpenAI', inputPerMillion: 0.4, outputPerMillion: 1.6 },
-  { id: 'o3', label: 'o3', provider: 'OpenAI', inputPerMillion: 10, outputPerMillion: 40 },
-  { id: 'o4-mini', label: 'o4-mini', provider: 'OpenAI', inputPerMillion: 1.1, outputPerMillion: 4.4 },
-  { id: 'claude-sonnet-4', label: 'Claude Sonnet 4', provider: 'Anthropic', inputPerMillion: 3, outputPerMillion: 15 },
-  { id: 'claude-opus-4', label: 'Claude Opus 4', provider: 'Anthropic', inputPerMillion: 15, outputPerMillion: 75 },
-  { id: 'claude-haiku-3.5', label: 'Claude Haiku 3.5', provider: 'Anthropic', inputPerMillion: 0.8, outputPerMillion: 4 },
-  { id: 'gemini-2.5-pro', label: 'Gemini 2.5 Pro', provider: 'Google', inputPerMillion: 1.25, outputPerMillion: 10 },
-  { id: 'gemini-2.5-flash', label: 'Gemini 2.5 Flash', provider: 'Google', inputPerMillion: 0.15, outputPerMillion: 0.6 },
-  { id: 'deepseek-v3', label: 'DeepSeek V3', provider: 'DeepSeek', inputPerMillion: 0.27, outputPerMillion: 1.1 },
-  { id: 'deepseek-r1', label: 'DeepSeek R1', provider: 'DeepSeek', inputPerMillion: 0.55, outputPerMillion: 2.19 },
+  // OpenAI
+  { id: 'gpt-6-astra', label: 'GPT-6 Astra', provider: 'OpenAI', inputPerMillion: 10, outputPerMillion: 50 },
+  { id: 'gpt-6.1-sol', label: 'GPT-6.1 Sol', provider: 'OpenAI', inputPerMillion: 2, outputPerMillion: 10 },
+  { id: 'gpt-6-luna', label: 'GPT-6 Luna', provider: 'OpenAI', inputPerMillion: 1, outputPerMillion: 5 },
+  // Anthropic
+  { id: 'claude-fable-5-1', label: 'Claude Fable 5.1', provider: 'Anthropic', inputPerMillion: 10, outputPerMillion: 50 },
+  { id: 'claude-opus-5-5', label: 'Claude Opus 5.5', provider: 'Anthropic', inputPerMillion: 4, outputPerMillion: 20 },
+  { id: 'claude-sonnet-5-5', label: 'Claude Sonnet 5.5', provider: 'Anthropic', inputPerMillion: 2, outputPerMillion: 10 },
+  { id: 'claude-haiku-5-5', label: 'Claude Haiku 5.5', provider: 'Anthropic', inputPerMillion: 0.1, outputPerMillion: 0.5 },
+  // xAI
+  { id: 'grok-4.7', label: 'Grok 4.7', provider: 'xAI', inputPerMillion: 2, outputPerMillion: 6 },
+  { id: 'grok-4.6', label: 'Grok 4.6', provider: 'xAI', inputPerMillion: 2, outputPerMillion: 6 },
+  { id: 'grok-4.5', label: 'Grok 4.5', provider: 'xAI', inputPerMillion: 2, outputPerMillion: 6 },
+  // Google
+  { id: 'gemini-4-argon', label: 'Gemini 4 Argon', provider: 'Google', inputPerMillion: 4, outputPerMillion: 20 },
+  { id: 'gemini-3.8-flash', label: 'Gemini 3.8 Flash', provider: 'Google', inputPerMillion: 0.15, outputPerMillion: 0.6 },
+  // DeepSeek
+  { id: 'deepseek-flash', label: 'DeepSeek Flash', provider: 'DeepSeek', inputPerMillion: 0.3, outputPerMillion: 1.2 },
+  { id: 'deepseek-v4-pro', label: 'DeepSeek V4 Pro', provider: 'DeepSeek', inputPerMillion: 1.32, outputPerMillion: 3.96 },
+  // Qwen (DashScope)
+  { id: 'qwen3.8-max', label: 'Qwen3.8 Max', provider: 'Qwen', inputPerMillion: 2, outputPerMillion: 8 },
+  { id: 'qwen3.8-flash', label: 'Qwen3.8 Flash', provider: 'Qwen', inputPerMillion: 0.15, outputPerMillion: 0.6 },
+  // Custom rates for the cost estimator UI
   { id: 'custom', label: 'Custom', provider: 'Custom', inputPerMillion: 1, outputPerMillion: 3 },
 ]
+
+/** Catalog entries suitable as Agent model presets (excludes the cost-UI "custom" row). */
+export const AGENT_MODEL_PRESETS: PricingModel[] = DEFAULT_PRICING_MODELS.filter((m) => m.id !== 'custom')
+
+/**
+ * Best-effort tokenizer family for a model id / provider prefix.
+ * Grok ≈ OpenAI o200k; Qwen ≈ cl100k/o200k (use o200k); Claude / Gemini / DeepSeek keep their heuristics.
+ */
+export function tokenizerFamilyForModel(modelId: string): TokenizerFamily {
+  const id = (modelId || '').toLowerCase()
+  if (id.includes('claude') || id.includes('anthropic') || id.includes('fable')) return 'claude'
+  if (id.includes('gemini') || id.includes('argon')) return 'gemini'
+  if (id.includes('deepseek')) return 'deepseek'
+  if (id.includes('qwen')) return 'o200k'
+  if (id.includes('grok') || id.includes('gpt') || id.includes('o3') || id.includes('o4')) return 'o200k'
+  return 'o200k'
+}
