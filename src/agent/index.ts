@@ -17,3 +17,6 @@ export {
 } from './settings'
 export { OpenAICompatProvider, isChatProviderId } from './providers'
 export type { ChatProvider, ChatProviderId, OpenAICompatMessage } from './providers'
+
+export { createHostTools, type HostToolDeps } from './hostTools'
+export { OFFLINE_TOOL_WHITELIST, isOfflineToolWhitelisted } from './hostTools/whitelist'
