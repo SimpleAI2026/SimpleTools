@@ -13,6 +13,7 @@ import { buildWorkbook, cellText, XLSX_MIME, type SheetInput } from '@/lib/excel
 import { parsePageRanges } from '@/lib/pdf'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { pdfToSheets } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { file, doc, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const range = ref('')
@@ -22,16 +23,12 @@ const sheets = shallowRef<SheetInput[]>([])
 const active = ref(0)
 const preview = computed(() => (sheets.value[active.value]?.rows ?? []).map((r) => r.map((c) => cellText(c as never))))
 async function run() {
-  if (!doc.value) return
-  busy.value = true
-  try {
-    sheets.value = await pdfToSheets(doc.value, parsePageRanges(range.value, numPages.value), mode.value, numbers.value)
+  const d = doc.value
+  if (!d) return
+  await runBusy({ busy, error }, async () => {
+    sheets.value = await pdfToSheets(d, parsePageRanges(range.value, numPages.value), mode.value, numbers.value)
     active.value = 0
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  })
 }
 async function download() {
   downloadBlob(new Blob([(await buildWorkbook(sheets.value)) as BlobPart], { type: XLSX_MIME }), `${baseName()}.xlsx`)

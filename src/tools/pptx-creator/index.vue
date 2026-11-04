@@ -10,6 +10,7 @@ import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import { downloadBlob } from '@/lib/download'
 import { buildPptx, parseSlides, THEMES, type DeckOptions, type ThemeName } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { t } = useI18n()
 const SAMPLE = '# 产品发布会\n## 2026 秋季\n---\n# 议程\n- 回顾\n- 新功能\n  - 离线工具箱\n  - 双语界面\n- 问答\n> 控制在 20 分钟内\n---\n# 关键数据\n- 117 个本地工具\n- 0 次数据上传\n'
@@ -21,16 +22,10 @@ const busy = ref(false)
 const themeOptions = computed(() => (Object.keys(THEMES) as ThemeName[]).map((k) => [k, t(`tools.pptx-creator.themes.${k}`)] as const))
 const th = computed(() => THEMES[o.theme])
 async function create() {
-  busy.value = true
-  error.value = ''
-  try {
+  await runBusy({ busy, error }, async () => {
     const bytes = await buildPptx(slides.value, o)
     downloadBlob(new Blob([bytes as BlobPart], { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' }), `${o.title || 'presentation'}.pptx`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  }, { clearError: true })
 }
 
 function loadSample() {

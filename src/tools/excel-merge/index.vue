@@ -11,6 +11,7 @@ import { downloadBlob } from '@/lib/download'
 import { buildWorkbook, readSpreadsheet, SPREADSHEET_ACCEPT, XLSX_MIME } from '@/lib/excel'
 import { loadSampleExcel } from '@/lib/sampleExcel'
 import { mergeSheets, type MergeMode, type MergeSource } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const sources = ref<MergeSource[]>([])
 const mode = ref<MergeMode>('sheets')
@@ -34,15 +35,10 @@ async function loadSample() {
   await onFiles([a, b])
 }
 async function merge() {
-  busy.value = true
-  try {
+  await runBusy({ busy, error }, async () => {
     const bytes = await buildWorkbook(mergeSheets(sources.value, mode.value, header.value, sourceCol.value))
     downloadBlob(new Blob([bytes as BlobPart], { type: XLSX_MIME }), 'merged.xlsx')
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  })
 }
 </script>
 

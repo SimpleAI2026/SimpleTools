@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import PdfInput from '@/components/shared/PdfInput.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { readMeta, writeMeta, type PdfMeta } from './logic'
+import { catchError } from '@/lib/runBusy'
 
 const { file, bytes, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const meta = reactive<PdfMeta>({ title: '', author: '', subject: '', keywords: '', creator: '', producer: '', creationDate: '', modDate: '' })
@@ -22,12 +22,11 @@ watch(bytes, async (b) => {
 })
 const keys = Object.keys(meta) as (keyof PdfMeta)[]
 async function save(strip: boolean) {
-  if (!bytes.value) return
-  try {
-    downloadBlob(pdfBlob(await writeMeta(bytes.value, meta, strip)), `${baseName()}${strip ? '-clean' : ''}.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  }
+  const data = bytes.value
+  if (!data) return
+  await catchError(error, async () => {
+    downloadPdf(await writeMeta(data, meta, strip), `${baseName()}${strip ? '-clean' : ''}.pdf`)
+  })
 }
 </script>
 

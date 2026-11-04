@@ -7,21 +7,20 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import PdfInput from '@/components/shared/PdfInput.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { protectPdf, type ProtectOptions } from './logic'
+import { catchError } from '@/lib/runBusy'
 
 const { file, bytes, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const o = reactive<ProtectOptions>({ userPassword: '', ownerPassword: '', algorithm: 'AES-256', printing: true, copying: false, modifying: false, annotating: true })
 const perms = ['printing', 'copying', 'modifying', 'annotating'] as const
 async function run() {
-  if (!bytes.value) return
-  try {
-    downloadBlob(pdfBlob(await protectPdf(bytes.value, o)), `${baseName()}-protected.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  }
+  const data = bytes.value
+  if (!data) return
+  await catchError(error, async () => {
+    downloadPdf(await protectPdf(data, o), `${baseName()}-protected.pdf`)
+  })
 }
 </script>
 

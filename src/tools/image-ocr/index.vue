@@ -12,6 +12,7 @@ import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import { downloadText, downloadBlob } from '@/lib/download'
+import { useObjectUrl } from '@/lib/useObjectUrl'
 import { formatBytes } from '@/lib/format'
 import { loadSampleImage } from '@/lib/sampleImage'
 import { zipBlobs } from '@/lib/zip'
@@ -20,7 +21,7 @@ import { recognizeImage, terminateOcrWorker } from './ocr'
 
 const { locale } = useI18n()
 const files = ref<File[]>([])
-const previewUrl = ref<string | null>(null)
+const { url: previewUrl, setObject } = useObjectUrl()
 const text = ref('')
 const confidence = ref(0)
 const words = ref<WordBox[]>([])
@@ -41,7 +42,6 @@ const blacklist = ref('')
 
 onBeforeUnmount(() => {
   void terminateOcrWorker()
-  if (previewUrl.value) URL.revokeObjectURL(previewUrl.value)
 })
 
 function setFiles(fs: File[]) {
@@ -51,8 +51,7 @@ function setFiles(fs: File[]) {
   batchOut.value = []
   confidence.value = 0
   error.value = ''
-  if (previewUrl.value) URL.revokeObjectURL(previewUrl.value)
-  previewUrl.value = fs[0] ? URL.createObjectURL(fs[0]) : null
+  setObject(fs[0])
 }
 
 async function loadSample() {

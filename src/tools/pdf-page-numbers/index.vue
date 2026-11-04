@@ -7,22 +7,21 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import PdfInput from '@/components/shared/PdfInput.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { addPageNumbers, type PageNumberOptions, type Position } from './logic'
+import { catchError } from '@/lib/runBusy'
 
 const { t } = useI18n()
 const { file, bytes, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const o = reactive<PageNumberOptions>({ format: '{n} / {total}', position: 'bottom-center', fontSize: 10, margin: 28, start: 1, pages: '', color: '#333333', skipFirst: false })
 const positions: Position[] = ['bottom-center', 'bottom-right', 'bottom-left', 'top-center', 'top-right', 'top-left']
 async function run() {
-  if (!bytes.value) return
-  try {
-    downloadBlob(pdfBlob(await addPageNumbers(bytes.value, { ...o, fontSize: Number(o.fontSize) || 10, margin: Number(o.margin) || 0, start: Number(o.start) || 1 })), `${baseName()}-numbered.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  }
+  const data = bytes.value
+  if (!data) return
+  await catchError(error, async () => {
+    downloadPdf(await addPageNumbers(data, { ...o, fontSize: Number(o.fontSize) || 10, margin: Number(o.margin) || 0, start: Number(o.start) || 1 }), `${baseName()}-numbered.pdf`)
+  })
 }
 </script>
 

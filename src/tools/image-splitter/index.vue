@@ -10,13 +10,15 @@ import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import { canvasToBlob, fillIfOpaque, loadBitmap, makeCanvas, RASTER_EXT, type RasterFormat } from '@/lib/canvas'
 import { downloadBlob } from '@/lib/download'
+import { runBusy } from '@/lib/runBusy'
+import { useObjectUrl } from '@/lib/useObjectUrl'
 import { zipBlobs } from '@/lib/zip'
 import { gridTiles, sizeTiles, tileName } from './logic'
 import { loadSampleImage } from '@/lib/sampleImage'
 
 const { t } = useI18n()
 const bmp = shallowRef<ImageBitmap | null>(null)
-const url = ref('')
+const { url, setObject } = useObjectUrl()
 const base = ref('image')
 const mode = ref<'grid' | 'size'>('grid')
 const rows = ref(3)
@@ -45,8 +47,7 @@ async function onFile(f: File) {
     const b = await loadBitmap(f)
     bmp.value?.close()
     bmp.value = b
-    if (url.value) URL.revokeObjectURL(url.value)
-    url.value = URL.createObjectURL(f)
+    setObject(f)
     base.value = f.name.replace(/\.[^.]+$/, '') || 'image'
     error.value = ''
   } catch {
@@ -55,25 +56,20 @@ async function onFile(f: File) {
 }
 onBeforeUnmount(() => {
   bmp.value?.close()
-  if (url.value) URL.revokeObjectURL(url.value)
 })
 async function run() {
-  if (!bmp.value) return
-  busy.value = true
-  try {
+  const image = bmp.value
+  if (!image) return
+  await runBusy({ busy, error }, async () => {
     const entries = []
     for (const tile of tiles.value) {
       const [c, ctx] = makeCanvas(tile.w, tile.h)
       fillIfOpaque(ctx, format.value)
-      ctx.drawImage(bmp.value, tile.x, tile.y, tile.w, tile.h, 0, 0, tile.w, tile.h)
+      ctx.drawImage(image, tile.x, tile.y, tile.w, tile.h, 0, 0, tile.w, tile.h)
       entries.push({ name: tileName(base.value, tile, RASTER_EXT[format.value]), blob: await canvasToBlob(c, format.value, 0.92) })
     }
     downloadBlob(await zipBlobs(entries), `${base.value}_tiles.zip`)
-  } catch {
-    error.value = t('tools.image-splitter.failed')
-  } finally {
-    busy.value = false
-  }
+  }, { mapError: () => t('tools.image-splitter.failed') })
 }
 const pct = (v: number, total: number) => `${(v / total) * 100}%`
 </script>

@@ -7,12 +7,12 @@ import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { canvasTextRasterizer } from '@/lib/pdfDraw'
 import { layoutPdf, type StdFamily } from '@/lib/pdfText'
 import { pageSize, type PageSizeName } from '@/lib/rasterPdf'
 import { textToBlocks } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const SAMPLE = 'SimpleTools Sample\n\nOffline-first local toolkit.\n本地优先 · 无需上传。\n\nhttps://github.com/linkxzhou/SimpleTools\n'
 const text = ref(SAMPLE)
@@ -27,17 +27,11 @@ async function openTxt(f: File) {
   text.value = await f.text()
 }
 async function run() {
-  busy.value = true
-  error.value = ''
-  try {
+  await runBusy({ busy, error }, async () => {
     const customFont = font.value ? new Uint8Array(await font.value.arrayBuffer()) : undefined
     const out = await layoutPdf(textToBlocks(text.value, o.size), { pageSize: pageSize(o.page, false), margin: o.margin, lineHeight: o.lineHeight, family: o.family, customFont }, canvasTextRasterizer)
-    downloadBlob(pdfBlob(out), 'text.pdf')
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+    downloadPdf(out, 'text.pdf')
+  }, { clearError: true })
 }
 </script>
 

@@ -10,22 +10,19 @@ import { downloadBlob } from '@/lib/download'
 import { parsePageRanges } from '@/lib/pdf'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { pdfToDocx } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { file, doc, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const range = ref('')
 const md = ref('')
 async function run() {
-  if (!doc.value) return
-  busy.value = true
-  try {
-    const r = await pdfToDocx(doc.value, parsePageRanges(range.value, numPages.value), { font: 'Calibri', fontSize: 11, title: baseName() })
+  const d = doc.value
+  if (!d) return
+  await runBusy({ busy, error }, async () => {
+    const r = await pdfToDocx(d, parsePageRanges(range.value, numPages.value), { font: 'Calibri', fontSize: 11, title: baseName() })
     md.value = r.markdown
     downloadBlob(r.blob, `${baseName()}.docx`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  })
 }
 </script>
 

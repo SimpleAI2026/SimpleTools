@@ -6,22 +6,21 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import PdfInput from '@/components/shared/PdfInput.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { MM } from '@/tools/pdf-crop/logic'
 import { scalePages, type ScaleOptions } from './logic'
+import { catchError } from '@/lib/runBusy'
 
 const { file, bytes, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const o = reactive({ target: 'a4' as ScaleOptions['target'], wmm: 210, hmm: 297, orientation: 'auto' as ScaleOptions['orientation'], mmargin: 0 })
 async function run() {
-  if (!bytes.value) return
-  try {
+  const data = bytes.value
+  if (!data) return
+  await catchError(error, async () => {
     const opts: ScaleOptions = { target: o.target, width: o.wmm * MM, height: o.hmm * MM, orientation: o.orientation, margin: o.mmargin * MM }
-    downloadBlob(pdfBlob(await scalePages(bytes.value, opts)), `${baseName()}-${o.target}.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  }
+    downloadPdf(await scalePages(data, opts), `${baseName()}-${o.target}.pdf`)
+  })
 }
 </script>
 

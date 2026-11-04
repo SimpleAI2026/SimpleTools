@@ -11,20 +11,17 @@ import { downloadText } from '@/lib/download'
 import { parsePageRanges } from '@/lib/pdf'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { pdfToMarkdown } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { file, doc, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const range = ref('')
 const md = ref<string | null>(null)
 async function run() {
-  if (!doc.value) return
-  busy.value = true
-  try {
-    md.value = await pdfToMarkdown(doc.value, parsePageRanges(range.value, numPages.value))
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  const d = doc.value
+  if (!d) return
+  await runBusy({ busy, error }, async () => {
+    md.value = await pdfToMarkdown(d, parsePageRanges(range.value, numPages.value))
+  })
 }
 </script>
 

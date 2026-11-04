@@ -12,11 +12,11 @@ import ModeToggle from '@/components/shared/ModeToggle.vue'
 import PdfInput from '@/components/shared/PdfInput.vue'
 import PdfPageCanvas from '@/components/shared/PdfPageCanvas.vue'
 import RangeField from '@/components/shared/RangeField.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { canvasTextRasterizer } from '@/lib/pdfDraw'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { applyEdits, type Edit } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 type Tool = 'select' | 'text' | 'rect' | 'whiteout' | 'image'
 const { t } = useI18n()
@@ -67,15 +67,11 @@ function remove() {
   sel.value = null
 }
 async function save() {
-  if (!bytes.value) return
-  busy.value = true
-  try {
-    downloadBlob(pdfBlob(await applyEdits(bytes.value, edits.value, canvasTextRasterizer)), `${baseName()}-edited.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  const data = bytes.value
+  if (!data) return
+  await runBusy({ busy, error }, async () => {
+    downloadPdf(await applyEdits(data, edits.value, canvasTextRasterizer), `${baseName()}-edited.pdf`)
+  })
 }
 </script>
 

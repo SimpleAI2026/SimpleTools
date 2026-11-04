@@ -6,10 +6,10 @@ import { Input } from '@/components/ui/input'
 import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import FileDropzone from '@/components/shared/FileDropzone.vue'
 import { loadSamplePdf } from '@/lib/samplePdf'
-import { downloadBlob } from '@/lib/download'
+import { downloadPdf } from '@/lib/download'
 import { formatBytes } from '@/lib/format'
-import { pdfBlob } from '@/lib/pdf'
 import { isEncrypted, unlockPdf } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const file = shallowRef<File | null>(null)
 const bytes = shallowRef<Uint8Array | null>(null)
@@ -26,16 +26,12 @@ async function onFile(f: File) {
   error.value = ''
 }
 async function run() {
-  if (!bytes.value || !file.value) return
-  busy.value = true
-  error.value = ''
-  try {
-    downloadBlob(pdfBlob(await unlockPdf(bytes.value, password.value)), file.value.name.replace(/\.pdf$/i, '') + '-unlocked.pdf')
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  const data = bytes.value
+  const f = file.value
+  if (!data || !f) return
+  await runBusy({ busy, error }, async () => {
+    downloadPdf(await unlockPdf(data, password.value), f.name.replace(/\.pdf$/i, '') + '-unlocked.pdf')
+  }, { clearError: true })
 }
 </script>
 

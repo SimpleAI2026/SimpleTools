@@ -8,12 +8,12 @@ import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import PdfInput from '@/components/shared/PdfInput.vue'
 import RangeField from '@/components/shared/RangeField.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { canvasTextRasterizer } from '@/lib/pdfDraw'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { watermarkPdf, type WatermarkOptions } from './logic'
 import { loadSampleImage } from '@/lib/sampleImage'
+import { catchError } from '@/lib/runBusy'
 
 const { file, bytes, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const o = reactive<WatermarkOptions>({ kind: 'text', text: 'CONFIDENTIAL', fontSize: 48, color: '#ef4444', opacity: 0.25, rotation: 45, layout: 'center', gap: 80, imageScale: 0.4, layer: 'foreground', pages: '' })
@@ -23,13 +23,12 @@ async function loadSampleImg() {
   o.kind = 'image'
 }
 async function run() {
-  if (!bytes.value) return
-  try {
+  const data = bytes.value
+  if (!data) return
+  await catchError(error, async () => {
     if (o.kind === 'image' && img.value) o.image = { bytes: new Uint8Array(await img.value.arrayBuffer()), type: img.value.type === 'image/png' ? 'png' : 'jpg' }
-    downloadBlob(pdfBlob(await watermarkPdf(bytes.value, o, canvasTextRasterizer)), `${baseName()}-watermarked.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  }
+    downloadPdf(await watermarkPdf(data, o, canvasTextRasterizer), `${baseName()}-watermarked.pdf`)
+  })
 }
 </script>
 

@@ -7,8 +7,8 @@ import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
 import { canvasToBlob, loadBitmap, makeCanvas } from '@/lib/canvas'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
+import { runBusy } from '@/lib/runBusy'
 import { imagesToPdf, type ImagePdfOptions, type PdfImage } from './logic'
 import { loadSampleImage } from '@/lib/sampleImage'
 
@@ -49,17 +49,11 @@ async function toPdfImage(f: File): Promise<PdfImage> {
   return { bytes: new Uint8Array(await (await canvasToBlob(c, 'image/png')).arrayBuffer()), type: 'png', width, height }
 }
 async function run() {
-  busy.value = true
-  error.value = ''
-  try {
+  await runBusy({ busy, error }, async () => {
     const imgs: PdfImage[] = []
     for (const it of items.value) imgs.push(await toPdfImage(it.file))
-    downloadBlob(pdfBlob(await imagesToPdf(imgs, o)), 'images.pdf')
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+    downloadPdf(await imagesToPdf(imgs, o), 'images.pdf')
+  }, { clearError: true })
 }
 </script>
 

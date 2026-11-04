@@ -11,6 +11,7 @@ import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
 import { withExt } from '@/lib/canvas'
 import { downloadBlob } from '@/lib/download'
+import { runBusy } from '@/lib/runBusy'
 import { formatBytes } from '@/lib/format'
 import { loadSamplePdf } from '@/lib/samplePdf'
 import { compressPdf, PRESETS, type PdfCompressOptions } from './logic'
@@ -33,19 +34,14 @@ function applyPreset(p: keyof typeof PRESETS) {
   o.quality100 = Math.round(PRESETS[p].quality * 100)
 }
 async function run() {
-  if (!file.value) return
-  busy.value = true
-  error.value = ''
+  const f = file.value
+  if (!f) return
   result.value = null
-  try {
-    const out = await compressPdf(file.value, { ...o, quality: o.quality100 / 100 }, (done, total) => (progress.value = { done, total }))
-    result.value = { from: formatBytes(file.value.size), to: formatBytes(out.size), pct: Math.round((out.size / file.value.size - 1) * 100) }
-    downloadBlob(out, withExt(file.value.name, 'pdf', '-compressed'))
-  } catch {
-    error.value = t('tools.pdf-compressor.failed')
-  } finally {
-    busy.value = false
-  }
+  await runBusy({ busy, error }, async () => {
+    const out = await compressPdf(f, { ...o, quality: o.quality100 / 100 }, (done, total) => (progress.value = { done, total }))
+    result.value = { from: formatBytes(f.size), to: formatBytes(out.size), pct: Math.round((out.size / f.size - 1) * 100) }
+    downloadBlob(out, withExt(f.name, 'pdf', '-compressed'))
+  }, { clearError: true, mapError: () => t('tools.pdf-compressor.failed') })
 }
 </script>
 

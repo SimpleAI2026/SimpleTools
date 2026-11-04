@@ -7,12 +7,12 @@ import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
-import { downloadBlob } from '@/lib/download'
+import { downloadPdf } from '@/lib/download'
 import { renderHtmlToPdf, type HtmlPdfOptions } from '@/lib/htmlPdf'
-import { pdfBlob } from '@/lib/pdf'
 import { loadSampleDocx } from '@/lib/sampleDocx'
 import { DOCX_ACCEPT, docxToHtml } from '@/lib/word'
 import { wordHtmlDocument } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const file = shallowRef<File | null>(null)
 const o = reactive<HtmlPdfOptions>({ page: 'a4', landscape: false, margin: 54, ratio: 2 })
@@ -22,18 +22,13 @@ async function loadSample() {
   file.value = await loadSampleDocx()
 }
 async function run() {
-  if (!file.value) return
-  busy.value = true
-  error.value = ''
-  try {
-    const { html } = await docxToHtml(await file.value.arrayBuffer())
+  const f = file.value
+  if (!f) return
+  await runBusy({ busy, error }, async () => {
+    const { html } = await docxToHtml(await f.arrayBuffer())
     const safe = DOMPurify.sanitize(wordHtmlDocument(html), { FORCE_BODY: true, ADD_TAGS: ['style'] }) as string
-    downloadBlob(pdfBlob(await renderHtmlToPdf(safe, o, file.value.name)), file.value.name.replace(/\.docx$/i, '') + '.pdf')
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+    downloadPdf(await renderHtmlToPdf(safe, o, f.name), f.name.replace(/\.docx$/i, '') + '.pdf')
+  }, { clearError: true })
 }
 </script>
 

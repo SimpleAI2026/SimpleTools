@@ -10,6 +10,7 @@ import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import { downloadBlob } from '@/lib/download'
 import { renderMarkdown } from '@/tools/markdown-preview/logic'
 import { markdownToDocx } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const SAMPLE = '# 项目周报\n\n本周完成了 **核心功能** 的开发，详见 [文档](https://example.com)。\n\n## 进展\n\n- 完成登录模块\n- 修复 3 个缺陷\n  - 包含一个 _严重_ 问题\n\n1. 下周计划一\n2. 下周计划二\n\n| 指标 | 数值 |\n| --- | --- |\n| 用户数 | 1024 |\n\n> 备注：数据截至周五。\n'
 const md = ref(SAMPLE)
@@ -18,15 +19,9 @@ const error = ref('')
 const busy = ref(false)
 const preview = computed(() => DOMPurify.sanitize(renderMarkdown(md.value)))
 async function create() {
-  busy.value = true
-  error.value = ''
-  try {
+  await runBusy({ busy, error }, async () => {
     downloadBlob(await markdownToDocx(md.value, o), `${o.title || 'document'}.docx`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  }, { clearError: true })
 }
 
 function loadSample() {

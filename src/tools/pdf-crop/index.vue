@@ -6,10 +6,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import PdfInput from '@/components/shared/PdfInput.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob, renderPage } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
+import { renderPage } from '@/lib/pdf'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { cropPdf, MM, type Margins } from './logic'
+import { catchError } from '@/lib/runBusy'
 
 const { file, bytes, doc, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const m = reactive<Margins>({ top: 10, right: 10, bottom: 10, left: 10 })
@@ -26,13 +27,12 @@ watch(doc, async (d) => {
 })
 const pct = (mm: number, total: number) => `${((mm * MM) / total) * 100}%`
 async function run() {
-  if (!bytes.value) return
-  try {
+  const data = bytes.value
+  if (!data) return
+  await catchError(error, async () => {
     const pt = { top: m.top * MM, right: m.right * MM, bottom: m.bottom * MM, left: m.left * MM }
-    downloadBlob(pdfBlob(await cropPdf(bytes.value, pt, pages.value, media.value)), `${baseName()}-cropped.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  }
+    downloadPdf(await cropPdf(data, pt, pages.value, media.value), `${baseName()}-cropped.pdf`)
+  })
 }
 const sides = ['top', 'right', 'bottom', 'left'] as const
 </script>

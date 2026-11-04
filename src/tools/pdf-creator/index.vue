@@ -9,12 +9,12 @@ import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { canvasTextRasterizer } from '@/lib/pdfDraw'
 import { layoutPdf, type StdFamily } from '@/lib/pdfText'
 import { pageSize, type PageSizeName } from '@/lib/rasterPdf'
 import { markdownToBlocks } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { t } = useI18n()
 const SAMPLE = () => t('tools.pdf-creator.placeholder')
@@ -28,17 +28,11 @@ function loadSample() {
   o.title = 'SimpleTools Sample'
 }
 async function run() {
-  busy.value = true
-  error.value = ''
-  try {
+  await runBusy({ busy, error }, async () => {
     const customFont = font.value ? new Uint8Array(await font.value.arrayBuffer()) : undefined
     const out = await layoutPdf(markdownToBlocks(md.value, o.size), { pageSize: pageSize(o.page, false), margin: o.margin, lineHeight: 1.45, family: o.family, customFont, title: o.title }, canvasTextRasterizer)
-    downloadBlob(pdfBlob(out), `${o.title || 'document'}.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+    downloadPdf(out, `${o.title || 'document'}.pdf`)
+  }, { clearError: true })
 }
 </script>
 

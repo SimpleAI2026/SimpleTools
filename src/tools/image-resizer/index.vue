@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -9,13 +9,15 @@ import { Switch } from '@/components/ui/switch'
 import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import { downloadBlob } from '@/lib/download'
+import { runBusy } from '@/lib/runBusy'
+import { useObjectUrl } from '@/lib/useObjectUrl'
 import { formatBytes } from '@/lib/format'
 import { defaultFormat, fitAspect, outputFilename, resizeImage, scaleByPercent, type OutputFormat, type Size } from './logic'
 import { loadSampleImage } from '@/lib/sampleImage'
 
 const { t } = useI18n()
 const file = ref<File | null>(null)
-const previewUrl = ref('')
+const { url: previewUrl, setObject } = useObjectUrl()
 const original = ref<Size | null>(null)
 const size = ref<Size>({ width: 0, height: 0 })
 const lock = ref(true)
@@ -24,12 +26,6 @@ const quality = ref([92])
 const error = ref('')
 const busy = ref(false)
 const lastOutput = ref<{ size: number; dims: Size } | null>(null)
-
-function revoke() {
-  if (previewUrl.value) URL.revokeObjectURL(previewUrl.value)
-  previewUrl.value = ''
-}
-onBeforeUnmount(revoke)
 
 async function loadSample() {
   busy.value = true
@@ -55,9 +51,8 @@ async function onFile(f: File) {
     error.value = t('tools.image-resizer.failed')
     return
   }
-  revoke()
   file.value = f
-  previewUrl.value = URL.createObjectURL(f)
+  setObject(f)
   size.value = { ...original.value }
   format.value = defaultFormat(f.type)
 }
@@ -74,18 +69,13 @@ function setPercent(p: number) {
 const lossy = computed(() => format.value !== 'image/png')
 
 async function run() {
-  if (!file.value) return
-  busy.value = true
-  error.value = ''
-  try {
-    const blob = await resizeImage(file.value, size.value, format.value, (quality.value[0] ?? 92) / 100)
+  const src = file.value
+  if (!src) return
+  await runBusy({ busy, error }, async () => {
+    const blob = await resizeImage(src, size.value, format.value, (quality.value[0] ?? 92) / 100)
     lastOutput.value = { size: blob.size, dims: { ...size.value } }
-    downloadBlob(blob, outputFilename(file.value.name, size.value, format.value))
-  } catch {
-    error.value = t('tools.image-resizer.failed')
-  } finally {
-    busy.value = false
-  }
+    downloadBlob(blob, outputFilename(src.name, size.value, format.value))
+  }, { clearError: true, mapError: () => t('tools.image-resizer.failed') })
 }
 </script>
 

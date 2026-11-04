@@ -13,3 +13,8 @@ export function downloadBlob(blob: Blob, filename: string): void {
 export function downloadText(text: string, filename: string, type = 'text/plain;charset=utf-8'): void {
   downloadBlob(new Blob([text], { type }), filename)
 }
+
+/** Download PDF bytes (same Blob construction as `pdfBlob` in `@/lib/pdf`). */
+export function downloadPdf(bytes: Uint8Array, filename: string): void {
+  downloadBlob(new Blob([bytes as BlobPart], { type: 'application/pdf' }), filename)
+}

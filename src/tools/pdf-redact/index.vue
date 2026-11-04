@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button'
 import PdfInput from '@/components/shared/PdfInput.vue'
 import PdfPageCanvas from '@/components/shared/PdfPageCanvas.vue'
 import RangeField from '@/components/shared/RangeField.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { canvasRedactor, rectFromDrag, redactPdf, type RedactRect } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { file, bytes, doc, numPages, error, busy, needsPassword, load: loadPdf, baseName } = usePdfFile()
 const page = ref(1)
@@ -33,16 +33,13 @@ function up(p: { x: number; y: number }) {
   start.value = draft.value = null
 }
 async function run() {
-  if (!bytes.value || !doc.value) return
-  busy.value = true
-  try {
-    const out = await redactPdf(bytes.value, rects.value, canvasRedactor(doc.value, dpi.value, color.value))
-    downloadBlob(pdfBlob(out), `${baseName()}-redacted.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  const data = bytes.value
+  const d = doc.value
+  if (!data || !d) return
+  await runBusy({ busy, error }, async () => {
+    const out = await redactPdf(data, rects.value, canvasRedactor(d, dpi.value, color.value))
+    downloadPdf(out, `${baseName()}-redacted.pdf`)
+  })
 }
 </script>
 

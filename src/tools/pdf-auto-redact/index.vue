@@ -9,10 +9,11 @@ import { Textarea } from '@/components/ui/textarea'
 import PdfInput from '@/components/shared/PdfInput.vue'
 import PdfPageCanvas from '@/components/shared/PdfPageCanvas.vue'
 import RangeField from '@/components/shared/RangeField.vue'
-import { downloadBlob } from '@/lib/download'
-import { parsePageRanges, pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
+import { parsePageRanges } from '@/lib/pdf'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { canvasRedactor, collectMatches, PRESETS, redactPdf, type Match } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const { file, bytes, doc, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const terms = ref('')
@@ -28,29 +29,21 @@ function toggle(k: string) {
   presets.value = presets.value.includes(k) ? presets.value.filter((p) => p !== k) : [...presets.value, k]
 }
 async function find() {
-  if (!doc.value) return
-  busy.value = true
-  error.value = ''
-  try {
-    matches.value = await collectMatches(doc.value, parsePageRanges(range.value, numPages.value), terms.value.split('\n'), presets.value, o)
+  const d = doc.value
+  if (!d) return
+  await runBusy({ busy, error }, async () => {
+    matches.value = await collectMatches(d, parsePageRanges(range.value, numPages.value), terms.value.split('\n'), presets.value, o)
     enabled.value = matches.value.map(() => true)
     previewPage.value = matches.value[0]?.page ?? 1
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  }, { clearError: true })
 }
 async function run() {
-  if (!bytes.value || !doc.value) return
-  busy.value = true
-  try {
-    downloadBlob(pdfBlob(await redactPdf(bytes.value, chosen.value, canvasRedactor(doc.value, dpi.value))), `${baseName()}-redacted.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+  const data = bytes.value
+  const d = doc.value
+  if (!data || !d) return
+  await runBusy({ busy, error }, async () => {
+    downloadPdf(await redactPdf(data, chosen.value, canvasRedactor(d, dpi.value)), `${baseName()}-redacted.pdf`)
+  })
 }
 </script>
 

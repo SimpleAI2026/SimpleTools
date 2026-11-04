@@ -10,11 +10,11 @@ import ErrorAlert from '@/components/shared/ErrorAlert.vue'
 import FileDropzone from '@/components/shared/FileDropzone.vue'
 import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
-import { downloadBlob } from '@/lib/download'
+import { downloadPdf } from '@/lib/download'
 import { renderHtmlToPdf, type HtmlPdfOptions } from '@/lib/htmlPdf'
-import { pdfBlob } from '@/lib/pdf'
 import { SANITIZE_CONFIG } from '@/tools/html-to-image/logic'
 import { composeDocument } from './logic'
+import { runBusy } from '@/lib/runBusy'
 
 const SAMPLE_HTML = '<h1>SimpleTools Sample</h1>\n<p>Offline-first developer toolbox. 你好，<b>世界</b>！</p>\n<ul><li>Pure front-end</li><li>Bilingual zh/en</li></ul>\n<table border="1" cellpadding="6"><tr><th>Tool</th><th>Status</th></tr><tr><td>Vue</td><td>OK</td></tr></table>'
 const SAMPLE_CSS = 'h1 { color: #6366f1; } table { border-collapse: collapse; margin-top: 1rem; }'
@@ -31,16 +31,10 @@ function loadSample() {
   css.value = SAMPLE_CSS
 }
 async function run() {
-  busy.value = true
-  error.value = ''
-  try {
+  await runBusy({ busy, error }, async () => {
     const safe = DOMPurify.sanitize(composeDocument(html.value, css.value), SANITIZE_CONFIG) as string
-    downloadBlob(pdfBlob(await renderHtmlToPdf(safe, o)), 'document.pdf')
-  } catch (e) {
-    error.value = (e as Error).message
-  } finally {
-    busy.value = false
-  }
+    downloadPdf(await renderHtmlToPdf(safe, o), 'document.pdf')
+  }, { clearError: true })
 }
 </script>
 

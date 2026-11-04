@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Download, RotateCcw } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
@@ -9,12 +9,14 @@ import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
 import { canvasToBlob, fillIfOpaque, loadBitmap, makeCanvas, RASTER_EXT, withExt, type RasterFormat } from '@/lib/canvas'
 import { downloadBlob } from '@/lib/download'
+import { runBusy } from '@/lib/runBusy'
+import { useObjectUrl } from '@/lib/useObjectUrl'
 import { applyFilters, cssFilter, FILTER_PRESETS, IDENTITY_FILTERS, type FilterSettings } from './logic'
 import { loadSampleImage } from '@/lib/sampleImage'
 
 const { t } = useI18n()
 const file = ref<File | null>(null)
-const url = ref('')
+const { url, setObject } = useObjectUrl()
 const f = reactive<FilterSettings>({ ...IDENTITY_FILTERS })
 const format = ref<RasterFormat>('image/png')
 const error = ref('')
@@ -42,19 +44,16 @@ async function loadSample() {
 
 function onFile(nf: File) {
   if (!nf.type.startsWith('image/')) return
-  if (url.value) URL.revokeObjectURL(url.value)
   file.value = nf
-  url.value = URL.createObjectURL(nf)
+  setObject(nf)
   error.value = ''
 }
-onBeforeUnmount(() => url.value && URL.revokeObjectURL(url.value))
 
 async function exportImage() {
-  if (!file.value) return
-  busy.value = true
-  error.value = ''
-  try {
-    const bmp = await loadBitmap(file.value)
+  const src = file.value
+  if (!src) return
+  await runBusy({ busy, error }, async () => {
+    const bmp = await loadBitmap(src)
     const [c, ctx] = makeCanvas(bmp.width, bmp.height)
     fillIfOpaque(ctx, format.value)
     ctx.drawImage(bmp, 0, 0)
@@ -63,12 +62,8 @@ async function exportImage() {
     const img = ctx.getImageData(0, 0, c.width, c.height)
     applyFilters(img, f)
     ctx.putImageData(img, 0, 0)
-    downloadBlob(await canvasToBlob(c, format.value, 0.92), withExt(file.value.name, RASTER_EXT[format.value], '-filtered'))
-  } catch {
-    error.value = t('tools.image-filters.failed')
-  } finally {
-    busy.value = false
-  }
+    downloadBlob(await canvasToBlob(c, format.value, 0.92), withExt(src.name, RASTER_EXT[format.value], '-filtered'))
+  }, { clearError: true, mapError: () => t('tools.image-filters.failed') })
 }
 </script>
 

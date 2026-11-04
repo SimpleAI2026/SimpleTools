@@ -5,23 +5,22 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import PdfInput from '@/components/shared/PdfInput.vue'
-import { downloadBlob } from '@/lib/download'
-import { pdfBlob } from '@/lib/pdf'
+import { downloadPdf } from '@/lib/download'
 import { usePdfFile } from '@/lib/usePdfFile'
 import { removeAnnotations } from './logic'
+import { catchError } from '@/lib/runBusy'
 
 const { file, bytes, numPages, error, busy, needsPassword, load, baseName } = usePdfFile()
 const o = reactive({ keepLinks: true, removeForms: false })
 const removed = ref<number | null>(null)
 async function run() {
-  if (!bytes.value) return
-  try {
-    const r = await removeAnnotations(bytes.value, o)
+  const data = bytes.value
+  if (!data) return
+  await catchError(error, async () => {
+    const r = await removeAnnotations(data, o)
     removed.value = r.removed
-    downloadBlob(pdfBlob(r.bytes), `${baseName()}-clean.pdf`)
-  } catch (e) {
-    error.value = (e as Error).message
-  }
+    downloadPdf(r.bytes, `${baseName()}-clean.pdf`)
+  })
 }
 </script>
 
