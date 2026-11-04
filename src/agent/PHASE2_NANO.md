@@ -1,11 +1,11 @@
-# Phase 2 — Chrome Built-in AI (Gemini Nano)
+# Chrome Built-in AI (Gemini Nano)
 
-Out of scope for BYOK HostTool P1.
+Implemented (ported from SimpleChat):
 
-Planned reuse:
 - `ChatProviderId = 'chrome-ai'`
-- Port SimpleChat `ChromeAiProvider` into `src/agent/providers/ChromeAiProvider.ts`
+- `src/agent/providers/ChromeAiProvider.ts` — Prompt API / `LanguageModel`
 - `ChatEngine.getProvider()` switches when `config.provider === 'chrome-ai'`
+- Settings default to `chrome-ai` when no API key and `LanguageModel` is present
 - Tools remain disabled on Nano (`supportsTools === false`), matching SimpleChat v1
 
-No tasks in the P1 plan implement this file.
+BYOK OpenAI-compatible path is unchanged when the user picks a cloud/custom model.

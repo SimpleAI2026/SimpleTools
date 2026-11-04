@@ -9,9 +9,14 @@ import {
   loadAgentSettings,
   resolveAgentConfig,
   saveAgentSettings,
+  checkChromeAiAvailability,
+  CHROME_AI_STATUS,
+  defaultProviderId,
   type ChatMessage,
   type ChatThread,
   type PersistedAgentSettings,
+  type ChatProviderId,
+  type ChromeAiStatus,
 } from '@/agent'
 
 export const useAgentStore = defineStore('agent', () => {
@@ -31,7 +36,12 @@ export const useAgentStore = defineStore('agent', () => {
     model: '',
     systemPrompt: '',
     rememberKey: true,
+    provider: undefined,
   })
+  const chromeAiStatus = ref<ChromeAiStatus>(CHROME_AI_STATUS.UNKNOWN)
+  const chromeAiProgress = ref(0)
+  const chromeAiChecking = ref(false)
+  const chromeAiDownloading = ref(false)
   const ready = ref(false)
 
   const currentTitle = computed(() => {
@@ -88,13 +98,54 @@ export const useAgentStore = defineStore('agent', () => {
     const stored = loadAgentSettings()
     // When rememberKey is false, LS omits apiKey — keep in-memory session key.
     const prevKey = draftSettings.value.apiKey
+    const apiKey = stored?.apiKey ?? prevKey ?? ''
+    const provider = defaultProviderId({
+      storedProvider: stored?.provider,
+      apiKey,
+    })
     draftSettings.value = {
       apiBaseUrl: stored?.apiBaseUrl ?? '',
-      apiKey: stored?.apiKey ?? prevKey ?? '',
+      apiKey,
       model: stored?.model ?? '',
       systemPrompt: stored?.systemPrompt ?? '',
       rememberKey: stored?.rememberKey ?? true,
+      provider,
     }
+  }
+
+  async function refreshChromeAiStatus(): Promise<void> {
+    chromeAiChecking.value = true
+    try {
+      const avail = await checkChromeAiAvailability()
+      chromeAiStatus.value = avail.status
+    } finally {
+      chromeAiChecking.value = false
+    }
+  }
+
+  async function downloadChromeAiModel(): Promise<void> {
+    const eng = ensureEngine()
+    chromeAiDownloading.value = true
+    chromeAiProgress.value = 0
+    try {
+      const provider = eng.getChromeAiProvider()
+      provider.setOnDownloadProgress((loaded) => {
+        chromeAiProgress.value = loaded
+        chromeAiStatus.value = CHROME_AI_STATUS.DOWNLOADING
+      })
+      await provider.ensureSession()
+      chromeAiStatus.value = CHROME_AI_STATUS.AVAILABLE
+      await refreshChromeAiStatus()
+    } catch (err) {
+      chromeAiStatus.value = CHROME_AI_STATUS.UNAVAILABLE
+      error.value = err instanceof Error ? err.message : String(err)
+    } finally {
+      chromeAiDownloading.value = false
+    }
+  }
+
+  function setProvider(provider: ChatProviderId): void {
+    draftSettings.value = { ...draftSettings.value, provider }
   }
 
   function saveSettings(): void {
@@ -131,12 +182,28 @@ export const useAgentStore = defineStore('agent', () => {
     const eng = ensureEngine()
     // Always resolve with draft so rememberKey:false session apiKey still works.
     const cfg = resolveAgentConfig(draftSettings.value)
-    if (!cfg.apiBaseUrl || !cfg.apiKey || !cfg.model) {
+    if (cfg.provider === 'chrome-ai') {
+      const avail = await checkChromeAiAvailability()
+      chromeAiStatus.value = avail.status
+      if (avail.status !== CHROME_AI_STATUS.AVAILABLE) {
+        if (avail.status === CHROME_AI_STATUS.DOWNLOADABLE) {
+          error.value = 'chrome-ai-downloadable'
+        } else if (avail.status === CHROME_AI_STATUS.DOWNLOADING) {
+          error.value = 'chrome-ai-downloading'
+        } else {
+          error.value = 'chrome-ai-unavailable'
+        }
+        settingsOpen.value = true
+        return false
+      }
+      eng.updateConfig({ ...cfg, provider: 'chrome-ai' })
+    } else if (!cfg.apiBaseUrl || !cfg.apiKey || !cfg.model) {
       error.value = 'missing-settings'
       settingsOpen.value = true
       return false
+    } else {
+      eng.updateConfig({ ...cfg, provider: 'openai' })
     }
-    eng.updateConfig(cfg)
     streaming.value = true
     error.value = null
     try {
@@ -195,6 +262,10 @@ export const useAgentStore = defineStore('agent', () => {
     error,
     settingsOpen,
     draftSettings,
+    chromeAiStatus,
+    chromeAiProgress,
+    chromeAiChecking,
+    chromeAiDownloading,
     init,
     newThread,
     selectThread,
@@ -203,5 +274,8 @@ export const useAgentStore = defineStore('agent', () => {
     stop,
     loadSettingsIntoDraft,
     saveSettings,
+    refreshChromeAiStatus,
+    downloadChromeAiModel,
+    setProvider,
   }
 })

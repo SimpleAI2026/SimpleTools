@@ -13,6 +13,7 @@ import {
 } from './types'
 import { mergeToolCallDeltas, type AccumulatedToolCall } from './sse'
 import { OpenAICompatProvider } from './providers/OpenAICompatProvider'
+import { ChromeAiProvider } from './providers/ChromeAiProvider'
 import type { ChatProvider, OpenAICompatMessage } from './providers/types'
 import { isChatProviderId } from './providers/types'
 
@@ -39,6 +40,7 @@ export class ChatEngine {
   private abort: AbortController | null = null
   private listeners = new Set<(ev: ChatEvent) => void>()
   private openaiProvider: OpenAICompatProvider
+  private chromeProvider: ChromeAiProvider
   private injectedProvider: ChatProvider | null = null
   currentThreadId: string | null = null
 
@@ -47,6 +49,7 @@ export class ChatEngine {
     this.store = opts.store ?? new MemoryStore()
     this.fetchImpl = opts.fetchImpl ?? globalThis.fetch.bind(globalThis)
     this.openaiProvider = new OpenAICompatProvider(this.fetchImpl)
+    this.chromeProvider = new ChromeAiProvider()
     this.injectedProvider = opts.provider ?? null
   }
 
@@ -63,7 +66,7 @@ export class ChatEngine {
     this.config = { ...this.config, ...partial }
   }
 
-  /** Active provider id (openai | chrome-ai). Phase1 defaults to openai. */
+  /** Active provider id (openai | chrome-ai). */
   getProviderId(): ChatProviderId {
     const p = this.config.provider
     if (isChatProviderId(p)) return p
@@ -72,8 +75,12 @@ export class ChatEngine {
 
   getProvider(): ChatProvider {
     if (this.injectedProvider) return this.injectedProvider
-    // Phase2: switch on this.getProviderId() === 'chrome-ai'
-    return this.openaiProvider
+    return this.getProviderId() === 'chrome-ai' ? this.chromeProvider : this.openaiProvider
+  }
+
+  /** Access Nano provider for availability / download UI. */
+  getChromeAiProvider(): ChromeAiProvider {
+    return this.chromeProvider
   }
 
   registerTool(tool: HostTool): void {

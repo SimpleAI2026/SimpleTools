@@ -10,13 +10,31 @@ export {
   AGENT_STORAGE_KEY,
   AGENT_SETTINGS_LS_KEY,
   DEFAULT_AGENT_MODEL,
+  CHROME_AI_MODEL_LABEL,
+  defaultProviderId,
   loadAgentSettings,
   saveAgentSettings,
   resolveAgentConfig,
   type PersistedAgentSettings,
 } from './settings'
-export { OpenAICompatProvider, isChatProviderId } from './providers'
-export type { ChatProvider, ChatProviderId, OpenAICompatMessage } from './providers'
+export {
+  OpenAICompatProvider,
+  ChromeAiProvider,
+  chromeAiProviderSingleton,
+  checkChromeAiAvailability,
+  shouldPreferChromeAi,
+  isLanguageModelPresent,
+  messagesToPrompt,
+  CHROME_AI_STATUS,
+  isChatProviderId,
+} from './providers'
+export type {
+  ChatProvider,
+  ChatProviderId,
+  OpenAICompatMessage,
+  ChromeAiStatus,
+  ChromeAiAvailability,
+} from './providers'
 
 export { createHostTools, type HostToolDeps } from './hostTools'
 export { OFFLINE_TOOL_WHITELIST, isOfflineToolWhitelisted } from './hostTools/whitelist'

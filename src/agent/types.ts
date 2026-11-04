@@ -11,7 +11,7 @@ export interface SimpleChatConfig {
   headers?: Record<string, string>
   maxMessages?: number
   maxToolRounds?: number
-  /** Phase1 always 'openai'; 'chrome-ai' reserved for Phase2 Nano */
+  /** openai (cloud BYOK) | chrome-ai (Chrome Prompt API / Gemini Nano) */
   provider?: ChatProviderId
 }
 

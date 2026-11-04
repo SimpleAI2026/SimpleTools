@@ -43,6 +43,24 @@ onMounted(() => {
       <p v-if="agent.error === 'missing-settings'" class="text-destructive px-3 pb-1 text-xs sm:px-4">
         {{ $t('agent.missingSettings') }}
       </p>
+      <p
+        v-else-if="agent.error === 'chrome-ai-downloadable'"
+        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+      >
+        {{ $t('agent.chromeAiNeedDownload') }}
+      </p>
+      <p
+        v-else-if="agent.error === 'chrome-ai-downloading'"
+        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+      >
+        {{ $t('agent.chromeAiWaitDownload') }}
+      </p>
+      <p
+        v-else-if="agent.error === 'chrome-ai-unavailable'"
+        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+      >
+        {{ $t('agent.chromeAiUnavailableSend') }}
+      </p>
       <p v-else-if="agent.error" class="text-destructive px-3 pb-1 text-xs sm:px-4">{{ agent.error }}</p>
       <AgentComposer />
     </section>
