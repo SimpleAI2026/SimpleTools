@@ -13,21 +13,24 @@ const colName = (i: number) => {
 </script>
 
 <template>
-  <div class="max-h-[32rem] overflow-auto rounded-md border">
-    <table class="w-max min-w-full border-collapse text-sm">
-      <thead class="bg-muted sticky top-0 z-10">
-        <tr>
-          <th class="text-muted-foreground w-10 border px-2 py-1 text-xs font-normal">#</th>
-          <th v-for="c in cols" :key="c" class="text-muted-foreground border px-2 py-1 text-xs font-normal">{{ colName(c - 1) }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(r, i) in shown" :key="i" :class="header && i === 0 ? 'bg-muted/50 font-semibold' : ''">
-          <td class="text-muted-foreground border px-2 py-1 text-right text-xs">{{ i + 1 }}</td>
-          <td v-for="c in cols" :key="c" class="max-w-80 truncate border px-2 py-1" :title="r[c - 1]">{{ r[c - 1] }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div v-if="rows.length > limit" class="text-muted-foreground p-2 text-xs">… {{ rows.length - limit }} more rows</div>
+  <div class="flex flex-col gap-1">
+    <p data-testid="sheet-scroll-hint" class="text-muted-foreground text-xs md:hidden">{{ $t('common.scrollHint') }}</p>
+    <div class="max-h-[min(32rem,60dvh)] overflow-auto rounded-md border">
+      <table class="w-max min-w-full border-collapse text-sm">
+        <thead class="bg-muted sticky top-0 z-10">
+          <tr>
+            <th class="text-muted-foreground w-10 border px-2 py-1 text-xs font-normal">#</th>
+            <th v-for="c in cols" :key="c" class="text-muted-foreground border px-2 py-1 text-xs font-normal">{{ colName(c - 1) }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(r, i) in shown" :key="i" :class="header && i === 0 ? 'bg-muted/50 font-semibold' : ''">
+            <td class="text-muted-foreground border px-2 py-1 text-right text-xs">{{ i + 1 }}</td>
+            <td v-for="c in cols" :key="c" class="max-w-80 truncate border px-2 py-1" :title="r[c - 1]">{{ r[c - 1] }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="rows.length > limit" class="text-muted-foreground p-2 text-xs">… {{ rows.length - limit }} more rows</div>
+    </div>
   </div>
 </template>

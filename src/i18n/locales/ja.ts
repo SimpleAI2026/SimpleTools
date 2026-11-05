@@ -88,7 +88,8 @@ const ja: MessageSchema = {
     remove: "取り除く",
     preview: "プレビュー",
     settings: "設定",
-    file: "ファイル"
+    file: "ファイル",
+    scrollHint: "横にスワイプして列を表示"
   },
   tools: {
     "json-formatter": {

@@ -88,7 +88,8 @@ const ptBR: MessageSchema = {
     remove: "Remover",
     preview: "Visualização",
     settings: "Configurações",
-    file: "Arquivo"
+    file: "Arquivo",
+    scrollHint: "Deslize horizontalmente para ver mais colunas"
   },
   tools: {
     "json-formatter": {

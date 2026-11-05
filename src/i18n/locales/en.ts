@@ -89,6 +89,7 @@ const en: MessageSchema = {
     preview: 'Preview',
     settings: 'Settings',
     file: 'File',
+    scrollHint: 'Swipe horizontally to see more columns',
   },
   tools: {
     'json-formatter': {

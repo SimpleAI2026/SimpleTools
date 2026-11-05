@@ -88,7 +88,8 @@ const fr: MessageSchema = {
     remove: "Retirer",
     preview: "Aperçu",
     settings: "Paramètres",
-    file: "Déposer"
+    file: "Déposer",
+    scrollHint: "Balayez horizontalement pour voir plus de colonnes"
   },
   tools: {
     "json-formatter": {

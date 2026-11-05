@@ -88,7 +88,8 @@ const es: MessageSchema = {
     remove: "Eliminar",
     preview: "Avance",
     settings: "Ajustes",
-    file: "Archivo"
+    file: "Archivo",
+    scrollHint: "Desliza horizontalmente para ver más columnas"
   },
   tools: {
     "json-formatter": {

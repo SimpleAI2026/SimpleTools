@@ -87,6 +87,7 @@ const zhCN = {
     preview: '预览',
     settings: '设置',
     file: '文件',
+    scrollHint: '可左右滑动查看表格',
   },
   tools: {
     'json-formatter': {

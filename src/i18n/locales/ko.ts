@@ -88,7 +88,8 @@ const ko: MessageSchema = {
     remove: "제거하다",
     preview: "시사",
     settings: "설정",
-    file: "파일"
+    file: "파일",
+    scrollHint: "가로로 밀어 더 많은 열을 보세요"
   },
   tools: {
     "json-formatter": {
