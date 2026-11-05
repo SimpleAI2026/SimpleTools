@@ -81,15 +81,15 @@ async function save() {
     <template v-if="doc">
       <div class="flex flex-wrap items-center gap-2">
         <ModeToggle v-model="tool" :options="[['select', $t('tools.pdf-editor.select')], ['text', $t('tools.pdf-editor.text')], ['rect', $t('tools.pdf-editor.rect')], ['whiteout', $t('tools.pdf-editor.whiteout')], ['image', $t('tools.pdf-editor.image')]]" />
-        <Button size="sm" variant="outline" :disabled="page <= 1" :aria-label="$t('tools.pdf-editor.prev')" @click="page--"><ChevronLeft /></Button>
+        <Button size="icon" class="size-11 md:size-8" variant="outline" :disabled="page <= 1" :aria-label="$t('tools.pdf-editor.prev')" @click="page--"><ChevronLeft /></Button>
         <span class="text-sm">{{ $t('tools.pdf-editor.page', { n: page, total: numPages }) }}</span>
-        <Button size="sm" variant="outline" :disabled="page >= numPages" :aria-label="$t('tools.pdf-editor.next')" @click="page++"><ChevronRight /></Button>
-        <Button size="sm" :disabled="!edits.length || busy" @click="save"><Download /> {{ $t('tools.pdf-editor.save') }}</Button>
+        <Button size="icon" class="size-11 md:size-8" variant="outline" :disabled="page >= numPages" :aria-label="$t('tools.pdf-editor.next')" @click="page++"><ChevronRight /></Button>
+        <Button class="min-h-11" size="sm" :disabled="!edits.length || busy" @click="save"><Download /> {{ $t('tools.pdf-editor.save') }}</Button>
       </div>
       <FileDropzone v-if="tool === 'image'" accept="image/png,image/jpeg" :label="$t('tools.pdf-editor.chooseImage')" @file="pickImage" />
       <p class="text-muted-foreground text-xs">{{ $t('tools.pdf-editor.hint') }} {{ $t('tools.pdf-editor.note') }}</p>
       <div class="flex flex-col gap-4 lg:flex-row">
-        <div class="overflow-auto">
+        <div class="min-w-0 max-w-full flex-1 overflow-auto">
           <PdfPageCanvas v-slot="{ scale }" :doc="doc" :page="page" :rotation="0" :width="680" :class="tool === 'select' ? '' : 'cursor-crosshair'" @down="down" @move="move" @up="up">
             <template v-for="(e, i) in edits" :key="i">
               <div
@@ -106,7 +106,7 @@ async function save() {
             <div v-if="draft" class="absolute border border-dashed border-blue-500" :style="{ left: `${draft.x * scale}px`, top: `${draft.y * scale}px`, width: `${draft.w * scale}px`, height: `${draft.h * scale}px` }" />
           </PdfPageCanvas>
         </div>
-        <div class="flex min-w-64 flex-col gap-3">
+        <div class="flex w-full min-w-0 flex-col gap-3 lg:w-72">
           <h3 class="text-sm font-medium">{{ $t('tools.pdf-editor.items', { n: edits.length }) }}</h3>
           <template v-if="current">
             <template v-if="current.type === 'text'">

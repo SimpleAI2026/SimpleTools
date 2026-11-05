@@ -49,18 +49,18 @@ async function run() {
     <template v-if="doc">
       <p class="text-muted-foreground text-sm">{{ $t('tools.pdf-redact.hint') }}</p>
       <div class="flex flex-wrap items-center gap-2">
-        <Button size="sm" variant="outline" :disabled="page <= 1" :aria-label="$t('tools.pdf-redact.prev')" @click="page--"><ChevronLeft /></Button>
+        <Button size="icon" class="size-11 md:size-8" variant="outline" :disabled="page <= 1" :aria-label="$t('tools.pdf-redact.prev')" @click="page--"><ChevronLeft /></Button>
         <span class="text-sm">{{ $t('tools.pdf-redact.page', { n: page, total: numPages }) }}</span>
-        <Button size="sm" variant="outline" :disabled="page >= numPages" :aria-label="$t('tools.pdf-redact.next')" @click="page++"><ChevronRight /></Button>
+        <Button size="icon" class="size-11 md:size-8" variant="outline" :disabled="page >= numPages" :aria-label="$t('tools.pdf-redact.next')" @click="page++"><ChevronRight /></Button>
         <Button size="sm" variant="ghost" @click="rects = rects.filter((r) => r.page !== page)">{{ $t('tools.pdf-redact.clear') }}</Button>
       </div>
       <div class="flex flex-col gap-4 lg:flex-row">
-        <div class="overflow-auto">
+        <div class="min-w-0 max-w-full flex-1 overflow-auto">
           <PdfPageCanvas v-slot="{ scale }" :doc="doc" :page="page" :width="680" class="cursor-crosshair" @down="(p) => (start = p)" @move="move" @up="up">
             <div v-for="(r, i) in [...pageRects, ...(draft ? [draft] : [])]" :key="i" class="absolute opacity-80" :style="{ left: `${r.x * scale}px`, top: `${r.y * scale}px`, width: `${r.w * scale}px`, height: `${r.h * scale}px`, background: color }" />
           </PdfPageCanvas>
         </div>
-        <div class="flex min-w-60 flex-col gap-3">
+        <div class="flex w-full min-w-0 flex-col gap-3 lg:w-60 lg:shrink-0">
           <h3 class="text-sm font-medium">{{ $t('tools.pdf-redact.boxes', { n: rects.length }) }}</h3>
           <ul class="max-h-64 overflow-auto text-xs">
             <li v-for="(r, i) in rects" :key="i" class="flex items-center justify-between gap-2">
@@ -71,7 +71,7 @@ async function run() {
           <RangeField v-model="dpi" :label="$t('tools.pdf-redact.dpi')" :min="72" :max="400" :step="4" unit="dpi" />
           <label class="flex items-center gap-2 text-sm">{{ $t('tools.pdf-redact.color') }} <input v-model="color" type="color" class="h-8 w-10 rounded border" /></label>
           <p class="text-muted-foreground text-xs">{{ $t('tools.pdf-redact.warn') }}</p>
-          <Button :disabled="!rects.length || busy" @click="run"><Download /> {{ busy ? $t('common.processing') : $t('tools.pdf-redact.run') }}</Button>
+          <Button class="min-h-11" :disabled="!rects.length || busy" @click="run"><Download /> {{ busy ? $t('common.processing') : $t('tools.pdf-redact.run') }}</Button>
         </div>
       </div>
     </template>

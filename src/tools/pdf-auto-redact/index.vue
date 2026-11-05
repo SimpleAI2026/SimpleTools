@@ -70,24 +70,26 @@ async function run() {
           <RangeField v-model="dpi" :label="$t('tools.pdf-auto-redact.dpi')" :min="72" :max="400" :step="4" unit="dpi" />
         </div>
       </div>
-      <div><Button :disabled="busy" @click="find"><Search /> {{ $t('tools.pdf-auto-redact.find') }}</Button></div>
+      <div><Button class="min-h-11" :disabled="busy" @click="find"><Search /> {{ $t('tools.pdf-auto-redact.find') }}</Button></div>
       <template v-if="matches">
         <p class="text-sm">{{ matches.length ? $t('tools.pdf-auto-redact.found', { n: chosen.length }) : $t('tools.pdf-auto-redact.none') }}</p>
         <div v-if="matches.length" class="flex flex-col gap-4 lg:flex-row">
-          <ul class="max-h-[32rem] min-w-64 overflow-auto text-sm">
+          <ul class="max-h-[min(32rem,40dvh)] w-full min-w-0 overflow-auto text-sm lg:max-h-[32rem] lg:w-64 lg:shrink-0">
             <li v-for="(m, i) in matches" :key="i" class="flex items-center gap-2">
               <input v-model="enabled[i]" type="checkbox" />
               <button class="truncate text-left underline" @click="previewPage = m.page">p{{ m.page }} · {{ m.text }}</button>
             </li>
           </ul>
-          <PdfPageCanvas v-slot="{ scale }" :doc="doc" :page="previewPage" :width="560">
-            <template v-for="(m, i) in matches" :key="i">
-              <div v-if="m.page === previewPage && enabled[i]" class="absolute bg-black/80" :style="{ left: `${m.x * scale}px`, top: `${m.y * scale}px`, width: `${m.w * scale}px`, height: `${m.h * scale}px` }" />
-            </template>
-          </PdfPageCanvas>
+          <div class="min-w-0 flex-1 overflow-auto">
+            <PdfPageCanvas v-slot="{ scale }" :doc="doc" :page="previewPage" :width="560">
+              <template v-for="(m, i) in matches" :key="i">
+                <div v-if="m.page === previewPage && enabled[i]" class="absolute bg-black/80" :style="{ left: `${m.x * scale}px`, top: `${m.y * scale}px`, width: `${m.w * scale}px`, height: `${m.h * scale}px` }" />
+              </template>
+            </PdfPageCanvas>
+          </div>
         </div>
         <p class="text-muted-foreground text-xs">{{ $t('tools.pdf-auto-redact.warn') }}</p>
-        <div><Button :disabled="!chosen.length || busy" @click="run"><Download /> {{ busy ? $t('common.processing') : $t('tools.pdf-auto-redact.run') }}</Button></div>
+        <div><Button class="min-h-11" :disabled="!chosen.length || busy" @click="run"><Download /> {{ busy ? $t('common.processing') : $t('tools.pdf-auto-redact.run') }}</Button></div>
       </template>
     </template>
   </div>
