@@ -180,8 +180,9 @@ onBeforeUnmount(() => {
 <template>
   <div class="border-t px-3 py-3" data-testid="agent-composer">
     <div class="mx-auto w-full max-w-5xl">
+      <!-- ChatGPT-style: one bordered shell; + / send embedded inside; text near shell edge -->
       <div
-        class="bg-background focus-within:border-ring focus-within:ring-ring/50 flex min-h-[108px] flex-col gap-2 rounded-2xl border p-3 shadow-xs focus-within:ring-[3px]"
+        class="bg-background focus-within:border-ring focus-within:ring-ring/50 flex min-h-[108px] flex-col gap-1 rounded-2xl border p-1 shadow-xs focus-within:ring-[3px]"
         :class="dragOver ? 'border-ring ring-ring/40 ring-[3px]' : ''"
         data-testid="agent-composer-dropzone"
         @dragenter.prevent="dragOver = true"
@@ -191,7 +192,7 @@ onBeforeUnmount(() => {
       >
         <div
           v-if="pending.length"
-          class="flex flex-wrap gap-1.5"
+          class="flex flex-wrap gap-1.5 px-1 pt-1"
           data-testid="agent-attach-chips"
         >
           <div
@@ -222,19 +223,30 @@ onBeforeUnmount(() => {
           </div>
         </div>
 
-        <div class="flex items-end gap-2">
+        <Textarea
+          v-model="draft"
+          class="min-h-[72px] h-auto max-h-48 w-full flex-1 resize-none border-0 bg-transparent p-1 font-sans shadow-none focus-visible:border-transparent focus-visible:ring-0"
+          :placeholder="$t('agent.placeholder')"
+          :disabled="agent.streaming"
+          rows="3"
+          data-testid="agent-composer-input"
+          @keydown="onKeydown"
+          @paste="onPaste"
+        />
+
+        <div class="flex items-center justify-between gap-2">
           <Button
             type="button"
             variant="ghost"
             size="icon"
-            class="mb-0.5 size-6 shrink-0 rounded-full"
+            class="size-8 shrink-0 rounded-full"
             data-testid="agent-attach"
             :disabled="agent.streaming"
             :aria-label="$t('agent.attach')"
             :title="$t('agent.attach')"
             @click="openFilePicker"
           >
-            <Plus class="size-3.5" stroke-width="2.25" />
+            <Plus class="size-4" stroke-width="2.25" />
           </Button>
           <input
             ref="fileInput"
@@ -245,21 +257,11 @@ onBeforeUnmount(() => {
             data-testid="agent-attach-input"
             @change="onFileChange"
           >
-          <Textarea
-            v-model="draft"
-            class="min-h-[84px] h-auto max-h-48 flex-1 resize-none border-0 bg-transparent p-1 font-sans shadow-none focus-visible:border-transparent focus-visible:ring-0"
-            :placeholder="$t('agent.placeholder')"
-            :disabled="agent.streaming"
-            rows="3"
-            data-testid="agent-composer-input"
-            @keydown="onKeydown"
-            @paste="onPaste"
-          />
           <Button
             v-if="agent.streaming"
             variant="outline"
             size="icon"
-            class="mb-0.5 size-8 shrink-0 rounded-full"
+            class="size-8 shrink-0 rounded-full"
             data-testid="agent-stop"
             :aria-label="$t('agent.stop')"
             @click="agent.stop()"
@@ -269,7 +271,7 @@ onBeforeUnmount(() => {
           <Button
             v-else
             size="icon"
-            class="mb-0.5 size-8 shrink-0 rounded-full"
+            class="size-8 shrink-0 rounded-full"
             data-testid="agent-send"
             :disabled="!canSend"
             :aria-label="$t('agent.send')"
