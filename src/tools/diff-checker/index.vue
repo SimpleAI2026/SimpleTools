@@ -34,8 +34,8 @@ function loadSample() {
       <Button size="sm" variant="outline" @click="loadSample">{{ $t('common.sample') }}</Button>
     </div>
     <div class="grid items-stretch gap-4 lg:grid-cols-2">
-      <div class="flex flex-col gap-2"><Label>{{ $t('tools.diff-checker.original') }}</Label><Textarea v-model="a" class="min-h-[500px] min-h-[500px] h-[500px]" /></div>
-      <div class="flex flex-col gap-2"><Label>{{ $t('tools.diff-checker.changed') }}</Label><Textarea v-model="b" class="min-h-[500px] min-h-[500px] h-[500px]" /></div>
+      <div class="flex min-w-0 flex-col gap-2"><Label>{{ $t('tools.diff-checker.original') }}</Label><Textarea v-model="a" class="min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" /></div>
+      <div class="flex min-w-0 flex-col gap-2"><Label>{{ $t('tools.diff-checker.changed') }}</Label><Textarea v-model="b" class="min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" /></div>
     </div>
     <div class="flex flex-wrap items-center gap-3">
       <ModeToggle v-model="mode" :options="[['lines', $t('tools.diff-checker.lines')], ['words', $t('tools.diff-checker.words')], ['chars', $t('tools.diff-checker.chars')]]" />

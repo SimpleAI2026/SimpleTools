@@ -41,7 +41,7 @@ const json = computed(() => (sheet.value ? workbookToJson(all.value ? sheets.val
         <CopyButton :text="json" />
         <Button variant="outline" @click="downloadText(json, `${baseName}.json`, 'application/json')"><Download /> {{ $t('tools.excel-to-json.download') }}</Button>
       </div>
-      <Textarea :model-value="json.length > 500000 ? json.slice(0, 500000) + '\n…' : json" readonly class="bg-muted/40 min-h-[500px] font-mono min-h-[500px] h-[500px]" data-testid="tool-output" />
+      <Textarea :model-value="json.length > 500000 ? json.slice(0, 500000) + '\n…' : json" readonly class="bg-muted/40 font-mono min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" data-testid="tool-output" />
     </template>
   </div>
 </template>

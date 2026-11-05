@@ -91,7 +91,7 @@ function loadSample() {
       <ModeToggle v-else v-model="inFmt" :options="[['auto', $t('tools.gzip-tool.auto')], ['gzip', 'gzip'], ['zlib', 'zlib'], ['deflate-raw', 'deflate']]" />
     </div>
     <RangeField v-if="mode === 'compress'" v-model="level" class="max-w-md" :label="$t('tools.gzip-tool.level')" :min="0" :max="9" />
-    <Textarea v-if="source === 'text'" v-model="text" class="min-h-[500px] font-mono min-h-[500px] h-[500px]" data-testid="tool-input" />
+    <Textarea v-if="source === 'text'" v-model="text" class="font-mono min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" data-testid="tool-input" />
     <template v-else>
       <FileDropzone :label="$t('tools.gzip-tool.drop')" @file="(f) => (file = f)" />
       <span v-if="file" class="text-sm">{{ file.name }} · {{ formatBytes(file.size) }}</span>
@@ -109,7 +109,7 @@ function loadSample() {
           <Label>{{ mode === 'compress' ? $t('tools.gzip-tool.base64') : $t('tools.gzip-tool.textPreview') }}</Label>
           <CopyButton :text="preview" />
         </div>
-        <Textarea :model-value="preview" readonly class="bg-muted/40 min-h-[500px] font-mono break-all min-h-[500px] h-[500px]" data-testid="tool-output" />
+        <Textarea :model-value="preview" readonly class="bg-muted/40 font-mono break-all min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" data-testid="tool-output" />
       </template>
       <span v-else-if="mode === 'decompress'" class="text-muted-foreground text-sm">{{ $t('tools.gzip-tool.binary') }}</span>
     </div>

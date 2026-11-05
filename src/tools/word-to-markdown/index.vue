@@ -47,7 +47,7 @@ async function loadSample() {
         <CopyButton :text="md" />
         <Button variant="outline" @click="downloadText(md, withExt(file?.name ?? 'document', 'md'), 'text/markdown')"><Download /> {{ $t('tools.word-to-markdown.download') }}</Button>
       </div>
-      <Textarea :model-value="md" readonly class="bg-muted/40 min-h-[500px] font-mono min-h-[500px] h-[500px]" data-testid="tool-output" />
+      <Textarea :model-value="md" readonly class="bg-muted/40 font-mono min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" data-testid="tool-output" />
     </template>
   </div>
 </template>

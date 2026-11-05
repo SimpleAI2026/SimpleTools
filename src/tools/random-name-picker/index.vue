@@ -37,7 +37,7 @@ function run() {
         <Label>{{ $t('tools.random-name-picker.names') }}</Label>
         <Button size="sm" variant="outline" @click="loadSample">{{ $t('common.sample') }}</Button>
       </div>
-      <Textarea v-model="text" class="min-h-[500px] font-sans min-h-[500px] h-[500px]" />
+      <Textarea v-model="text" class="font-sans min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
       <p class="text-muted-foreground text-xs">{{ $t('tools.random-name-picker.total', { n: names.length }) }}</p>
     </div>
     <div class="flex flex-col gap-4">

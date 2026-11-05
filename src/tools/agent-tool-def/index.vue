@@ -122,7 +122,7 @@ function loadSample() {
           <Label>{{ $t('common.output') }}</Label>
           <CopyButton :text="formOut" />
         </div>
-        <Textarea :model-value="formOut" readonly class="min-h-[500px] bg-muted/40 min-h-[500px] h-[500px]" />
+        <Textarea :model-value="formOut" readonly class="bg-muted/40 min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
       </div>
     </template>
     <template v-else>

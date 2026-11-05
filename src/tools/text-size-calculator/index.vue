@@ -31,6 +31,6 @@ function loadSample() {
       </div>
     </div>
     <p class="text-muted-foreground text-sm">{{ $t('tools.text-size-calculator.sms', { enc: sms.encoding, n: sms.segments }) }}</p>
-    <Textarea v-model="text" class="min-h-[500px] font-sans min-h-[500px] h-[500px]" :placeholder="$t('tools.text-size-calculator.placeholder')" />
+    <Textarea v-model="text" class="font-sans min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" :placeholder="$t('tools.text-size-calculator.placeholder')" />
   </div>
 </template>

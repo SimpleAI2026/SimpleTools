@@ -26,7 +26,7 @@ const severityClass: Record<string, string> = {
           <Button size="sm" variant="ghost" @click="text = ''">{{ $t('common.clear') }}</Button>
         </div>
       </div>
-      <Textarea v-model="text" class="min-h-[500px] font-sans min-h-[500px] h-[500px]" :placeholder="$t('tools.system-prompt-linter.placeholder')" />
+      <Textarea v-model="text" class="font-sans min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" :placeholder="$t('tools.system-prompt-linter.placeholder')" />
     </div>
     <div>
       <h3 class="mb-2 text-sm font-medium">{{ $t('tools.system-prompt-linter.findings') }} ({{ findings.length }})</h3>

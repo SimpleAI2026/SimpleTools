@@ -40,6 +40,6 @@ const fields = ['min', 'max', 'count', 'decimals'] as const
     </div>
     <ErrorAlert v-if="err" :message="$t(`tools.random-number-generator.errors.${err}`)" />
     <div v-else-if="nums.length === 1" class="py-6 text-center text-6xl font-bold tabular-nums">{{ nums[0] }}</div>
-    <Textarea v-else :model-value="text" readonly class="bg-muted/40 min-h-[500px] min-h-[500px] h-[500px]" />
+    <Textarea v-else :model-value="text" readonly class="bg-muted/40 min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
   </div>
 </template>

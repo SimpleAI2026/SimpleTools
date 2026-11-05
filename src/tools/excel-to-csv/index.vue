@@ -46,7 +46,7 @@ async function exportCsv() {
         <Label><Switch v-model="o.bom" /> {{ $t('tools.excel-to-csv.bom') }}</Label>
         <Button @click="exportCsv"><Download /> {{ $t('tools.excel-to-csv.export') }}</Button>
       </div>
-      <Textarea :model-value="preview" readonly class="bg-muted/40 min-h-[500px] font-mono min-h-[500px] h-[500px]" data-testid="tool-output" />
+      <Textarea :model-value="preview" readonly class="bg-muted/40 font-mono min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" data-testid="tool-output" />
     </template>
   </div>
 </template>

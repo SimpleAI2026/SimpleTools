@@ -87,10 +87,10 @@ const types: QrContentType[] = ['text', 'url', 'wifi', 'email', 'phone', 'sms']
       </div>
       <p class="text-muted-foreground font-mono text-xs break-all">{{ payload }}</p>
     </div>
-    <div class="flex flex-col items-center gap-3">
+    <div class="flex max-w-full flex-col items-center gap-3">
       <ErrorAlert v-if="error" :message="$t('tools.qr-code-generator.tooLong')" />
-      <img v-if="dataUrl" :src="dataUrl" alt="QR" class="size-72 rounded border object-contain" />
-      <div class="flex gap-2">
+      <img v-if="dataUrl" :src="dataUrl" alt="QR" class="size-72 max-w-full rounded border object-contain" />
+      <div class="flex flex-wrap gap-2">
         <Button size="sm" variant="outline" :disabled="!dataUrl" @click="savePng"><Download /> {{ $t('tools.qr-code-generator.png') }}</Button>
         <Button size="sm" variant="outline" :disabled="!svg" @click="downloadText(svg, 'qrcode.svg', 'image/svg+xml')"><Download /> {{ $t('tools.qr-code-generator.svg') }}</Button>
       </div>

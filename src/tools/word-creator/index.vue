@@ -46,9 +46,9 @@ function loadSample() {
     </div>
     <ErrorAlert v-if="error" :message="error" />
     <div class="grid items-stretch gap-4 lg:grid-cols-2">
-      <Textarea v-model="md" class="min-h-[500px] font-mono min-h-[500px] h-[500px]" spellcheck="false" data-testid="tool-input" />
+      <Textarea v-model="md" class="min-w-0 font-mono min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" spellcheck="false" data-testid="tool-input" />
       <!-- eslint-disable-next-line vue/no-v-html -- sanitized with DOMPurify -->
-      <article class="prose-sm doc-preview min-h-[500px] overflow-auto rounded-md border bg-white p-6 text-black min-h-[500px] h-[500px]" :aria-label="$t('tools.word-creator.preview')" v-html="preview" />
+      <article class="prose-sm doc-preview min-w-0 overflow-auto rounded-md border bg-white p-6 text-black min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" :aria-label="$t('tools.word-creator.preview')" v-html="preview" />
     </div>
   </div>
 </template>

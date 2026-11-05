@@ -49,7 +49,7 @@ async function loadSample() {
         <CopyButton :text="text" />
         <Button variant="outline" @click="downloadText(text, withExt(name, 'txt'))"><Download /> {{ $t('tools.word-to-text.download') }}</Button>
       </div>
-      <Textarea :model-value="text" readonly class="bg-muted/40 min-h-[500px] min-h-[500px] h-[500px]" data-testid="tool-output" />
+      <Textarea :model-value="text" readonly class="bg-muted/40 min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" data-testid="tool-output" />
     </template>
   </div>
 </template>

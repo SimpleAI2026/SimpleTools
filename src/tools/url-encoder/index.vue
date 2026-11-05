@@ -45,18 +45,18 @@ function loadSample() {
       <Button size="sm" variant="ghost" class="ml-auto" @click="input = ''">{{ $t('common.clear') }}</Button>
     </div>
     <div class="grid items-stretch gap-4 lg:grid-cols-2">
-      <div class="flex min-h-0 flex-col gap-2">
+      <div class="flex min-h-0 min-w-0 flex-col gap-2">
         <div class="flex h-8 shrink-0 items-center justify-between">
           <Label>{{ $t('common.input') }}</Label>
         </div>
-        <Textarea v-model="input" class="min-h-[500px] h-[500px]" spellcheck="false" />
+        <Textarea v-model="input" class="min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" spellcheck="false" />
       </div>
-      <div class="flex min-h-0 flex-col gap-2">
+      <div class="flex min-h-0 min-w-0 flex-col gap-2">
         <div class="flex h-8 shrink-0 items-center justify-between">
           <Label>{{ $t('common.output') }}</Label>
           <CopyButton :text="result.output" />
         </div>
-        <Textarea :model-value="result.output" readonly class="bg-muted/40 break-all min-h-[500px] h-[500px]" />
+        <Textarea :model-value="result.output" readonly class="bg-muted/40 break-all min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
       </div>
     </div>
     <ErrorAlert v-if="result.error" :message="result.error" />

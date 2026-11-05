@@ -34,7 +34,7 @@ onBeforeUnmount(() => token.value++)
 </script>
 
 <template>
-  <div class="grid grid-cols-[repeat(auto-fill,minmax(7.5rem,1fr))] gap-3">
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(6.5rem,1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(7.5rem,1fr))] sm:gap-3">
     <button
       v-for="(src, i) in thumbs"
       :key="i"

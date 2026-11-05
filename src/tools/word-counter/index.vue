@@ -23,7 +23,7 @@ function loadSample() {
         <div class="text-muted-foreground text-xs">{{ $t(`tools.word-counter.${k}`) }}</div>
       </div>
     </div>
-    <Textarea v-model="text" class="min-h-[500px] font-sans min-h-[500px] h-[500px]" :placeholder="$t('tools.word-counter.placeholder')" />
+    <Textarea v-model="text" class="font-sans min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" :placeholder="$t('tools.word-counter.placeholder')" />
     <div class="flex flex-wrap items-center gap-2">
       <Button size="sm" variant="outline" @click="loadSample">{{ $t('common.sample') }}</Button>
       <Button size="sm" variant="ghost" @click="text = ''">{{ $t('common.clear') }}</Button>

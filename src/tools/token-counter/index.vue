@@ -49,7 +49,7 @@ const contextOptions = computed(() => CONTEXT_WINDOWS.map((w) => [w, `${(w / 100
       </div>
     </div>
     <p class="text-muted-foreground text-sm">{{ $t('tools.token-counter.estimateNote') }}</p>
-    <Textarea v-model="text" class="min-h-[500px] font-sans min-h-[500px] h-[500px]" :placeholder="$t('tools.token-counter.placeholder')" />
+    <Textarea v-model="text" class="font-sans min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" :placeholder="$t('tools.token-counter.placeholder')" />
     <div class="flex gap-2">
       <Button size="sm" variant="outline" @click="text = $t('tools.token-counter.sampleText')">{{ $t('common.sample') }}</Button>
       <Button size="sm" variant="ghost" @click="text = ''">{{ $t('common.clear') }}</Button>

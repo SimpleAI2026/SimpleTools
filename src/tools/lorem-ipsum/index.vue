@@ -38,6 +38,6 @@ function loadSample() {
         <CopyButton :text="text" />
       </div>
     </div>
-    <Textarea :model-value="text" readonly class="min-h-[500px] font-sans min-h-[500px] h-[500px]" />
+    <Textarea :model-value="text" readonly class="font-sans min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
   </div>
 </template>

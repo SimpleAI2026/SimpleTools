@@ -72,12 +72,12 @@ function loadSample() {
     </div>
     <ErrorAlert v-if="error" :message="error" />
     <div class="grid items-stretch gap-4 lg:grid-cols-2">
-      <div class="flex flex-col gap-2">
+      <div class="flex min-w-0 flex-col gap-2">
         <Label>{{ $t('tools.regex-tester.text') }}</Label>
-        <Textarea v-model="text" class="min-h-[500px] min-h-[500px] h-[500px]" />
-        <pre class="bg-muted/30 min-h-[500px] overflow-auto rounded-md border p-3 font-mono text-sm whitespace-pre-wrap min-h-[500px] h-[500px]"><span v-for="(s, i) in segs" :key="i" :class="s.match !== null ? `${colors[s.match % 2]} rounded-sm` : ''">{{ s.text }}</span></pre>
+        <Textarea v-model="text" class="min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
+        <pre class="bg-muted/30 overflow-auto rounded-md border p-3 font-mono text-sm whitespace-pre-wrap min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]"><span v-for="(s, i) in segs" :key="i" :class="s.match !== null ? `${colors[s.match % 2]} rounded-sm` : ''">{{ s.text }}</span></pre>
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex min-w-0 flex-col gap-2">
         <Label>{{ result ? $t('tools.regex-tester.matches', { n: result.matches.length }) : '' }}</Label>
         <p v-if="result?.truncated" class="text-muted-foreground text-xs">{{ $t('tools.regex-tester.truncated') }}</p>
         <div class="flex max-h-72 flex-col gap-2 overflow-auto">

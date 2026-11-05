@@ -37,7 +37,7 @@ function loadSample() {
       <Button size="sm" variant="ghost" @click="input = ''">{{ $t('common.clear') }}</Button>
     </div>
     <div class="grid items-stretch gap-4 lg:grid-cols-2">
-      <Textarea v-model="input" class="min-h-[500px] min-h-[500px] h-[500px]" :placeholder="$t('tools.json-viewer.input')" />
+      <Textarea v-model="input" class="min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" :placeholder="$t('tools.json-viewer.input')" />
       <div class="flex flex-col gap-2">
         <ErrorAlert v-if="!parsed.ok" :message="parsed.error" />
         <template v-else>

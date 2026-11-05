@@ -52,7 +52,7 @@ async function convert() {
       <Button size="sm" variant="outline" @click="loadSample">{{ $t('common.sample') }}</Button>
     </div>
     <span v-if="files.length" class="text-sm">{{ $t('tools.csv-to-excel.files', { n: files.length }) }} <Button size="sm" variant="ghost" @click="files = []">{{ $t('common.clear') }}</Button></span>
-    <Textarea v-else v-model="text" class="min-h-[500px] font-mono min-h-[500px] h-[500px]" data-testid="tool-input" />
+    <Textarea v-else v-model="text" class="font-mono min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" data-testid="tool-input" />
     <div class="flex flex-wrap items-center gap-3">
       <span class="text-sm">{{ $t('tools.csv-to-excel.delimiter') }}</span>
       <ModeToggle v-model="o.delimiter" :options="[['', $t('tools.csv-to-excel.auto')], [',', ','], [';', ';'], ['\t', 'Tab']]" />

@@ -49,8 +49,8 @@ async function onImport(e: Event) {
 
 <template>
   <div class="grid gap-4 md:grid-cols-[14rem_1fr]">
-    <aside class="flex flex-col gap-2">
-      <div class="flex gap-2">
+    <aside class="flex max-h-48 flex-col gap-2 overflow-auto md:max-h-none">
+      <div class="flex flex-wrap gap-2">
         <Button size="sm" class="flex-1" @click="create()"><Plus /> {{ $t('tools.notepad.new') }}</Button>
         <Button size="sm" variant="outline" @click="loadSample">{{ $t('common.sample') }}</Button>
         <Button size="sm" variant="outline" :aria-label="$t('tools.notepad.import')" @click="fileInput?.click()"><Upload /></Button>
@@ -66,13 +66,13 @@ async function onImport(e: Event) {
         {{ displayTitle(n, $t('tools.notepad.untitled')) }}
       </button>
     </aside>
-    <section v-if="active" class="flex flex-col gap-2">
-      <div class="flex gap-2">
+    <section v-if="active" class="flex min-w-0 flex-col gap-2">
+      <div class="flex flex-wrap gap-2">
         <Input :model-value="active.title" :placeholder="$t('tools.notepad.title')" @update:model-value="update({ title: String($event) })" />
         <Button size="sm" variant="outline" @click="downloadText(active.body, noteFilename(active))"><Download /> {{ $t('tools.notepad.export') }}</Button>
         <Button size="sm" variant="outline" :aria-label="$t('tools.notepad.delete')" @click="remove"><Trash2 /></Button>
       </div>
-      <Textarea :model-value="active.body" class="min-h-[500px] font-sans text-base min-h-[500px] h-[500px]" :placeholder="$t('tools.notepad.placeholder')" @update:model-value="update({ body: String($event) })" />
+      <Textarea :model-value="active.body" class="font-sans text-base min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" :placeholder="$t('tools.notepad.placeholder')" @update:model-value="update({ body: String($event) })" />
       <p class="text-muted-foreground text-xs">
         {{ $t('tools.notepad.words', { n: countText(active.body).words }) }} · {{ $t('tools.notepad.saved') }} {{ new Date(active.updatedAt).toLocaleTimeString() }}
       </p>

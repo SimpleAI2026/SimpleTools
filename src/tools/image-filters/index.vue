@@ -72,7 +72,7 @@ async function exportImage() {
     </div>
     <ErrorAlert v-if="error" :message="error" />
     <div v-if="url" class="grid gap-6 lg:grid-cols-[1fr_22rem]">
-      <div class="flex flex-col gap-2">
+      <div class="flex min-w-0 flex-col gap-2 overflow-auto">
         <div class="flex flex-wrap gap-1">
           <Button v-for="(_, k) in FILTER_PRESETS" :key="k" size="sm" variant="outline" @click="applyPreset(k)">{{ $t(`tools.image-filters.preset.${k}`) }}</Button>
         </div>

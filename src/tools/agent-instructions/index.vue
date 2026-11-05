@@ -76,7 +76,7 @@ const targetOptions = computed(() => [
           <Button size="sm" variant="outline" @click="downloadText(result.content, result.filename.split('/').pop()!)">{{ $t('common.download') }}</Button>
         </div>
       </div>
-      <Textarea :model-value="result.content" readonly class="min-h-[500px] bg-muted/40 font-sans min-h-[500px] h-[500px]" />
+      <Textarea :model-value="result.content" readonly class="bg-muted/40 font-sans min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
     </div>
   </div>
 </template>

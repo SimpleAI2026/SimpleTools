@@ -41,8 +41,8 @@ const sides = ['top', 'right', 'bottom', 'left'] as const
   <div class="flex flex-col gap-4">
     <PdfInput :file="file" :num-pages="numPages" :busy="busy" :error="error" :needs-password="needsPassword" @load="load" />
     <div v-if="doc" class="grid gap-6 lg:grid-cols-[1fr_20rem]">
-      <div class="relative mx-auto w-fit">
-        <img :src="preview" :alt="$t('common.preview')" class="block max-h-[34rem] border shadow" />
+      <div class="relative mx-auto min-w-0 w-fit max-w-full overflow-auto">
+        <img :src="preview" :alt="$t('common.preview')" class="block max-h-[34rem] max-w-full border shadow" />
         <div
           class="border-primary absolute border-2 border-dashed bg-transparent shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]"
           :style="{ top: pct(m.top, size.h), bottom: pct(m.bottom, size.h), left: pct(m.left, size.w), right: pct(m.right, size.w) }"

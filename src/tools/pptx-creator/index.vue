@@ -54,7 +54,7 @@ function loadSample() {
     <p class="text-muted-foreground text-xs">{{ $t('tools.pptx-creator.help') }}</p>
     <ErrorAlert v-if="error" :message="error" />
     <div class="grid items-stretch gap-4 lg:grid-cols-2">
-      <Textarea v-model="md" class="min-h-[500px] font-mono min-h-[500px] h-[500px]" spellcheck="false" data-testid="tool-input" />
+      <Textarea v-model="md" class="font-mono min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" spellcheck="false" data-testid="tool-input" />
       <div class="flex max-h-[36rem] flex-col gap-3 overflow-auto">
         <div
           v-for="(s, i) in slides"

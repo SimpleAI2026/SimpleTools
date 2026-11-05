@@ -20,11 +20,11 @@ const ctxKeys = Object.keys(DEFAULT_CONTEXT) as (keyof CssContext)[]
 
 <template>
   <div class="grid gap-6 lg:grid-cols-[1fr_18rem]">
-    <div class="flex flex-col gap-3">
+    <div class="flex min-w-0 flex-col gap-3 overflow-auto">
       <div class="flex flex-wrap items-center gap-2">
         <Button size="sm" variant="outline" @click="loadSample">{{ $t('common.sample') }}</Button>
       </div>
-      <div class="flex gap-2">
+      <div class="flex flex-wrap gap-2">
         <Input v-model.number="value" type="number" class="font-mono" :aria-label="$t('tools.css-unit-converter.value')" />
         <select v-model="from" class="border-input bg-background h-9 rounded-md border px-2" :aria-label="$t('tools.css-unit-converter.from')">
           <option v-for="u in CSS_UNITS" :key="u" :value="u">{{ u }}</option>

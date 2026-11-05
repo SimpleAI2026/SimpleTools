@@ -39,7 +39,7 @@ const label = (c: Corner, axis: 'h' | 'v') => `${t(`tools.border-radius-generato
       </template>
       <CssOutput :code="css" />
     </div>
-    <div class="flex min-h-[500px] items-center justify-center rounded-md border p-6 min-h-[500px] h-[500px]">
+    <div class="flex items-center justify-center rounded-md border p-6 min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]">
       <div class="size-56 bg-gradient-to-br from-indigo-500 to-pink-500 shadow-lg" :style="{ borderRadius: borderRadiusValue(s) }" />
     </div>
   </div>

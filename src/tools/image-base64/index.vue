@@ -62,12 +62,12 @@ function save() {
         </div>
         <div v-for="[k, v] in outputs" :key="k" class="flex flex-col gap-2">
           <div class="flex items-center justify-between"><Label>{{ $t(`tools.image-base64.${k}`) }}</Label><CopyButton :text="v ?? ''" /></div>
-          <Textarea :model-value="v" readonly class="bg-muted/40 min-h-[500px] break-all min-h-[500px] h-[500px]" />
+          <Textarea :model-value="v" readonly class="bg-muted/40 break-all min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
         </div>
       </div>
     </template>
     <template v-else>
-      <Textarea v-model="pasted" :placeholder="$t('tools.image-base64.paste')" class="min-h-[500px] break-all min-h-[500px] h-[500px]" />
+      <Textarea v-model="pasted" :placeholder="$t('tools.image-base64.paste')" class="break-all min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
       <ErrorAlert v-if="pasted.trim() && !parsed" :message="$t('tools.image-base64.invalid')" />
       <div v-if="parsed" class="flex flex-col items-start gap-3">
         <img :src="previewUrl" alt="" class="max-h-80 rounded border" />

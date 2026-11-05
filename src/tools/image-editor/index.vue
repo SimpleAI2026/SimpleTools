@@ -91,7 +91,7 @@ async function exportImage() {
     </div>
     <ErrorAlert v-if="error" :message="error" />
     <div v-if="bmp" class="grid gap-6 lg:grid-cols-[1fr_22rem]">
-      <div class="bg-muted/30 flex items-center justify-center rounded-md border p-2">
+      <div class="bg-muted/30 flex min-w-0 items-center justify-center overflow-auto rounded-md border p-2">
         <canvas ref="canvas" class="max-h-[32rem] max-w-full" />
       </div>
       <div class="flex flex-col gap-3">
@@ -103,7 +103,7 @@ async function exportImage() {
         </div>
         <h3 class="text-sm font-medium">{{ $t('tools.image-editor.crop') }}</h3>
         <ModeToggle v-model="ratio" :options="Object.keys(ratios).map((k) => [k, k === 'free' ? $t('tools.image-editor.free') : k] as const)" />
-        <div class="grid grid-cols-4 gap-2">
+        <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
           <label v-for="k in ['x', 'y', 'w', 'h'] as const" :key="k" class="flex flex-col gap-1 text-xs uppercase">
             {{ k }}
             <Input :model-value="s.crop[k]" type="number" class="h-8 font-mono" @change="setCrop(k, ($event.target as HTMLInputElement).value)" />

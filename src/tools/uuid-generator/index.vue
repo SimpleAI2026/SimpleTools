@@ -36,6 +36,6 @@ watch([count, opts], regenerate, { immediate: true })
         <Button size="sm" variant="outline" @click="downloadText(text, 'uuids.txt')"><Download /> {{ $t('common.download') }}</Button>
       </div>
     </div>
-    <Textarea :model-value="text" readonly class="bg-muted/40 min-h-[500px] min-h-[500px] h-[500px]" />
+    <Textarea :model-value="text" readonly class="bg-muted/40 min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
   </div>
 </template>

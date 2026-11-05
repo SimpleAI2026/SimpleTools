@@ -20,7 +20,7 @@ function loadSample() {
       <Button size="sm" variant="outline" @click="loadSample">{{ $t('common.sample') }}</Button>
     </div>
     <Label>{{ $t('common.input') }}</Label>
-    <Textarea v-model="input" class="min-h-[500px] min-h-[500px] h-[500px]" spellcheck="false" />
+    <Textarea v-model="input" class="min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" spellcheck="false" />
     <div class="grid gap-3 sm:grid-cols-2">
       <div v-for="c in CASES" :key="c" class="flex flex-col gap-1 rounded-md border p-3">
         <div class="flex items-center justify-between">

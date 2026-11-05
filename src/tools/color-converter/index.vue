@@ -43,8 +43,8 @@ function loadSample() {
     </div>
     <ErrorAlert v-if="input.trim() && !color" :message="$t('tools.color-converter.invalid')" />
     <div v-if="color" class="grid gap-4 md:grid-cols-[12rem_1fr]">
-      <div class="flex flex-col gap-2">
-        <div class="h-32 rounded-md border" :style="{ background: rows[1]!.v }" />
+      <div class="flex w-full flex-col gap-2">
+        <div class="h-32 w-full rounded-md border" :style="{ background: rows[1]!.v }" />
         <div class="text-sm">{{ $t('tools.color-converter.contrast') }}: {{ contrastRatio(color, W) }}:1 {{ $t('tools.color-converter.onWhite') }}</div>
         <div class="text-sm">{{ $t('tools.color-converter.contrast') }}: {{ contrastRatio(color, K) }}:1 {{ $t('tools.color-converter.onBlack') }}</div>
       </div>

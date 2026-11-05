@@ -85,13 +85,13 @@ async function exportImage() {
       <Button size="sm" variant="outline" @click="loadSample">{{ $t('common.sample') }}</Button>
     </div>
     <div class="grid items-stretch gap-4 lg:grid-cols-2">
-      <div class="flex flex-col gap-2">
+      <div class="flex min-w-0 flex-col gap-2">
         <Label>{{ $t('tools.html-to-image.html') }}</Label>
-        <Textarea v-model="html" class="min-h-[500px] font-mono min-h-[500px] h-[500px]" spellcheck="false" data-testid="tool-input" />
+        <Textarea v-model="html" class="font-mono min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" spellcheck="false" data-testid="tool-input" />
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex min-w-0 flex-col gap-2">
         <Label>{{ $t('tools.html-to-image.css') }}</Label>
-        <Textarea v-model="css" class="min-h-[500px] font-mono min-h-[500px] h-[500px]" spellcheck="false" />
+        <Textarea v-model="css" class="font-mono min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" spellcheck="false" />
       </div>
     </div>
     <div class="flex flex-wrap items-center gap-3">

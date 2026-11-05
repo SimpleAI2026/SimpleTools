@@ -85,9 +85,9 @@ async function convert() {
     <div class="grid items-stretch gap-4 lg:grid-cols-2">
       <div class="flex flex-col gap-2">
         <Label>{{ $t('tools.svg-to-png.code') }}</Label>
-        <Textarea v-model="code" class="min-h-[500px] font-mono min-h-[500px] h-[500px]" spellcheck="false" data-testid="tool-input" />
+        <Textarea v-model="code" class="font-mono min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" spellcheck="false" data-testid="tool-input" />
       </div>
-      <div class="flex min-h-[500px] items-center justify-center rounded-md border bg-[repeating-conic-gradient(#e5e7eb_0_25%,transparent_0_50%)] bg-[length:16px_16px] p-4 min-h-[500px] h-[500px]">
+      <div class="flex items-center justify-center rounded-md border bg-[repeating-conic-gradient(#e5e7eb_0_25%,transparent_0_50%)] bg-[length:16px_16px] p-4 min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]">
         <img :src="preview" :alt="$t('common.preview')" class="max-h-64 max-w-full" />
       </div>
     </div>

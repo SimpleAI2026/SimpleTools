@@ -42,7 +42,7 @@ const applyPreset = (k: string) => (layers.value = SHADOW_PRESETS[k]!.map((l) =>
     </div>
     <div class="flex flex-col gap-2">
       <Label class="self-end">{{ $t('tools.box-shadow-generator.background') }} <input v-model="bg" type="color" class="h-7 w-9 rounded border" /></Label>
-      <div class="flex min-h-[500px] flex-1 items-center justify-center rounded-md border p-10 min-h-[500px] h-[500px]" :style="{ background: bg }">
+      <div class="flex flex-1 items-center justify-center rounded-md border p-10 min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" :style="{ background: bg }">
         <div class="size-48 rounded-xl bg-white" :style="{ boxShadow: boxShadowValue(layers) }" />
       </div>
     </div>

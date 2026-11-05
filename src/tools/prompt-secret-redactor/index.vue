@@ -25,7 +25,7 @@ const cats: RedactCategory[] = ['openai', 'anthropic', 'google', 'github', 'slac
     </div>
     <div class="text-sm font-medium">{{ $t('tools.prompt-secret-redactor.redacted', { n: result.total }) }}</div>
     <div class="grid items-stretch gap-4 lg:grid-cols-2">
-      <div class="flex flex-col gap-2">
+      <div class="flex min-w-0 flex-col gap-2">
         <div class="flex h-8 items-center justify-between">
           <Label>{{ $t('common.input') }}</Label>
           <div class="flex gap-2">
@@ -33,14 +33,14 @@ const cats: RedactCategory[] = ['openai', 'anthropic', 'google', 'github', 'slac
             <Button size="sm" variant="ghost" @click="input = ''">{{ $t('common.clear') }}</Button>
           </div>
         </div>
-        <Textarea v-model="input" class="min-h-[500px] min-h-[500px] h-[500px]" :placeholder="$t('tools.prompt-secret-redactor.placeholder')" />
+        <Textarea v-model="input" class="min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" :placeholder="$t('tools.prompt-secret-redactor.placeholder')" />
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex min-w-0 flex-col gap-2">
         <div class="flex h-8 items-center justify-between">
           <Label>{{ $t('common.output') }}</Label>
           <CopyButton :text="result.text" />
         </div>
-        <Textarea :model-value="result.text" readonly class="min-h-[500px] bg-muted/40 min-h-[500px] h-[500px]" />
+        <Textarea :model-value="result.text" readonly class="bg-muted/40 min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
       </div>
     </div>
   </div>

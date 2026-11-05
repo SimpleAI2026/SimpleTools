@@ -47,7 +47,7 @@ function loadSample() {
       <Button size="sm" :variant="source === 'text' ? 'default' : 'outline'" @click="source = 'text'">{{ $t('tools.hash-generator.text') }}</Button>
       <Button size="sm" :variant="source === 'file' ? 'default' : 'outline'" @click="source = 'file'">{{ $t('tools.hash-generator.file') }}</Button>
     </div>
-    <Textarea v-if="source === 'text'" v-model="text" class="min-h-[500px] min-h-[500px] h-[500px]" spellcheck="false" />
+    <Textarea v-if="source === 'text'" v-model="text" class="min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" spellcheck="false" />
     <div v-else class="flex flex-col gap-2">
       <FileDropzone :label="$t('tools.hash-generator.chooseFile')" @file="file = $event" />
       <p v-if="file" class="text-muted-foreground text-sm">{{ file.name }} · {{ formatBytes(file.size) }}</p>

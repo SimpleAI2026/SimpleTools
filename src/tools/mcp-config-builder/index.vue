@@ -72,7 +72,7 @@ function addServer() {
     </div>
     <ModeToggle v-model="mode" :options="modeOptions" />
     <template v-if="mode === 'build'">
-      <div class="flex flex-col gap-2">
+      <div class="flex min-w-0 flex-col gap-2">
         <Label>{{ $t('tools.mcp-config-builder.target') }}</Label>
         <ModeToggle v-model="target" :options="targetOptions" />
       </div>
@@ -119,7 +119,7 @@ function addServer() {
         </template>
       </div>
       <Button size="sm" variant="outline" @click="addServer">{{ $t('tools.mcp-config-builder.addServer') }}</Button>
-      <div class="flex flex-col gap-2">
+      <div class="flex min-w-0 flex-col gap-2">
         <div class="flex h-8 items-center justify-between">
           <Label>{{ $t('common.output') }}</Label>
           <div class="flex gap-2">
@@ -127,19 +127,19 @@ function addServer() {
             <Button size="sm" variant="outline" @click="downloadText(output, 'mcp.json', 'application/json')">{{ $t('common.download') }}</Button>
           </div>
         </div>
-        <Textarea :model-value="output" readonly class="min-h-[500px] bg-muted/40 min-h-[500px] h-[500px]" />
+        <Textarea :model-value="output" readonly class="bg-muted/40 min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
       </div>
     </template>
     <template v-else>
-      <div class="flex flex-col gap-2">
+      <div class="flex min-w-0 flex-col gap-2">
         <Label>{{ $t('tools.mcp-config-builder.pasteJson') }}</Label>
-        <Textarea v-model="paste" class="min-h-[500px] min-h-[500px] h-[500px]" />
+        <Textarea v-model="paste" class="min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" />
       </div>
       <div>
         <h3 class="mb-2 text-sm font-medium">{{ $t('tools.mcp-config-builder.issues') }}</h3>
         <p v-if="!paste.trim()" class="text-muted-foreground text-sm">—</p>
         <p v-else-if="issues.length === 0" class="text-sm text-emerald-600">{{ $t('tools.mcp-config-builder.valid') }}</p>
-        <ul v-else class="flex flex-col gap-2">
+        <ul v-else class="flex min-w-0 flex-col gap-2">
           <li v-for="(iss, i) in issues" :key="i" class="rounded-md border border-destructive/40 p-2 text-sm text-destructive">
             <code class="font-mono">{{ iss.path }}</code>: {{ iss.message }}
           </li>
