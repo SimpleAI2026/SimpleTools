@@ -52,52 +52,52 @@ onMounted(() => {
         </Button>
       </header>
       <AgentMessageList />
-      <p v-if="agent.error === 'missing-settings'" class="text-destructive px-3 pb-1 text-xs sm:px-4">
+      <p v-if="agent.error === 'missing-settings'" class="text-destructive px-3 pb-1 text-xs">
         {{ $t('agent.missingSettings') }}
       </p>
       <p
         v-else-if="agent.error === 'chrome-ai-downloadable'"
-        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+        class="text-destructive px-3 pb-1 text-xs"
       >
         {{ $t('agent.chromeAiNeedDownload') }}
       </p>
       <p
         v-else-if="agent.error === 'chrome-ai-downloading'"
-        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+        class="text-destructive px-3 pb-1 text-xs"
       >
         {{ $t('agent.chromeAiWaitDownload') }}
       </p>
       <p
         v-else-if="agent.error === 'chrome-ai-unavailable'"
-        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+        class="text-destructive px-3 pb-1 text-xs"
       >
         {{ $t('agent.chromeAiUnavailableSend') }}
       </p>
       <p
         v-else-if="agent.error === 'chrome-ai-images'"
-        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+        class="text-destructive px-3 pb-1 text-xs"
       >
         {{ $t('agent.chromeAiNoImages') }}
       </p>
       <p
         v-else-if="agent.error === 'attach-max'"
-        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+        class="text-destructive px-3 pb-1 text-xs"
       >
         {{ $t('agent.attachMax', { n: 5 }) }}
       </p>
       <p
         v-else-if="agent.error?.startsWith('attach-type:')"
-        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+        class="text-destructive px-3 pb-1 text-xs"
       >
         {{ $t('agent.attachType', { name: agent.error.slice('attach-type:'.length) }) }}
       </p>
       <p
         v-else-if="agent.error?.startsWith('attach-size:')"
-        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+        class="text-destructive px-3 pb-1 text-xs"
       >
         {{ $t('agent.attachSize', { name: agent.error.slice('attach-size:'.length), limit: '4 MB' }) }}
       </p>
-      <p v-else-if="agent.error" class="text-destructive px-3 pb-1 text-xs sm:px-4">{{ agent.error }}</p>
+      <p v-else-if="agent.error" class="text-destructive px-3 pb-1 text-xs">{{ agent.error }}</p>
       <AgentComposer />
     </section>
     <AgentSettingsDialog />

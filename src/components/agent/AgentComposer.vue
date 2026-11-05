@@ -178,8 +178,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="border-t p-3 sm:p-4" data-testid="agent-composer">
-    <div class="mx-auto max-w-3xl">
+  <div class="border-t px-3 py-3" data-testid="agent-composer">
+    <div class="mx-auto w-full max-w-5xl">
       <div
         class="bg-background focus-within:border-ring focus-within:ring-ring/50 flex min-h-[108px] flex-col gap-2 rounded-2xl border p-3 shadow-xs focus-within:ring-[3px]"
         :class="dragOver ? 'border-ring ring-ring/40 ring-[3px]' : ''"
@@ -259,7 +259,7 @@ onBeforeUnmount(() => {
             v-if="agent.streaming"
             variant="outline"
             size="icon"
-            class="mb-0.5 size-11 shrink-0 rounded-full md:size-8"
+            class="mb-0.5 size-8 shrink-0 rounded-full"
             data-testid="agent-stop"
             :aria-label="$t('agent.stop')"
             @click="agent.stop()"
@@ -269,13 +269,13 @@ onBeforeUnmount(() => {
           <Button
             v-else
             size="icon"
-            class="mb-0.5 size-11 shrink-0 rounded-full md:size-8"
+            class="mb-0.5 size-8 shrink-0 rounded-full"
             data-testid="agent-send"
             :disabled="!canSend"
             :aria-label="$t('agent.send')"
             @click="submit"
           >
-            <ArrowUp class="size-4" />
+            <ArrowUp class="size-3.5" />
           </Button>
         </div>
       </div>

@@ -25,7 +25,7 @@ watch(
 <template>
   <div
     ref="scroller"
-    class="min-h-0 flex-1 overflow-y-auto px-3 py-6 sm:px-4"
+    class="min-h-0 flex-1 overflow-y-auto px-3 py-6"
     data-testid="agent-message-list"
   >
     <p
@@ -34,7 +34,7 @@ watch(
     >
       {{ $t('agent.empty') }}
     </p>
-    <div v-else class="mx-auto flex max-w-3xl flex-col gap-5">
+    <div v-else class="mx-auto flex w-full max-w-5xl flex-col gap-5">
       <AgentMessage
         v-for="m in agent.messages"
         :key="m.id"
