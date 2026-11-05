@@ -110,7 +110,7 @@ async function save() {
           <h3 class="text-sm font-medium">{{ $t('tools.pdf-editor.items', { n: edits.length }) }}</h3>
           <template v-if="current">
             <template v-if="current.type === 'text'">
-              <Textarea class="h-auto" v-model="current.text" rows="3" :aria-label="$t('tools.pdf-editor.content')" />
+              <Textarea v-model="current.text" class="h-auto" rows="3" :aria-label="$t('tools.pdf-editor.content')" />
               <RangeField v-model="current.size" :label="$t('tools.pdf-editor.size')" :min="6" :max="96" unit="pt" />
               <Label><Switch v-model="current.bold" /> {{ $t('tools.pdf-editor.bold') }}</Label>
             </template>

@@ -10,6 +10,15 @@ import {
 import { ChatEngine } from '../ChatEngine';
 import { MemoryStore } from '../MemoryStore';
 
+type LanguageModelMock = {
+  availability?: ReturnType<typeof vi.fn>;
+  create?: ReturnType<typeof vi.fn>;
+};
+
+function languageModel(): LanguageModelMock {
+  return (globalThis as unknown as { LanguageModel: LanguageModelMock }).LanguageModel;
+}
+
 beforeEach(() => {
   delete (globalThis as { LanguageModel?: unknown }).LanguageModel;
 });
@@ -35,16 +44,16 @@ describe('checkChromeAiAvailability', () => {
     expect(isLanguageModelPresent()).toBe(true);
     expect((await checkChromeAiAvailability()).status).toBe(CHROME_AI_STATUS.AVAILABLE);
 
-    (globalThis as any).LanguageModel.availability.mockResolvedValueOnce('downloadable');
+    languageModel().availability!.mockResolvedValueOnce('downloadable');
     expect((await checkChromeAiAvailability()).status).toBe(CHROME_AI_STATUS.DOWNLOADABLE);
 
-    (globalThis as any).LanguageModel.availability.mockResolvedValueOnce('downloading');
+    languageModel().availability!.mockResolvedValueOnce('downloading');
     expect((await checkChromeAiAvailability()).status).toBe(CHROME_AI_STATUS.DOWNLOADING);
 
-    (globalThis as any).LanguageModel.availability.mockResolvedValueOnce('nope');
+    languageModel().availability!.mockResolvedValueOnce('nope');
     expect((await checkChromeAiAvailability()).status).toBe(CHROME_AI_STATUS.UNAVAILABLE);
 
-    (globalThis as any).LanguageModel.availability.mockRejectedValueOnce(new Error('boom'));
+    languageModel().availability!.mockRejectedValueOnce(new Error('boom'));
     const failed = await checkChromeAiAvailability();
     expect(failed.status).toBe(CHROME_AI_STATUS.UNAVAILABLE);
     expect(failed.reason).toContain('boom');
@@ -53,12 +62,12 @@ describe('checkChromeAiAvailability', () => {
 
 describe('shouldPreferChromeAi', () => {
   it('is false when apiKey present', async () => {
-    (globalThis as any).LanguageModel = { availability: vi.fn(async () => 'available') };
+    (globalThis as unknown as { LanguageModel: LanguageModelMock }).LanguageModel = { availability: vi.fn(async () => 'available') };
     expect(await shouldPreferChromeAi('sk-x')).toBe(false);
   });
 
   it('is true when no key and Nano available/downloadable', async () => {
-    (globalThis as any).LanguageModel = { availability: vi.fn(async () => 'downloadable') };
+    (globalThis as unknown as { LanguageModel: LanguageModelMock }).LanguageModel = { availability: vi.fn(async () => 'downloadable') };
     expect(await shouldPreferChromeAi('')).toBe(true);
   });
 });
@@ -88,7 +97,7 @@ describe('ChromeAiProvider.stream', () => {
       yield 'Hel';
       yield 'lo';
     }
-    (globalThis as any).LanguageModel = {
+    (globalThis as unknown as { LanguageModel: LanguageModelMock }).LanguageModel = {
       availability: vi.fn(async () => 'available'),
       create: vi.fn(async ({ monitor }: { monitor?: (m: unknown) => void }) => {
         monitor?.({ addEventListener });
@@ -113,24 +122,24 @@ describe('ChromeAiProvider.stream', () => {
     }
     expect(deltas.join('')).toBe('Hello');
     expect(onDownloadProgress).toHaveBeenCalledWith(0.4);
-    expect((globalThis as any).LanguageModel.create).toHaveBeenCalledTimes(1);
+    expect(languageModel().create!).toHaveBeenCalledTimes(1);
 
     // reuse
-    for await (const _ of provider.stream({
+    for await (const ev of provider.stream({
       config: { apiBaseUrl: '', apiKey: '', model: '', provider: 'chrome-ai' },
       messages: [{ role: 'user', content: 'again' }],
       tools: [],
       signal: new AbortController().signal,
     })) {
-      /* drain */
+      void ev
     }
-    expect((globalThis as any).LanguageModel.create).toHaveBeenCalledTimes(1);
+    expect(languageModel().create!).toHaveBeenCalledTimes(1);
     provider.destroySession();
     expect(destroy).toHaveBeenCalled();
   });
 
   it('falls back to prompt() when promptStreaming missing', async () => {
-    (globalThis as any).LanguageModel = {
+    (globalThis as unknown as { LanguageModel: LanguageModelMock }).LanguageModel = {
       create: vi.fn(async () => ({
         prompt: vi.fn(async () => 'nano-ok'),
         destroy: vi.fn(),
@@ -150,16 +159,16 @@ describe('ChromeAiProvider.stream', () => {
   });
 
   it('throws when create unavailable', async () => {
-    (globalThis as any).LanguageModel = {};
+    (globalThis as unknown as { LanguageModel: LanguageModelMock }).LanguageModel = {};
     const provider = new ChromeAiProvider();
     await expect(async () => {
-      for await (const _ of provider.stream({
+      for await (const ev of provider.stream({
         config: { apiBaseUrl: '', apiKey: '', model: '' },
         messages: [{ role: 'user', content: 'x' }],
         tools: [],
         signal: new AbortController().signal,
       })) {
-        /* */
+        void ev
       }
     }).rejects.toThrow(/unavailable/i);
   });
@@ -168,7 +177,7 @@ describe('ChromeAiProvider.stream', () => {
 describe('ChatEngine with chrome-ai skips tools', () => {
   it('does not call fetch and ignores registered tools', async () => {
     const fetchSpy = vi.fn();
-    (globalThis as any).LanguageModel = {
+    (globalThis as unknown as { LanguageModel: LanguageModelMock }).LanguageModel = {
       create: vi.fn(async () => ({
         prompt: vi.fn(async () => 'local reply'),
         destroy: vi.fn(),
