@@ -12,6 +12,7 @@ const ptBR: MessageSchema = {
     noResults: "Nenhuma ferramenta correspondente",
     back: "Voltar ao início",
     language: "Linguagem",
+    moreMenu: "Mais",
     toggleTheme: "Alternar tema",
     github: "Repositório GitHub",
     addFavorite: "Adicionar aos favoritos",

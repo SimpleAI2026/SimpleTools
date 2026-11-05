@@ -10,6 +10,7 @@ const zhCN = {
     noResults: '没有找到匹配的工具',
     back: '返回首页',
     language: '语言',
+    moreMenu: '更多',
     toggleTheme: '切换主题',
     github: 'GitHub 仓库',
     addFavorite: '加入收藏',

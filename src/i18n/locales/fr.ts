@@ -12,6 +12,7 @@ const fr: MessageSchema = {
     noResults: "Aucun outil correspondant",
     back: "Retour à l'accueil",
     language: "Langue",
+    moreMenu: "Plus",
     toggleTheme: "Changer de thème",
     github: "Dépôt GitHub",
     addFavorite: "Ajouter aux favoris",

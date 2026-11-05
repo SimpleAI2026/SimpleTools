@@ -12,6 +12,7 @@ const es: MessageSchema = {
     noResults: "No hay herramientas coincidentes",
     back: "Volver al inicio",
     language: "Idioma",
+    moreMenu: "Más",
     toggleTheme: "Alternar tema",
     github: "repositorio de GitHub",
     addFavorite: "Añadir a favoritos",

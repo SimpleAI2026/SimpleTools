@@ -12,6 +12,7 @@ const de: MessageSchema = {
     noResults: "Keine passenden Werkzeuge",
     back: "Zur Startseite",
     language: "Sprache",
+    moreMenu: "Mehr",
     toggleTheme: "Thema umschalten",
     github: "GitHub-Repository",
     addFavorite: "Zu Favoriten hinzufügen",

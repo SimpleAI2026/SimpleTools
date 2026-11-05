@@ -12,6 +12,7 @@ const en: MessageSchema = {
     noResults: 'No matching tools',
     back: 'Back to home',
     language: 'Language',
+    moreMenu: 'More',
     toggleTheme: 'Toggle theme',
     github: 'GitHub repository',
     addFavorite: 'Add to favorites',

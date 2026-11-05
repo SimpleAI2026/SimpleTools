@@ -12,6 +12,7 @@ const ja: MessageSchema = {
     noResults: "一致するツールがありません",
     back: "ホームに戻る",
     language: "言語",
+    moreMenu: "その他",
     toggleTheme: "テーマの切り替え",
     github: "GitHub リポジトリ",
     addFavorite: "お気に入りに追加",

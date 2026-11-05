@@ -12,6 +12,7 @@ const ko: MessageSchema = {
     noResults: "일치하는 도구가 없습니다.",
     back: "홈으로",
     language: "언어",
+    moreMenu: "더보기",
     toggleTheme: "테마 전환",
     github: "GitHub 저장소",
     addFavorite: "즐겨찾기에 추가",
