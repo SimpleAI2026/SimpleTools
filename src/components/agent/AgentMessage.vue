@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { ChatMessage } from '@/agent'
+import type { ChatContentPart, ChatMessage } from '@/agent'
 import AgentMarkdown from '@/components/agent/AgentMarkdown.vue'
 
-defineProps<{ message: ChatMessage }>()
+const props = defineProps<{ message: ChatMessage }>()
 
 const { t } = useI18n()
 
@@ -29,6 +30,19 @@ function formatToolContent(content: string): string {
     return content
   }
 }
+
+type ImagePart = Extract<ChatContentPart, { type: 'image_url' }>
+
+const imageParts = computed((): ImagePart[] =>
+  (props.message.parts || []).filter((p): p is ImagePart => p.type === 'image_url'),
+)
+
+const userText = computed(() => {
+  const m = props.message
+  if (m.content && m.content !== '[image]') return m.content
+  if (imageParts.value.length && (!m.content || m.content === '[image]')) return ''
+  return m.content
+})
 </script>
 
 <template>
@@ -68,9 +82,33 @@ function formatToolContent(content: string): string {
 
     <div
       v-else-if="message.role === 'user'"
-      class="bg-background rounded-lg border px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap"
+      class="bg-background flex flex-col gap-2 rounded-lg border px-3 py-2 text-sm leading-relaxed"
     >
-      {{ message.content }}
+      <div
+        v-if="imageParts.length"
+        class="flex flex-wrap gap-2"
+        data-testid="agent-message-images"
+      >
+        <img
+          v-for="(p, i) in imageParts"
+          :key="`${p.image_url.url}-${i}`"
+          :src="p.image_url.url"
+          :alt="p.name || 'image'"
+          class="max-h-48 max-w-full rounded-md border object-contain"
+        >
+      </div>
+      <div
+        v-if="userText"
+        class="whitespace-pre-wrap"
+      >
+        {{ userText }}
+      </div>
+      <div
+        v-else-if="!imageParts.length"
+        class="whitespace-pre-wrap"
+      >
+        {{ message.content || '[image]' }}
+      </div>
     </div>
 
     <div

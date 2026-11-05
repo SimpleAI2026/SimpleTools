@@ -82,16 +82,28 @@ export async function shouldPreferChromeAi(apiKey: string): Promise<boolean> {
   );
 }
 
+function flattenMessageContent(
+  content: string | import('./types').OpenAIContentPart[],
+): string {
+  if (typeof content === 'string') return content;
+  const bits: string[] = [];
+  for (const p of content) {
+    if (p.type === 'text') bits.push(p.text);
+    else if (p.type === 'image_url') bits.push('[image]');
+  }
+  return bits.join('\n') || '';
+}
+
 /** Flatten OpenAI-style messages into a single prompt for Nano. */
 export function messagesToPrompt(messages: OpenAICompatMessage[]): string {
   const parts: string[] = [];
   for (const m of messages) {
     if (m.role === 'system') {
-      parts.push(`System:\n${m.content}`);
+      parts.push(`System:\n${flattenMessageContent(m.content)}`);
     } else if (m.role === 'user') {
-      parts.push(`User:\n${m.content}`);
+      parts.push(`User:\n${flattenMessageContent(m.content)}`);
     } else if (m.role === 'assistant') {
-      parts.push(`Assistant:\n${m.content || ''}`);
+      parts.push(`Assistant:\n${flattenMessageContent(m.content || '')}`);
     } else if (m.role === 'tool') {
       parts.push(`Tool:\n${m.content}`);
     }

@@ -84,6 +84,19 @@ describe('messagesToPrompt', () => {
     expect(p).toContain('Assistant:\nyo');
     expect(p.trim().endsWith('Assistant:')).toBe(true);
   });
+
+  it('array content marks images as [image]', () => {
+    const p = messagesToPrompt([
+      {
+        role: 'user',
+        content: [
+          { type: 'text', text: 'look' },
+          { type: 'image_url', image_url: { url: 'data:image/png;base64,x' } },
+        ],
+      },
+    ]);
+    expect(p).toContain('User:\nlook\n[image]');
+  });
 });
 
 describe('ChromeAiProvider.stream', () => {

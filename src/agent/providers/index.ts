@@ -2,6 +2,7 @@ export type {
   ChatProvider,
   ChatProviderId,
   OpenAICompatMessage,
+  OpenAIContentPart,
   ProviderStreamEvent,
   ProviderStreamRequest,
 } from './types'

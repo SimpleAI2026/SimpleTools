@@ -215,3 +215,92 @@ describe('ChatEngine', () => {
     expect(assistant?.status).toBe('done')
   })
 })
+
+describe('multimodal attachments (Phase A)', () => {
+  let fetchMock: ReturnType<typeof vi.fn>
+
+  beforeEach(() => {
+    fetchMock = vi.fn()
+  })
+
+  function okStream() {
+    return streamResponse([
+      sseChunk({ choices: [{ delta: { content: 'seen' }, finish_reason: 'stop' }] }),
+      'data: [DONE]\n\n',
+    ])
+  }
+
+  it('toOpenAIMessages: string-only legacy messages stay string content', async () => {
+    fetchMock.mockResolvedValue(okStream())
+    const store = new MemoryStore()
+    const engine = new ChatEngine({
+      config: { apiBaseUrl: 'https://api.example.com/v1', apiKey: 'sk', model: 'm' },
+      store,
+      fetchImpl: fetchMock as unknown as typeof fetch,
+    })
+    for await (const ev of engine.send('hello only')) {
+      void ev
+    }
+    const thread = (await engine.listThreads())[0]!
+    const msgs = await engine.getMessages(thread.id)
+    const wire = engine.toOpenAIMessagesPublic(msgs)
+    const user = wire.find((m) => m.role === 'user')
+    expect(user && typeof user.content === 'string').toBe(true)
+    expect(user && (user as { content: string }).content).toBe('hello only')
+  })
+
+  it('toOpenAIMessages: parts produce image_url array content', async () => {
+    fetchMock.mockResolvedValue(okStream())
+    const store = new MemoryStore()
+    const engine = new ChatEngine({
+      config: { apiBaseUrl: 'https://api.example.com/v1', apiKey: 'sk', model: 'm' },
+      store,
+      fetchImpl: fetchMock as unknown as typeof fetch,
+    })
+    for await (const ev of engine.send('what is this?', {
+      attachments: [
+        {
+          url: 'data:image/png;base64,abc',
+          mime: 'image/png',
+          name: 'a.png',
+          detail: 'auto',
+        },
+      ],
+    })) {
+      void ev
+    }
+    const body = JSON.parse(fetchMock.mock.calls[0]![1].body as string)
+    const user = body.messages.find((m: { role: string }) => m.role === 'user')
+    expect(Array.isArray(user.content)).toBe(true)
+    expect(user.content[0]).toEqual({ type: 'text', text: 'what is this?' })
+    expect(user.content[1]).toEqual({
+      type: 'image_url',
+      image_url: { url: 'data:image/png;base64,abc', detail: 'auto' },
+    })
+  })
+
+  it('send: image-only uses [image] placeholder and stores parts', async () => {
+    fetchMock.mockResolvedValue(okStream())
+    const store = new MemoryStore()
+    const engine = new ChatEngine({
+      config: { apiBaseUrl: 'https://api.example.com/v1', apiKey: 'sk', model: 'm' },
+      store,
+      fetchImpl: fetchMock as unknown as typeof fetch,
+    })
+    for await (const ev of engine.send('', {
+      attachments: [{ url: 'data:image/jpeg;base64,xx', name: 'x.jpg', mime: 'image/jpeg' }],
+    })) {
+      void ev
+    }
+    const thread = (await engine.listThreads())[0]!
+    const msgs = await engine.getMessages(thread.id)
+    const user = msgs.find((m) => m.role === 'user')!
+    expect(user.parts?.length).toBe(2)
+    expect(user.parts?.[0]).toEqual({ type: 'text', text: '[image]' })
+    expect(user.content).toContain('x.jpg')
+    const body = JSON.parse(fetchMock.mock.calls[0]![1].body as string)
+    const wireUser = body.messages.find((m: { role: string }) => m.role === 'user')
+    expect(wireUser.content.some((p: { type: string }) => p.type === 'image_url')).toBe(true)
+  })
+})
+

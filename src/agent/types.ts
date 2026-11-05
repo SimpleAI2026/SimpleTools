@@ -31,16 +31,54 @@ export interface ToolCall {
   arguments: string
 }
 
+/** Multimodal content part (OpenAI-compatible vision shape). */
+export type ChatContentPart =
+  | { type: 'text'; text: string }
+  | {
+      type: 'image_url'
+      image_url: { url: string; detail?: 'auto' | 'low' | 'high' }
+      /** UI / persistence helpers; strip before OpenAI body if desired */
+      name?: string
+      mime?: string
+      attachmentId?: string
+    }
+
 export interface ChatMessage {
   id: string
   threadId: string
   role: Role
+  /** Plain-text summary / legacy; when `parts` is set, parts win for the model */
   content: string
+  /** Optional multimodal parts (Phase A: text + image_url) */
+  parts?: ChatContentPart[]
   toolCallId?: string
   toolCalls?: ToolCall[]
   createdAt: number
   status?: 'streaming' | 'done' | 'error'
 }
+
+/** Attachment input for ChatEngine.send (already resolved URLs / data URLs). */
+export interface SendAttachment {
+  url: string
+  mime?: string
+  name?: string
+  detail?: 'auto' | 'low' | 'high'
+}
+
+export interface SendOptions {
+  attachments?: SendAttachment[]
+}
+
+/** Host-pluggable upload; return a model/UI reference. */
+export type UploadFileResult =
+  | { url: string; mime?: string; name?: string }
+  | { base64: string; mime: string; name?: string }
+  | { id: string; url?: string; mime?: string; name?: string }
+
+export type UploadFileHandler = (
+  file: File,
+  ctx: { signal: AbortSignal; threadId: string | null },
+) => Promise<UploadFileResult>
 
 export interface ToolContext {
   threadId: string

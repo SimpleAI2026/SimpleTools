@@ -73,6 +73,30 @@ onMounted(() => {
       >
         {{ $t('agent.chromeAiUnavailableSend') }}
       </p>
+      <p
+        v-else-if="agent.error === 'chrome-ai-images'"
+        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+      >
+        {{ $t('agent.chromeAiNoImages') }}
+      </p>
+      <p
+        v-else-if="agent.error === 'attach-max'"
+        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+      >
+        {{ $t('agent.attachMax', { n: 5 }) }}
+      </p>
+      <p
+        v-else-if="agent.error?.startsWith('attach-type:')"
+        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+      >
+        {{ $t('agent.attachType', { name: agent.error.slice('attach-type:'.length) }) }}
+      </p>
+      <p
+        v-else-if="agent.error?.startsWith('attach-size:')"
+        class="text-destructive px-3 pb-1 text-xs sm:px-4"
+      >
+        {{ $t('agent.attachSize', { name: agent.error.slice('attach-size:'.length), limit: '4 MB' }) }}
+      </p>
       <p v-else-if="agent.error" class="text-destructive px-3 pb-1 text-xs sm:px-4">{{ agent.error }}</p>
       <AgentComposer />
     </section>

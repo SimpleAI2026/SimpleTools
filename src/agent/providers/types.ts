@@ -3,8 +3,19 @@ import type { StreamDelta } from '../sse'
 
 export type { ChatProviderId }
 
+export type OpenAIContentPart =
+  | { type: 'text'; text: string }
+  | {
+      type: 'image_url'
+      image_url: { url: string; detail?: 'auto' | 'low' | 'high' }
+    }
+
 export type OpenAICompatMessage =
-  | { role: 'system' | 'user' | 'assistant'; content: string; tool_calls?: unknown[] }
+  | {
+      role: 'system' | 'user' | 'assistant'
+      content: string | OpenAIContentPart[]
+      tool_calls?: unknown[]
+    }
   | { role: 'tool'; content: string; tool_call_id: string }
 
 export interface ProviderStreamRequest {

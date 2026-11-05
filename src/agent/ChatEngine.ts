@@ -2,11 +2,13 @@ import { ToolRegistry } from './ToolRegistry'
 import { MemoryStore } from './MemoryStore'
 import {
   createId,
+  type ChatContentPart,
   type ChatEvent,
   type ChatMessage,
   type ChatThread,
   type HistoryStore,
   type HostTool,
+  type SendOptions,
   type SimpleChatConfig,
   type ToolCall,
   type ChatProviderId,
@@ -14,7 +16,7 @@ import {
 import { mergeToolCallDeltas, type AccumulatedToolCall } from './sse'
 import { OpenAICompatProvider } from './providers/OpenAICompatProvider'
 import { ChromeAiProvider } from './providers/ChromeAiProvider'
-import type { ChatProvider, OpenAICompatMessage } from './providers/types'
+import type { ChatProvider, OpenAICompatMessage, OpenAIContentPart } from './providers/types'
 import { isChatProviderId } from './providers/types'
 
 export interface ChatEngineOptions {
@@ -136,23 +138,47 @@ export class ChatEngine {
     return this.createThread()
   }
 
-  async *send(userText: string): AsyncGenerator<ChatEvent> {
-    const text = userText.trim()
-    if (!text) return
+  async *send(userText: string, opts?: SendOptions): AsyncGenerator<ChatEvent> {
+    const text = (userText ?? '').trim()
+    const attachments = (opts?.attachments ?? []).filter((a) => a && a.url)
+    if (!text && !attachments.length) return
 
     const thread = await this.ensureThread()
+
+    const parts: ChatContentPart[] | undefined = attachments.length
+      ? [
+          ...(text ? [{ type: 'text' as const, text }] : [{ type: 'text' as const, text: '[image]' }]),
+          ...attachments.map((a) => ({
+            type: 'image_url' as const,
+            image_url: {
+              url: a.url,
+              detail: a.detail ?? ('auto' as const),
+            },
+            name: a.name,
+            mime: a.mime,
+          })),
+        ]
+      : undefined
+
+    const contentSummary =
+      text ||
+      (attachments.length
+        ? attachments.map((a) => a.name || '[image]').join(', ')
+        : '')
 
     const userMsg: ChatMessage = {
       id: createId('msg'),
       threadId: thread.id,
       role: 'user',
-      content: text,
+      content: contentSummary || '[image]',
+      parts,
       createdAt: Date.now(),
       status: 'done',
     }
     await this.store.appendMessage(userMsg)
     if (thread.title === '新会话' || thread.title === 'New chat') {
-      thread.title = text.slice(0, 40) + (text.length > 40 ? '…' : '')
+      const titleBase = text || contentSummary || '[image]'
+      thread.title = titleBase.slice(0, 40) + (titleBase.length > 40 ? '…' : '')
     }
     thread.updatedAt = Date.now()
     await this.store.upsertThread(thread)
@@ -349,6 +375,15 @@ export class ChatEngine {
     }
   }
 
+  /** Expose for tests / hosts that need the OpenAI wire shape. */
+  toOpenAIMessagesPublic(
+    history: ChatMessage[],
+    systemPrompt?: string,
+    maxMessages = 40,
+  ): OpenAICompatMessage[] {
+    return this.toOpenAIMessages(history, systemPrompt, maxMessages)
+  }
+
   private toOpenAIMessages(
     history: ChatMessage[],
     systemPrompt: string | undefined,
@@ -378,6 +413,18 @@ export class ChatEngine {
         })
       } else if (m.role === 'system') {
         // injected from config each turn
+      } else if (m.role === 'user' && m.parts?.length) {
+        const content: OpenAIContentPart[] = m.parts.map((p) => {
+          if (p.type === 'text') return { type: 'text', text: p.text }
+          return {
+            type: 'image_url',
+            image_url: {
+              url: p.image_url.url,
+              detail: p.image_url.detail ?? 'auto',
+            },
+          }
+        })
+        out.push({ role: 'user', content })
       } else {
         out.push({ role: m.role as 'user' | 'assistant', content: m.content })
       }

@@ -32,9 +32,22 @@ export type {
   ChatProvider,
   ChatProviderId,
   OpenAICompatMessage,
+  OpenAIContentPart,
   ChromeAiStatus,
   ChromeAiAvailability,
 } from './providers'
+
+export {
+  DEFAULT_ACCEPT,
+  DEFAULT_MAX_ATTACHMENT_BYTES,
+  DEFAULT_MAX_ATTACHMENTS,
+  createPendingId,
+  isImageFile,
+  formatBytes,
+  fileToDataUrl,
+  resolveUploadToUrl,
+  type PendingAttachment,
+} from './attachments'
 
 export { createHostTools, type HostToolDeps } from './hostTools'
 export { OFFLINE_TOOL_WHITELIST, isOfflineToolWhitelisted } from './hostTools/whitelist'

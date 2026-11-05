@@ -17,6 +17,7 @@ import {
   type PersistedAgentSettings,
   type ChatProviderId,
   type ChromeAiStatus,
+  type SendOptions,
 } from '@/agent'
 
 export const useAgentStore = defineStore('agent', () => {
@@ -178,10 +179,15 @@ export const useAgentStore = defineStore('agent', () => {
     }
   }
 
-  async function send(text: string): Promise<boolean> {
+  async function send(text: string, opts?: SendOptions): Promise<boolean> {
     const eng = ensureEngine()
+    const attachments = (opts?.attachments ?? []).filter((a) => a && a.url)
     // Always resolve with draft so rememberKey:false session apiKey still works.
     const cfg = resolveAgentConfig(draftSettings.value)
+    if (cfg.provider === 'chrome-ai' && attachments.length) {
+      error.value = 'chrome-ai-images'
+      return false
+    }
     if (cfg.provider === 'chrome-ai') {
       const avail = await checkChromeAiAvailability()
       chromeAiStatus.value = avail.status
@@ -207,7 +213,7 @@ export const useAgentStore = defineStore('agent', () => {
     streaming.value = true
     error.value = null
     try {
-      for await (const ev of eng.send(text)) {
+      for await (const ev of eng.send(text, attachments.length ? { attachments } : undefined)) {
         if (ev.type === 'text-delta') {
           applyTextDelta(ev.messageId, ev.delta)
         } else if (ev.type === 'message' || ev.type === 'done') {
