@@ -215,6 +215,8 @@ const zhCN = {
   agent: {
     newChat: '新会话',
     threads: '会话',
+    openThreads: '会话列表',
+    closeThreads: '关闭会话列表',
     deleteThread: '删除会话',
     placeholder: '输入消息…（可让模型调用本机工具）',
     send: '发送',

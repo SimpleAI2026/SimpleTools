@@ -46,7 +46,7 @@ function onKeydown(e: KeyboardEvent) {
           v-if="agent.streaming"
           variant="outline"
           size="icon"
-          class="mb-0.5 size-8 shrink-0 rounded-full"
+          class="mb-0.5 size-11 shrink-0 rounded-full md:size-8"
           data-testid="agent-stop"
           :aria-label="$t('agent.stop')"
           @click="agent.stop()"
@@ -56,7 +56,7 @@ function onKeydown(e: KeyboardEvent) {
         <Button
           v-else
           size="icon"
-          class="mb-0.5 size-8 shrink-0 rounded-full"
+          class="mb-0.5 size-11 shrink-0 rounded-full md:size-8"
           data-testid="agent-send"
           :disabled="!canSend"
           :aria-label="$t('agent.send')"

@@ -217,6 +217,8 @@ const en: MessageSchema = {
   agent: {
     newChat: 'New chat',
     threads: 'Chats',
+    openThreads: 'Chats',
+    closeThreads: 'Close chats',
     deleteThread: 'Delete chat',
     placeholder: 'Type a message… (the model can call local tools)',
     send: 'Send',
