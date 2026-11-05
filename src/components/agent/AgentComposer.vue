@@ -247,7 +247,7 @@ onBeforeUnmount(() => {
           >
           <Textarea
             v-model="draft"
-            class="min-h-[84px] h-auto max-h-48 flex-1 resize-none border-0 bg-transparent px-1 py-1 font-sans shadow-none focus-visible:border-transparent focus-visible:ring-0"
+            class="min-h-[84px] h-auto max-h-48 flex-1 resize-none border-0 bg-transparent p-1 font-sans shadow-none focus-visible:border-transparent focus-visible:ring-0"
             :placeholder="$t('agent.placeholder')"
             :disabled="agent.streaming"
             rows="3"
