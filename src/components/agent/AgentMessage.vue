@@ -2,11 +2,14 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { ChatContentPart, ChatMessage } from '@/agent'
+import { useAgentStore } from '@/stores/agent'
 import AgentMarkdown from '@/components/agent/AgentMarkdown.vue'
+import AgentTypingBubble from '@/components/agent/AgentTypingBubble.vue'
 
 const props = defineProps<{ message: ChatMessage }>()
 
 const { t } = useI18n()
+const agent = useAgentStore()
 
 function roleLabel(role: ChatMessage['role']): string {
   if (role === 'user') return t('agent.roleUser')
@@ -43,6 +46,16 @@ const userText = computed(() => {
   if (imageParts.value.length && (!m.content || m.content === '[image]')) return ''
   return m.content
 })
+
+/** Match SimpleChat: dots while streaming with empty prose and no tool calls. */
+const showTyping = computed(() => {
+  const m = props.message
+  if (m.role !== 'assistant') return false
+  if (!agent.streaming || m.status !== 'streaming') return false
+  if (m.content?.trim()) return false
+  if (m.toolCalls?.length) return false
+  return true
+})
 </script>
 
 <template>
@@ -53,32 +66,36 @@ const userText = computed(() => {
   >
     <div class="text-muted-foreground text-xs font-medium tracking-wide">
       {{ roleLabel(message.role) }}
-      <span v-if="message.status === 'streaming'" class="ml-2 font-normal">
-        {{ $t('agent.streaming') }}
-      </span>
     </div>
 
-    <div
-      v-if="message.role === 'assistant'"
-      class="bg-muted/40 rounded-lg border px-3 py-2"
-    >
-      <AgentMarkdown :content="message.content" />
+    <template v-if="message.role === 'assistant'">
+      <AgentTypingBubble v-if="showTyping" />
       <div
-        v-if="message.toolCalls?.length"
-        class="mt-2 space-y-2 border-t pt-2"
+        v-else-if="message.content?.trim() || message.toolCalls?.length"
+        class="bg-muted/40 rounded-lg border px-3 py-2"
       >
+        <AgentMarkdown
+          v-if="message.content?.trim()"
+          :content="message.content"
+        />
         <div
-          v-for="tc in message.toolCalls"
-          :key="tc.id"
-          class="bg-background rounded-md border p-2 text-xs"
+          v-if="message.toolCalls?.length"
+          class="mt-2 space-y-2 border-t pt-2"
+          :class="message.content?.trim() ? '' : 'mt-0 border-t-0 pt-0'"
         >
-          <div class="mb-1 font-medium">{{ $t('agent.toolCall') }}: {{ tc.name }}</div>
-          <pre class="overflow-x-auto whitespace-pre-wrap break-words text-[11px] leading-relaxed">{{
-            prettyJson(tc.arguments)
-          }}</pre>
+          <div
+            v-for="tc in message.toolCalls"
+            :key="tc.id"
+            class="bg-background rounded-md border p-2 text-xs"
+          >
+            <div class="mb-1 font-medium">{{ $t('agent.toolCall') }}: {{ tc.name }}</div>
+            <pre class="overflow-x-auto whitespace-pre-wrap break-words text-[11px] leading-relaxed">{{
+              prettyJson(tc.arguments)
+            }}</pre>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
 
     <div
       v-else-if="message.role === 'user'"

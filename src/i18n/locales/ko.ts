@@ -268,6 +268,7 @@ const ko: MessageSchema = {
     attachType: '이미지만 지원(image/*). 무시됨: {name}',
     attachSize: '파일이 너무 큽니다(최대 {limit}): {name}',
     streaming: 'Generating…',
+    typing: '입력 중',
     error: 'Something went wrong',
   },
 }

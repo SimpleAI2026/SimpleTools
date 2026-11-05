@@ -268,6 +268,7 @@ const en: MessageSchema = {
     attachType: 'Images only (image/*); ignored: {name}',
     attachSize: 'File too large (max {limit}): {name}',
     streaming: 'Generating…',
+    typing: 'Typing',
     error: 'Something went wrong',
   },
 }

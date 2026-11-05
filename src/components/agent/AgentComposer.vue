@@ -142,10 +142,14 @@ async function submit() {
   const hasAtt = pending.value.length > 0
   if ((!text && !hasAtt) || agent.streaming) return
   const snapshot = [...pending.value]
+  // Match SimpleChat: show typing / stop during attachment encode as well as the model stream.
+  agent.streaming = true
+  agent.error = null
   let attachments: SendAttachment[] = []
   try {
     attachments = await resolveAttachments()
   } catch (err) {
+    agent.streaming = false
     agent.error = err instanceof Error ? err.message : String(err)
     return
   }
@@ -154,6 +158,7 @@ async function submit() {
   const accepted = await agent.send(text, attachments.length ? { attachments } : undefined)
   // Restore input / chips if send rejected before starting (settings / Nano).
   if (!accepted) {
+    agent.streaming = false
     draft.value = text
     for (const a of snapshot) {
       // Recreate object URLs for restored chips.
@@ -178,7 +183,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="border-t px-3 py-3" data-testid="agent-composer">
+  <div
+    class="border-t px-3 py-3 max-md:pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] md:px-4"
+    data-testid="agent-composer"
+  >
     <div class="mx-auto w-full max-w-5xl">
       <!-- ChatGPT-style: one bordered shell; + / send embedded inside; text near shell edge -->
       <div
@@ -239,14 +247,14 @@ onBeforeUnmount(() => {
             type="button"
             variant="ghost"
             size="icon"
-            class="size-8 shrink-0 rounded-full"
+            class="size-8 shrink-0 rounded-full max-md:size-10"
             data-testid="agent-attach"
             :disabled="agent.streaming"
             :aria-label="$t('agent.attach')"
             :title="$t('agent.attach')"
             @click="openFilePicker"
           >
-            <Plus class="size-4" stroke-width="2.25" />
+            <Plus class="size-4 max-md:size-[18px]" stroke-width="2.25" />
           </Button>
           <input
             ref="fileInput"
@@ -261,7 +269,7 @@ onBeforeUnmount(() => {
             v-if="agent.streaming"
             variant="outline"
             size="icon"
-            class="size-8 shrink-0 rounded-full"
+            class="size-8 shrink-0 rounded-full max-md:size-10"
             data-testid="agent-stop"
             :aria-label="$t('agent.stop')"
             @click="agent.stop()"
@@ -271,7 +279,7 @@ onBeforeUnmount(() => {
           <Button
             v-else
             size="icon"
-            class="size-8 shrink-0 rounded-full"
+            class="size-8 shrink-0 rounded-full max-md:size-10"
             data-testid="agent-send"
             :disabled="!canSend"
             :aria-label="$t('agent.send')"

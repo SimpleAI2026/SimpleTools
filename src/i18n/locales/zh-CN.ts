@@ -266,6 +266,7 @@ const zhCN = {
     attachType: '暂仅支持图片（image/*），已忽略：{name}',
     attachSize: '文件过大（上限 {limit}）：{name}',
     streaming: '生成中…',
+    typing: '正在输入',
     error: '出错了',
   },
 }

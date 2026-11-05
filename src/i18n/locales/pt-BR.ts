@@ -268,6 +268,7 @@ const ptBR: MessageSchema = {
     attachType: 'Apenas imagens (image/*); ignorado: {name}',
     attachSize: 'Arquivo muito grande (máx. {limit}): {name}',
     streaming: 'Generating…',
+    typing: 'Digitando…',
     error: 'Something went wrong',
   },
 }

@@ -268,6 +268,7 @@ const ja: MessageSchema = {
     attachType: '画像（image/*）のみ対応。無視しました：{name}',
     attachSize: 'ファイルが大きすぎます（上限 {limit}）：{name}',
     streaming: 'Generating…',
+    typing: '入力中',
     error: 'Something went wrong',
   },
 }

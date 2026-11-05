@@ -30,7 +30,7 @@ function select(id: string) {
           type="button"
           :class="
             cn(
-              'hover:bg-accent min-h-11 w-full truncate rounded-md px-2 py-1.5 pr-10 text-left text-sm md:min-h-0',
+              'hover:bg-accent min-h-11 w-full truncate rounded-md px-2 py-2.5 pr-10 text-left text-sm md:min-h-0 md:py-1.5',
               th.id === agent.currentThreadId && 'bg-accent font-medium',
             )
           "
@@ -59,11 +59,11 @@ function select(id: string) {
     >
       <div class="absolute inset-0 bg-black/40" @click="emit('close')" />
       <aside
-        class="bg-background absolute inset-y-0 left-0 flex w-[min(18rem,85vw)] flex-col border-r shadow-lg"
+        class="bg-background absolute inset-y-0 left-0 flex w-[min(20rem,100%)] flex-col border-r shadow-lg"
         role="dialog"
         :aria-label="$t('agent.openThreads')"
       >
-        <div class="flex items-center gap-2 border-b p-2">
+        <div class="flex items-center gap-2 border-b p-2 pt-[max(0.5rem,env(safe-area-inset-top,0px))]">
           <Button size="sm" class="h-11 flex-1" data-testid="agent-new-thread-mobile" @click="agent.newThread(); emit('close')">
             <Plus /> {{ $t('agent.newChat') }}
           </Button>
@@ -83,7 +83,7 @@ function select(id: string) {
               type="button"
               :class="
                 cn(
-                  'hover:bg-accent min-h-11 w-full truncate rounded-md px-2 py-1.5 pr-10 text-left text-sm',
+                  'hover:bg-accent min-h-11 w-full truncate rounded-md px-2 py-2.5 pr-10 text-left text-sm',
                   th.id === agent.currentThreadId && 'bg-accent font-medium',
                 )
               "
