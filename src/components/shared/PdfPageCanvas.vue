@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
 import type { PDFDocumentProxy } from 'pdfjs-dist'
 import { renderPage } from '@/lib/pdf'
+import { fitWidth } from './fitWidth'
 
 /** Renders one PDF page and reports pointer positions in page viewport units (pt, top-left origin). */
 const props = withDefaults(defineProps<{ doc: PDFDocumentProxy; page: number; width?: number; rotation?: number }>(), { width: 720, rotation: undefined })
@@ -10,10 +12,16 @@ const src = ref('')
 const scale = ref(1)
 const size = ref({ w: 0, h: 0 })
 const box = ref<HTMLDivElement | null>(null)
+const container = ref<HTMLDivElement | null>(null)
+const containerW = ref(0)
+useResizeObserver(container, (entries) => {
+  containerW.value = entries[0]?.contentRect.width ?? 0
+})
+const renderWidth = computed(() => fitWidth(props.width, containerW.value || props.width))
 let token = 0
 
 watch(
-  () => [props.doc, props.page, props.width, props.rotation] as const,
+  () => [props.doc, props.page, renderWidth.value, props.rotation] as const,
   async ([doc, n, width, rotation]) => {
     const my = ++token
     const pg = await doc.getPage(n)
@@ -55,15 +63,17 @@ defineExpose({ scale })
 </script>
 
 <template>
-  <div
-    ref="box"
-    class="relative touch-none overflow-hidden border bg-white select-none"
-    :style="{ width: `${size.w * scale}px`, height: `${size.h * scale}px` }"
-    @pointerdown="onDown"
-    @pointermove="(e) => emit('move', pos(e))"
-    @pointerup="(e) => emit('up', pos(e))"
-  >
-    <img v-if="src" :src="src" class="pointer-events-none absolute inset-0 h-full w-full" alt="" draggable="false" />
-    <slot :scale="scale" />
+  <div ref="container" class="w-full max-w-full overflow-auto overscroll-contain">
+    <div
+      ref="box"
+      class="relative touch-manipulation select-none overflow-hidden border bg-white"
+      :style="{ width: `${size.w * scale}px`, height: `${size.h * scale}px` }"
+      @pointerdown="onDown"
+      @pointermove="(e) => emit('move', pos(e))"
+      @pointerup="(e) => emit('up', pos(e))"
+    >
+      <img v-if="src" :src="src" class="pointer-events-none absolute inset-0 h-full w-full" alt="" draggable="false" />
+      <slot :scale="scale" />
+    </div>
   </div>
 </template>
