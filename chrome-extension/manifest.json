@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SimpleTools",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Offline-first developer toolbox. All processing stays on your device. / 纯前端离线开发者工具箱，数据不离开本机。",
   "icons": {
     "16": "icons/icon-16.png",
