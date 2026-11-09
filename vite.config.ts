@@ -128,7 +128,7 @@ function stripWebOnlyCode() {
         }
       }
       const codeDir = join(options.dir, 'offline', 'code')
-      const manifestPath = join(codeDir, 'manifest.json')
+      const manifestPath = join(codeDir, 'runtime-manifest.json')
       const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as {
         assets: Record<string, { file: string }>
         languages: Array<{ id: string; assets?: string[]; prepare?: Array<{ asset?: string; baseFS?: string }>; run: { asset?: string; baseFS?: string } }>
@@ -160,7 +160,7 @@ function stripWebOnlyCode() {
             continue
           }
           const name = path.slice(codeDir.length + 1).split('\\').join('/')
-          const notice = name === 'manifest.json' || name.startsWith('licenses/') || ['THIRD_PARTY.md', 'TUTORIALS-LICENSE.txt', 'sources.yaml'].includes(name)
+          const notice = name === 'runtime-manifest.json' || name.startsWith('licenses/') || ['THIRD_PARTY.md', 'TUTORIALS-LICENSE.txt', 'sources.yaml'].includes(name)
           if (!keep.has(name) && !notice) rmSync(path)
         }
       }

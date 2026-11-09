@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import manifest from '../../../../public/offline/code/manifest.json'
+import manifest from '../../../../public/offline/code/runtime-manifest.json'
 import javaLock from './java-lock.json'
 import rustLock from './rust-lock.json'
 import { languageAssetIds, languageSize, type Asset, type Manifest } from './manifest'

@@ -8,7 +8,7 @@ const root = fileURLToPath(new URL('..', import.meta.url))
 const source = fileURLToPath(new URL('../../SimpleCode', import.meta.url))
 const target = join(root, 'public/offline/code')
 const sync = process.argv.includes('--sync')
-const manifestPath = join(target, 'manifest.json')
+const manifestPath = join(target, 'runtime-manifest.json')
 const javaLockPath = join(root, 'src/tools/code-playground/core/java-lock.json')
 const rustLockPath = join(root, 'src/tools/code-playground/core/rust-lock.json')
 const javaFiles = ['compiler.wasm', 'compiler.wasm-runtime.js', 'compile-classlib-teavm.bin', 'runtime-classlib-teavm.bin']
@@ -93,7 +93,7 @@ const allowed = new Set([
 ])
 for (const entry of readdirSync(target, { recursive: true })) {
   const name = entry.split('/').join('/')
-  if (allowed.has(name) || name === 'manifest.json' || name.startsWith('licenses/') || ['THIRD_PARTY.md', 'TUTORIALS-LICENSE.txt', 'sources.yaml'].includes(name)) continue
+  if (allowed.has(name) || name === 'runtime-manifest.json' || name.startsWith('licenses/') || ['THIRD_PARTY.md', 'TUTORIALS-LICENSE.txt', 'sources.yaml'].includes(name)) continue
   if (statSync(join(target, entry)).isDirectory()) continue
   throw new Error(`Non-whitelist code asset: ${name}`)
 }

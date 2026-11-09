@@ -44,7 +44,7 @@ export const WASM_BASE = `${import.meta.env.BASE_URL}offline/code/`
 
 export async function loadManifest(): Promise<Manifest> {
   try {
-    const bytes = await fetchPinned({ url: `${WASM_BASE}manifest.json` })
+    const bytes = await fetchPinned({ url: `${WASM_BASE}runtime-manifest.json` })
     return JSON.parse(new TextDecoder().decode(bytes)) as Manifest
   } catch (e) {
     if (e instanceof PinnedMissing) {

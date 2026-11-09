@@ -22,7 +22,7 @@ The programming tools are adapted from the local SimpleCode project. The website
 | Go / Yaegi 0.16.1 | Go BSD-3-Clause; Yaegi Apache-2.0 |
 | wasi-sh | MIT |
 
-The WASM binaries also link wasi-libc and related wasi-sdk runtime code (MIT, BSD, and Apache-2.0 with LLVM exceptions). Source pins and hashes are in `public/offline/code/manifest.json`, `src/tools/code-playground/core/java-lock.json`, and `src/tools/code-playground/core/rust-lock.json`.
+The WASM binaries also link wasi-libc and related wasi-sdk runtime code (MIT, BSD, and Apache-2.0 with LLVM exceptions). Source pins and hashes are in `public/offline/code/runtime-manifest.json`, `src/tools/code-playground/core/java-lock.json`, and `src/tools/code-playground/core/rust-lock.json`.
 
 Lua copyright: Copyright (C) 1994-2026 Lua.org, PUC-Rio. wasi-sh copyright: Copyright (c) 2026 SimpleCode contributors. Both are distributed under MIT:
 

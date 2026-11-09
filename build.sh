@@ -150,10 +150,12 @@ cmd_test() {
 }
 
 cmd_chrome() {
+  node "$ROOT/scripts/bump-version.mjs"
   exec bash "$ROOT/chrome-extension/build.sh" "$@"
 }
 
 cmd_vscode() {
+  node "$ROOT/scripts/bump-version.mjs"
   exec bash "$ROOT/vscode-extension/build.sh" "$@"
 }
 

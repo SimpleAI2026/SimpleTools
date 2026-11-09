@@ -14,6 +14,8 @@
 4. Chrome 扩展与 VS Code 扩展只支持 JS/TS、SQLite、Lua、Shell、Java；网站专用语言和对应 WASM/VM 资源不得进入扩展产物。
 5. `AGENTS.md` 固化上述规则，后续新增语言或调整构建时必须同步遵守。
 6. 保持 SimpleTools 的页面风格、八语 UI、主题、收藏、最近使用、移动端适配、离线能力及 100% 测试通过率。
+7. 编程运行时清单改名为 `runtime-manifest.json`，扩展 ZIP 内只允许根目录的 Chrome `manifest.json`，避免上传时被判定为多个清单。
+8. 每次通过 `./build.sh chrome` 或 `./build.sh vscode` 构建时，项目及两端版本号同步递增 0.0.1，并更新 VS Code 锁文件。
 
 源仓库依据仍为当前工作树；HEAD `258a0e4f8ae0109694d2fb58a1f8baa316d30ba9` 仅用于溯源，不修改源仓库任何文件。
 
