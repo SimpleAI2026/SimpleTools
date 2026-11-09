@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { ArrowLeft, Star } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
+import UsageSteps from '@/components/shared/UsageSteps.vue'
 import type { ToolMeta } from '@/registry'
 import { useUserStore } from '@/stores/user'
 
@@ -36,5 +37,6 @@ const fav = computed(() => user.isFavorite(props.tool.slug))
       </Button>
     </div>
     <slot />
+    <UsageSteps :slug="tool.slug" />
   </div>
 </template>

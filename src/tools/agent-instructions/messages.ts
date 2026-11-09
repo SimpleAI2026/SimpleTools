@@ -15,6 +15,11 @@ export default {
     targetClaude: "CLAUDE.md",
     targetCursor: "Cursor Rules (.mdc)",
     targetWindsurf: "Windsurf rules"
+  ,
+    usageTitle: "使用方法",
+    step1: "填写项目、技术栈、应当和不要，并选好目标文件。",
+    step2: "复制预览全文，按所选目标保存为 AGENTS.md、CLAUDE.md、Cursor 规则或 Windsurf 规则。",
+    step3: "在对应的编码助手里打开同一仓库，确认它读到的约束和预览一致，而不是旧文件。"
   },
   en: {
     name: "Coding Agent Instructions",
@@ -32,6 +37,11 @@ export default {
     targetClaude: "CLAUDE.md",
     targetCursor: "Cursor Rules (.mdc)",
     targetWindsurf: "Windsurf rules"
+  ,
+    usageTitle: "How to use",
+    step1: "Fill in the project, stack, do list, and don't list, and choose the target file.",
+    step2: "Copy the full preview and save it as the chosen file: AGENTS.md, CLAUDE.md, a Cursor rule, or a Windsurf rule.",
+    step3: "Open the same repository in that coding assistant and confirm it reads these constraints, not an older file."
   },
   ja: {
     name: "コーディングエージェントの指示",
@@ -49,6 +59,11 @@ export default {
     targetClaude: "クロード.md",
     targetCursor: "カーソルルール (.mdc)",
     targetWindsurf: "ウィンドサーフィンのルール"
+  ,
+    usageTitle: "使い方",
+    step1: "プロジェクト、技術構成、する事、しない事を入れ、対象ファイルを選びます。",
+    step2: "プレビュー全文をコピーし、選んだ対象どおり AGENTS.md、CLAUDE.md、Cursor ルール、または Windsurf ルールとして保存します。",
+    step3: "そのコーディング支援で同じリポジトリを開き、読んでいる制約がプレビューと一致し、古いファイルではないことを確認します。"
   },
   ko: {
     name: "코딩 에이전트 지침",
@@ -66,6 +81,11 @@ export default {
     targetClaude: "클로드.md",
     targetCursor: "커서 규칙(.mdc)",
     targetWindsurf: "윈드서핑 규칙"
+  ,
+    usageTitle: "사용 방법",
+    step1: "프로젝트, 기술 스택, 할 일과 하지 말 일을 넣고 대상 파일을 고릅니다.",
+    step2: "미리보기 전문을 복사해 고른 대상대로 AGENTS.md, CLAUDE.md, Cursor 규칙 또는 Windsurf 규칙으로 저장합니다.",
+    step3: "그 코딩 도우미에서 같은 저장소를 열고, 읽는 제약이 미리보기와 같고 이전 파일이 아닌지 확인합니다."
   },
   de: {
     name: "Anweisungen für den Codierungsagenten",
@@ -83,6 +103,11 @@ export default {
     targetClaude: "CLAUDE.md",
     targetCursor: "Cursorregeln (.mdc)",
     targetWindsurf: "Windsurfregeln"
+  ,
+    usageTitle: "So geht es",
+    step1: "Projekt, Stack, Do und Don't eintragen und die Zieldatei waehlen.",
+    step2: "Die ganze Vorschau kopieren und als gewaehlte Datei speichern: AGENTS.md, CLAUDE.md, Cursor-Regel oder Windsurf-Regel.",
+    step3: "Dasselbe Repository in diesem Coding-Assistenten oeffnen und pruefen, dass er diese Vorgaben liest und nicht eine alte Datei."
   },
   fr: {
     name: "Instructions pour l'agent de codage",
@@ -100,6 +125,11 @@ export default {
     targetClaude: "CLAUDE.md",
     targetCursor: "Règles du curseur (.mdc)",
     targetWindsurf: "Règles de planche à voile"
+  ,
+    usageTitle: "Mode d'emploi",
+    step1: "Remplissez le projet, la pile, les actions a faire et a eviter, puis choisissez le fichier cible.",
+    step2: "Copiez tout l'apercu et enregistrez-le comme fichier choisi: AGENTS.md, CLAUDE.md, une regle Cursor ou une regle Windsurf.",
+    step3: "Ouvrez le meme depot dans cet assistant de code et verifiez qu'il lit ces contraintes, pas un ancien fichier."
   },
   es: {
     name: "Instrucciones del agente codificador",
@@ -117,6 +147,11 @@ export default {
     targetClaude: "CLAUDE.md",
     targetCursor: "Reglas del cursor (.mdc)",
     targetWindsurf: "Reglas del windsurf"
+  ,
+    usageTitle: "Como usarlo",
+    step1: "Complete el proyecto, la pila, lo que se debe y lo que no, y elija el archivo de destino.",
+    step2: "Copie toda la vista previa y guardela como el archivo elegido: AGENTS.md, CLAUDE.md, una regla de Cursor o una regla de Windsurf.",
+    step3: "Abra el mismo repositorio en ese asistente de codigo y compruebe que lee estas restricciones, no un archivo viejo."
   },
   "pt-BR": {
     name: "Instruções do Agente de Codificação",
@@ -134,5 +169,10 @@ export default {
     targetClaude: "CLAUDE.md",
     targetCursor: "Regras do Cursor (.mdc)",
     targetWindsurf: "Regras do windsurf"
+  ,
+    usageTitle: "Como usar",
+    step1: "Preencha o projeto, a pilha, o que fazer e o que nao fazer, e escolha o arquivo de destino.",
+    step2: "Copie a previa inteira e salve como o arquivo escolhido: AGENTS.md, CLAUDE.md, uma regra do Cursor ou uma regra do Windsurf.",
+    step3: "Abra o mesmo repositorio nesse assistente de codigo e confira se ele le estas restricoes, nao um arquivo antigo."
   }
 }

@@ -59,7 +59,7 @@
 
 音视频分类 id 为 `audiovisual`，工具 slug 和 `/tools/:slug` 路由不变，收藏和最近使用仍按 slug 保存。移入该分类：`ffmpeg`、`ai-storyboard-variants`、`subtitle-toolkit`、`video-delivery-preflight`、`audio-level-auditor`、`edit-decision-log`、`chapter-author`、`voiceover-timing-planner`。`visual-selects-board` 和 `image-alt-review` 仍在图片分类，因为它们处理的是画面而不是音视频时间轴。
 
-使用说明只加在输出会贴进 AI 工具的 4 个工具：`geo-question-panel`、`evidence-answer-brief`、`agent-eval-cases`、`ai-storyboard-variants`。其余新工具的输出是核对表或计算，不是给模型粘贴的 schema、提示词或用例。
+使用说明放在工具页底部，由 `ToolLayout` 渲染，避免和工作台里的按钮重复。已有说明的 4 个工具保持不变。随后补上 `agent-workflow-preflight`、`eval-dataset-splitter`，以及既有的 `mcp-config-builder`、`agent-tool-def`、`agent-instructions`、`system-prompt-linter`、`prompt-secret-redactor`。复制按钮在 40 个新工具的输出面板右上角，与 `TextIO` 相同，下载按钮不再另放一个复制。
 
 ## 与计划不一致、但保留能力的地方
 

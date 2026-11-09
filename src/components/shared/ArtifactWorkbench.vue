@@ -2,10 +2,10 @@
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import CopyButton from './CopyButton.vue'
 import ErrorAlert from './ErrorAlert.vue'
-import UsageSteps from './UsageSteps.vue'
 import { downloadText } from '@/lib/download'
 import { bytesToBase64, MAX_IMPORT_BYTES, type Presented } from '@/lib/workflow/core'
 
@@ -90,16 +90,25 @@ function save(name: string, text: string) {
       <Button type="button" class="min-h-11 flex-1" :variant="tab === 'input' ? 'default' : 'outline'" @click="tab = 'input'">{{ t('common.input') }}</Button>
       <Button type="button" class="min-h-11 flex-1" :variant="tab === 'output' ? 'default' : 'outline'" @click="tab = 'output'">{{ t('common.output') }}</Button>
     </div>
-    <div class="grid gap-4 lg:grid-cols-2">
-      <Textarea v-model="input" :class="tab === 'input' ? '' : 'hidden lg:flex'" spellcheck="false" data-testid="tool-input" />
-      <Textarea :model-value="result.jsonText" readonly class="bg-muted/40" :class="tab === 'output' ? '' : 'hidden lg:flex'" data-testid="tool-output" />
+    <div class="grid items-stretch gap-4 lg:grid-cols-2">
+      <div class="flex min-h-0 flex-col gap-2" :class="tab === 'input' ? '' : 'hidden lg:flex'">
+        <div class="flex h-8 shrink-0 items-center">
+          <Label class="hidden lg:inline">{{ t('common.input') }}</Label>
+        </div>
+        <Textarea v-model="input" class="min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" spellcheck="false" data-testid="tool-input" />
+      </div>
+      <div class="flex min-h-0 flex-col gap-2" :class="tab === 'output' ? '' : 'hidden lg:flex'">
+        <div class="flex h-8 shrink-0 items-center justify-between">
+          <Label class="hidden lg:inline">{{ t('common.output') }}</Label>
+          <CopyButton class="ml-auto" :text="result.jsonText" />
+        </div>
+        <Textarea :model-value="result.jsonText" readonly class="bg-muted/40 min-h-[min(500px,45dvh)] h-[min(500px,45dvh)]" data-testid="tool-output" />
+      </div>
     </div>
     <p v-if="result.summary" class="text-sm">{{ result.summary }}</p>
     <div class="flex flex-wrap gap-2">
       <Button v-for="file in result.files" :key="file.name" type="button" variant="secondary" class="min-h-11" @click="save(file.name, file.text)">{{ file.name }}</Button>
-      <CopyButton v-if="result.jsonText" :text="result.jsonText" />
     </div>
     <ErrorAlert v-if="errorText" :message="errorText" />
-    <UsageSteps :slug="slug" />
   </div>
 </template>
