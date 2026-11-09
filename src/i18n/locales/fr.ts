@@ -89,7 +89,19 @@ const fr: MessageSchema = {
     preview: "Aperçu",
     settings: "Paramètres",
     file: "Déposer",
-    scrollHint: "Balayez horizontalement pour voir plus de colonnes"
+    scrollHint: "Balayez horizontalement pour voir plus de colonnes",
+    importFile: "Importer un fichier",
+    downloadJson: "Télécharger le JSON",
+    downloadCsv: "Télécharger le CSV",
+    tooLarge: "L'import dépasse la limite locale de 2 Mo.",
+    emptyInput: "Il n'y a rien à traiter.",
+    invalidJson: "Le JSON n'a pas pu être lu.",
+    forbiddenKey: "Le JSON contient une clé interdite.",
+    tooDeep: "Le JSON est trop imbriqué.",
+    tooManyRows: "Il y a trop de lignes.",
+    invalidCsv: "Les guillemets ou la structure du CSV sont invalides.",
+    badInput: "L'entrée ne correspond pas à cet outil.",
+    localNote: "Seul le texte collé ou le fichier choisi est traité. Aucune requête réseau n'est envoyée."
   },
   tools: {
     "json-formatter": {

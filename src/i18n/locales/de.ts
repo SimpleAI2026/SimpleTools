@@ -89,7 +89,19 @@ const de: MessageSchema = {
     preview: "Vorschau",
     settings: "Einstellungen",
     file: "Datei",
-    scrollHint: "Horizontal wischen, um mehr Spalten zu sehen"
+    scrollHint: "Horizontal wischen, um mehr Spalten zu sehen",
+    importFile: "Datei importieren",
+    downloadJson: "JSON herunterladen",
+    downloadCsv: "CSV herunterladen",
+    tooLarge: "Der Import liegt über dem lokalen Limit von 2 MB.",
+    emptyInput: "Es gibt nichts zu verarbeiten.",
+    invalidJson: "Das JSON konnte nicht gelesen werden.",
+    forbiddenKey: "Das JSON enthält einen verbotenen Schlüssel.",
+    tooDeep: "Das JSON ist zu tief verschachtelt.",
+    tooManyRows: "Es gibt zu viele Zeilen.",
+    invalidCsv: "Die CSV-Anführungszeichen oder die Struktur sind ungültig.",
+    badInput: "Die Eingabe passt nicht zu diesem Werkzeug.",
+    localNote: "Verarbeitet wird nur der eingefügte Text oder die gewählte Datei. Es gibt keinen Netzwerkzugriff."
   },
   tools: {
     "json-formatter": {

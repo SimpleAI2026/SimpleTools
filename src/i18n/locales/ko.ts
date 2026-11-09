@@ -89,7 +89,19 @@ const ko: MessageSchema = {
     preview: "시사",
     settings: "설정",
     file: "파일",
-    scrollHint: "가로로 밀어 더 많은 열을 보세요"
+    scrollHint: "가로로 밀어 더 많은 열을 보세요",
+    importFile: "파일 가져오기",
+    downloadJson: "JSON 다운로드",
+    downloadCsv: "CSV 다운로드",
+    tooLarge: "로컬 가져오기 한도(2 MB)를 넘었습니다.",
+    emptyInput: "처리할 입력이 없습니다.",
+    invalidJson: "JSON을 해석할 수 없습니다.",
+    forbiddenKey: "JSON에 허용되지 않는 키가 있습니다.",
+    tooDeep: "JSON 중첩이 너무 깊습니다.",
+    tooManyRows: "행 수가 한도를 넘었습니다.",
+    invalidCsv: "CSV 따옴표나 구조가 잘못되었습니다.",
+    badInput: "이 도구의 입력 형식과 맞지 않습니다.",
+    localNote: "붙여 넣은 텍스트나 고른 파일만 처리하며 네트워크로 보내지 않습니다."
   },
   tools: {
     "json-formatter": {

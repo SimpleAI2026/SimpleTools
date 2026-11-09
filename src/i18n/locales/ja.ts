@@ -89,7 +89,19 @@ const ja: MessageSchema = {
     preview: "プレビュー",
     settings: "設定",
     file: "ファイル",
-    scrollHint: "横にスワイプして列を表示"
+    scrollHint: "横にスワイプして列を表示",
+    importFile: "ファイルを読み込む",
+    downloadJson: "JSONをダウンロード",
+    downloadCsv: "CSVをダウンロード",
+    tooLarge: "ローカル取り込み上限（2 MB）を超えています。",
+    emptyInput: "処理できる入力がありません。",
+    invalidJson: "JSONを解析できません。",
+    forbiddenKey: "JSONに許可されないキーがあります。",
+    tooDeep: "JSONの入れ子が深すぎます。",
+    tooManyRows: "行数が上限を超えています。",
+    invalidCsv: "CSVの引用符または構造が無効です。",
+    badInput: "このツールの入力形式と一致しません。",
+    localNote: "貼り付けた文章か選んだファイルだけを処理し、ネットワークには送りません。"
   },
   tools: {
     "json-formatter": {

@@ -88,6 +88,18 @@ const zhCN = {
     settings: '设置',
     file: '文件',
     scrollHint: '可左右滑动查看表格',
+    importFile: '导入文件',
+    downloadJson: '下载 JSON',
+    downloadCsv: '下载 CSV',
+    tooLarge: '超过本地导入上限（2 MB）。',
+    emptyInput: '没有可处理的输入。',
+    invalidJson: 'JSON 无法解析。',
+    forbiddenKey: 'JSON 含有不允许的键。',
+    tooDeep: 'JSON 嵌套过深。',
+    tooManyRows: '行数超过上限。',
+    invalidCsv: 'CSV 引号或结构无效。',
+    badInput: '输入不符合该工具要求。',
+    localNote: '只处理你粘贴或选择的本地数据，不会访问网络。',
   },
   tools: {
     'json-formatter': {
