@@ -5,6 +5,7 @@ const fr: MessageSchema = {
     name: "SimpleTools",
     tagline: "Boîte à outils de développement front-end uniquement, prête pour le hors-ligne. Vos données ne quittent jamais votre navigateur.",
     search: "Rechercher des outils…",
+    categoryNavigation: "Catégories d’outils",
     all: "Tous",
     favorites: "Favoris",
     recent: "Récent",

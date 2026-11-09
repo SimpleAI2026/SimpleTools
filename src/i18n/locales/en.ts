@@ -5,6 +5,7 @@ const en: MessageSchema = {
     name: 'SimpleTools',
     tagline: 'Front-end-only, offline-ready developer toolbox. Your data never leaves your browser.',
     search: 'Search tools…',
+    categoryNavigation: 'Tool categories',
     all: 'All',
     favorites: 'Favorites',
     recent: 'Recent',

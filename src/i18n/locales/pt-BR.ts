@@ -5,6 +5,7 @@ const ptBR: MessageSchema = {
     name: "SimpleTools",
     tagline: "Caixa de ferramentas de desenvolvedor somente front-end e pronta para uso off-line. Seus dados nunca saem do seu navegador.",
     search: "Pesquisar ferramentas…",
+    categoryNavigation: "Categorias de ferramentas",
     all: "Todos",
     favorites: "Favoritos",
     recent: "Recente",
