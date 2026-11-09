@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, ref, shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ChevronLeft, ChevronRight, Download, Trash2 } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
@@ -25,23 +25,31 @@ const page = ref(1)
 const tool = ref<Tool>('text')
 const edits = ref<Edit[]>([])
 const sel = ref<number | null>(null)
-const img = shallowRef<{ bytes: Uint8Array; type: 'png' | 'jpg'; url: string; ratio: number } | null>(null)
+const img = shallowRef<{ bytes: Uint8Array; type: 'png' | 'jpg'; ratio: number } | null>(null)
 const start = ref<{ x: number; y: number } | null>(null)
 const draft = ref<{ x: number; y: number; w: number; h: number } | null>(null)
 const current = computed(() => (sel.value === null ? null : edits.value[sel.value] ?? null))
-const urls = new WeakMap<Uint8Array, string>()
+const urls = new Map<Uint8Array, string>()
 const imgUrl = (b: Uint8Array) => urls.get(b) ?? (urls.set(b, URL.createObjectURL(new Blob([b as BlobPart]))), urls.get(b)!)
 
+function revokeEditUrls() {
+  for (const url of urls.values()) URL.revokeObjectURL(url)
+  urls.clear()
+}
 async function load(f: File, pw?: string) {
+  revokeEditUrls()
   edits.value = []
+  sel.value = null
+  img.value = null
   page.value = 1
   await loadPdf(f, pw)
 }
 async function pickImage(f: File) {
   const bmp = await createImageBitmap(f)
-  img.value = { bytes: new Uint8Array(await f.arrayBuffer()), type: f.type === 'image/png' ? 'png' : 'jpg', url: URL.createObjectURL(f), ratio: bmp.height / bmp.width }
+  img.value = { bytes: new Uint8Array(await f.arrayBuffer()), type: f.type === 'image/png' ? 'png' : 'jpg', ratio: bmp.height / bmp.width }
   bmp.close()
 }
+onBeforeUnmount(revokeEditUrls)
 function down(p: { x: number; y: number }) {
   if (tool.value === 'text') {
     edits.value.push({ type: 'text', page: page.value, x: p.x, y: p.y, text: t('tools.pdf-editor.text'), size: 14, color: '#000000' })

@@ -5,6 +5,7 @@ const es: MessageSchema = {
     name: "SimpleTools",
     tagline: "Caja de herramientas para desarrolladores lista para usar solo en el front-end y sin conexión. Tus datos nunca salen de tu navegador.",
     search: "Buscar herramientas…",
+    categoryNavigation: "Categorías de herramientas",
     all: "Todo",
     favorites: "Favoritos",
     recent: "Reciente",

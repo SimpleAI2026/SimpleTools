@@ -5,6 +5,7 @@ const ja: MessageSchema = {
     name: "SimpleTools",
     tagline: "フロントエンド専用、オフライン対応の開発者ツールボックス。データがブラウザから離れることはありません。",
     search: "ツールを検索…",
+    categoryNavigation: "ツールのカテゴリー",
     all: "すべて",
     favorites: "お気に入り",
     recent: "最近",

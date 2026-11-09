@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { onBeforeUnmount, reactive, ref } from 'vue'
 import { ArrowUp, Download, X } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import ErrorAlert from '@/components/shared/ErrorAlert.vue'
@@ -8,7 +8,7 @@ import ModeToggle from '@/components/shared/ModeToggle.vue'
 import RangeField from '@/components/shared/RangeField.vue'
 import { canvasToBlob, loadBitmap, makeCanvas } from '@/lib/canvas'
 import { downloadPdf } from '@/lib/download'
-import {runBusy, withBusy} from '@/lib/runBusy'
+import { runBusy, withBusy } from '@/lib/runBusy'
 import { imagesToPdf, type ImagePdfOptions, type PdfImage } from './logic'
 import { loadSampleImage } from '@/lib/sampleImage'
 
@@ -29,6 +29,10 @@ function add(files: File[]) {
 function remove(i: number) {
   URL.revokeObjectURL(items.value[i]!.url)
   items.value.splice(i, 1)
+}
+function clearItems() {
+  for (const item of items.value) URL.revokeObjectURL(item.url)
+  items.value = []
 }
 function up(i: number) {
   if (i > 0) items.value.splice(i - 1, 2, items.value[i]!, items.value[i - 1]!)
@@ -52,6 +56,7 @@ async function run() {
     downloadPdf(await imagesToPdf(imgs, o), 'images.pdf')
   }, { clearError: true })
 }
+onBeforeUnmount(clearItems)
 </script>
 
 <template>

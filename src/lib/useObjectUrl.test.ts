@@ -1,4 +1,7 @@
+/** @vitest-environment jsdom */
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { defineComponent, h } from 'vue'
+import { mount } from '@vue/test-utils'
 import { useObjectUrl } from './useObjectUrl'
 
 afterEach(() => {
@@ -6,7 +9,7 @@ afterEach(() => {
 })
 
 describe('useObjectUrl', () => {
-  it('creates, replaces, and revokes object URLs', () => {
+  it('creates, replaces, and revokes object URLs including on unmount', () => {
     const created: Blob[] = []
     const revoked: string[] = []
     let n = 0
@@ -23,7 +26,14 @@ describe('useObjectUrl', () => {
       } as unknown as typeof URL,
     )
 
-    const { url, setObject, revoke } = useObjectUrl()
+    let api!: ReturnType<typeof useObjectUrl>
+    const host = mount(defineComponent({
+      setup() {
+        api = useObjectUrl()
+        return () => h('div')
+      },
+    }))
+    const { url, setObject, revoke } = api
     expect(url.value).toBe('')
 
     const a = new Blob(['a'])
@@ -44,5 +54,10 @@ describe('useObjectUrl', () => {
     revoke()
     expect(url.value).toBe('')
     expect(revoked.at(-1)).toBe('blob:mock-3')
+
+    setObject(b)
+    host.unmount()
+    expect(url.value).toBe('')
+    expect(revoked.at(-1)).toBe('blob:mock-4')
   })
 })

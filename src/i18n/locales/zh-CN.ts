@@ -3,6 +3,7 @@ const zhCN = {
     name: 'SimpleTools',
     tagline: '纯前端、离线可用的开发者小工具箱，数据从不离开你的浏览器。',
     search: '搜索工具…',
+    categoryNavigation: '工具分类',
     all: '全部',
     favorites: '收藏',
     recent: '最近使用',

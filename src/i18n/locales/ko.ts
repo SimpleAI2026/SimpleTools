@@ -5,6 +5,7 @@ const ko: MessageSchema = {
     name: "SimpleTools",
     tagline: "프런트엔드 전용, 오프라인 지원 개발자 도구 상자입니다. 귀하의 데이터는 브라우저를 떠나지 않습니다.",
     search: "도구 검색…",
+    categoryNavigation: "도구 카테고리",
     all: "전체",
     favorites: "즐겨찾기",
     recent: "최근",
