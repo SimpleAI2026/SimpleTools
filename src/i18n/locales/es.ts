@@ -49,6 +49,7 @@ const es: MessageSchema = {
     convert: "Convertir",
     text: "Texto",
     media: "Imagen",
+    audiovisual: "Audio y vídeo",
     compress: "Comprimir",
     office: "Oficina",
     pdf: "PDF"

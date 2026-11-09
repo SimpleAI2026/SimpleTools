@@ -12,6 +12,16 @@ describe('registry', () => {
       expect(t.slug in zhCN.tools || t.slug in TOOL_MESSAGES, t.slug).toBe(true)
     }
   })
+  it('splits audio and video from images without changing tool slugs', () => {
+    expect(CATEGORIES).toContain('audiovisual')
+    for (const slug of ['ffmpeg', 'subtitle-toolkit', 'video-delivery-preflight', 'audio-level-auditor', 'edit-decision-log', 'chapter-author', 'voiceover-timing-planner', 'ai-storyboard-variants']) {
+      expect(getTool(slug)?.slug).toBe(slug)
+      expect(getTool(slug)?.category).toBe('audiovisual')
+    }
+    expect(getTool('image-editor')?.category).toBe('media')
+    expect(getTool('image-alt-review')?.category).toBe('media')
+    expect(getTool('visual-selects-board')?.category).toBe('media')
+  })
   it('looks up and filters', () => {
     expect(getTool('base64')?.category).toBe('encode')
     expect(getTool('nope')).toBeUndefined()

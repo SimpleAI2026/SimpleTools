@@ -49,6 +49,7 @@ const ptBR: MessageSchema = {
     convert: "Converter",
     text: "Texto",
     media: "Imagem",
+    audiovisual: "Áudio e vídeo",
     compress: "Compressa",
     office: "Escritório",
     pdf: "PDF"

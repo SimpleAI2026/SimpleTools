@@ -49,6 +49,7 @@ const ko: MessageSchema = {
     convert: "전환하다",
     text: "텍스트",
     media: "영상",
+    audiovisual: "오디오와 비디오",
     compress: "압박 붕대",
     office: "사무실",
     pdf: "PDF"

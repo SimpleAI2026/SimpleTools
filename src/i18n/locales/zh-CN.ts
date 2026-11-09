@@ -47,6 +47,7 @@ const zhCN = {
     convert: '转换',
     text: '文本',
     media: '图片',
+    audiovisual: '音视频',
     compress: '压缩',
     office: '办公',
     pdf: 'PDF',

@@ -55,6 +55,12 @@
 
 2026-11-09 提交后复跑：`eslint .` 通过，`vue-tsc -b` 通过，`vitest run` 为 212 个文件、575 个测试全部通过，`./build.sh build` 与 `./build.sh chrome` 通过。Chrome 包版本仍是 5.0.0，包内无 Pandoc 目录，FFmpeg WASM 仍在包内。
 
+## 后续：音视频分类与使用说明
+
+音视频分类 id 为 `audiovisual`，工具 slug 和 `/tools/:slug` 路由不变，收藏和最近使用仍按 slug 保存。移入该分类：`ffmpeg`、`ai-storyboard-variants`、`subtitle-toolkit`、`video-delivery-preflight`、`audio-level-auditor`、`edit-decision-log`、`chapter-author`、`voiceover-timing-planner`。`visual-selects-board` 和 `image-alt-review` 仍在图片分类，因为它们处理的是画面而不是音视频时间轴。
+
+使用说明只加在输出会贴进 AI 工具的 4 个工具：`geo-question-panel`、`evidence-answer-brief`、`agent-eval-cases`、`ai-storyboard-variants`。其余新工具的输出是核对表或计算，不是给模型粘贴的 schema、提示词或用例。
+
 ## 与计划不一致、但保留能力的地方
 
 - 用户正则没有走可终止的原生 `RegExp` Worker。MV3 CSP 不允许 blob worker，而 V8 的同步正则无法用 `AbortController` 打断。等价实现是 `src/lib/workflow/regexBudget.ts` 的步进解释器：超限返回 `timeout`，工具记为 `incomplete`，不算通过。前瞻、反向引用直接拒绝。

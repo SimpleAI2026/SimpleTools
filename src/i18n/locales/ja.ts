@@ -49,6 +49,7 @@ const ja: MessageSchema = {
     convert: "変換する",
     text: "文章",
     media: "画像",
+    audiovisual: "音声と動画",
     compress: "圧縮する",
     office: "オフィス",
     pdf: "PDF"

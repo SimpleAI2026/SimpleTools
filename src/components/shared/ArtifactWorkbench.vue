@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import CopyButton from './CopyButton.vue'
 import ErrorAlert from './ErrorAlert.vue'
+import UsageSteps from './UsageSteps.vue'
 import { downloadText } from '@/lib/download'
 import { bytesToBase64, MAX_IMPORT_BYTES, type Presented } from '@/lib/workflow/core'
 
@@ -99,5 +100,6 @@ function save(name: string, text: string) {
       <CopyButton v-if="result.jsonText" :text="result.jsonText" />
     </div>
     <ErrorAlert v-if="errorText" :message="errorText" />
+    <UsageSteps :slug="slug" />
   </div>
 </template>
