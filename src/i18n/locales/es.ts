@@ -49,6 +49,7 @@ const es: MessageSchema = {
     convert: "Convertir",
     text: "Texto",
     media: "Imagen",
+    audiovisual: "Audio y vídeo",
     compress: "Comprimir",
     office: "Oficina",
     pdf: "PDF"
@@ -89,7 +90,19 @@ const es: MessageSchema = {
     preview: "Avance",
     settings: "Ajustes",
     file: "Archivo",
-    scrollHint: "Desliza horizontalmente para ver más columnas"
+    scrollHint: "Desliza horizontalmente para ver más columnas",
+    importFile: "Importar archivo",
+    downloadJson: "Descargar JSON",
+    downloadCsv: "Descargar CSV",
+    tooLarge: "La importación supera el límite local de 2 MB.",
+    emptyInput: "No hay nada que procesar.",
+    invalidJson: "No se pudo leer el JSON.",
+    forbiddenKey: "El JSON contiene una clave prohibida.",
+    tooDeep: "El JSON está anidado demasiado.",
+    tooManyRows: "Hay demasiadas filas.",
+    invalidCsv: "Las comillas o la estructura del CSV no son válidas.",
+    badInput: "La entrada no coincide con esta herramienta.",
+    localNote: "Solo se procesa el texto pegado o el archivo elegido. No se envía nada por la red."
   },
   tools: {
     "json-formatter": {

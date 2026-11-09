@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Search } from 'lucide-vue-next'
+import { Film, Search } from 'lucide-vue-next'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import ToolCard from '@/components/shared/ToolCard.vue'
@@ -44,6 +44,7 @@ const browsing = computed(() => !query.value.trim() && category.value === 'all')
           :variant="category === c ? 'default' : 'outline'"
           @click="category = c"
         >
+          <Film v-if="c === 'audiovisual'" class="size-3.5" aria-hidden="true" />
           {{ c === 'all' ? $t('app.all') : $t(`categories.${c}`) }}
         </Button>
       </div>

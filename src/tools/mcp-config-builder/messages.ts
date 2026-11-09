@@ -22,6 +22,11 @@ export default {
     issues: "校验问题",
     valid: "配置有效",
     pasteJson: "粘贴 MCP JSON"
+  ,
+    usageTitle: "使用方法",
+    step1: "填写服务器名、command 或远程 URL，生成本地的 mcpServers JSON。",
+    step2: "复制输出，贴到 Cursor 或 Claude Desktop 的 MCP 配置文件，不要贴进系统提示。",
+    step3: "重新打开对应客户端，确认这个服务器名出现，且校验里列出的结构问题已经没有。"
   },
   en: {
     name: "MCP Config Builder / Validator",
@@ -46,6 +51,11 @@ export default {
     issues: "Validation issues",
     valid: "Config looks valid",
     pasteJson: "Paste MCP JSON"
+  ,
+    usageTitle: "How to use",
+    step1: "Enter the server name and either a command or a remote URL, and generate the local mcpServers JSON.",
+    step2: "Copy the output and paste it into the MCP config file for Cursor or Claude Desktop. Do not paste it into a system prompt.",
+    step3: "Reopen that client and confirm the server name appears and the structure issues from validation are gone."
   },
   ja: {
     name: "MCP 構成ビルダー / バリデーター",
@@ -70,6 +80,11 @@ export default {
     issues: "検証の問題",
     valid: "構成は有効のようです",
     pasteJson: "MCP JSON を貼り付けます"
+  ,
+    usageTitle: "使い方",
+    step1: "サーバ名と command または遠隔 URL を入れ、手元の mcpServers JSON を作ります。",
+    step2: "出力をコピーし、Cursor または Claude Desktop の MCP 設定ファイルへ貼ります。システムプロンプトには貼りません。",
+    step3: "そのクライアントを開き直し、サーバ名が表示され、検証に出ていた構造の問題が消えていることを確認します。"
   },
   ko: {
     name: "MCP 구성 작성기/검증기",
@@ -94,6 +109,11 @@ export default {
     issues: "유효성 검사 문제",
     valid: "구성이 유효한 것 같습니다.",
     pasteJson: "MCP JSON 붙여넣기"
+  ,
+    usageTitle: "사용 방법",
+    step1: "서버 이름과 command 또는 원격 URL을 넣고 로컬 mcpServers JSON을 만듭니다.",
+    step2: "출력을 복사해 Cursor 또는 Claude Desktop의 MCP 설정 파일에 붙입니다. 시스템 프롬프트에는 붙이지 않습니다.",
+    step3: "해당 클라이언트를 다시 열고 서버 이름이 보이며 검사에 나온 구조 문제가 없어졌는지 확인합니다."
   },
   de: {
     name: "MCP Config Builder/Validator",
@@ -118,6 +138,11 @@ export default {
     issues: "Validierungsprobleme",
     valid: "Die Konfiguration sieht gültig aus",
     pasteJson: "Fügen Sie MCP JSON ein"
+  ,
+    usageTitle: "So geht es",
+    step1: "Servername und command oder entfernte URL eintragen und das lokale mcpServers-JSON erzeugen.",
+    step2: "Die Ausgabe kopieren und in die MCP-Konfigurationsdatei von Cursor oder Claude Desktop kleben. Nicht in den Systemprompt.",
+    step3: "Den Client neu oeffnen und pruefen, dass der Servername erscheint und die genannten Strukturfehler weg sind."
   },
   fr: {
     name: "Générateur/validateur de configuration MCP",
@@ -142,6 +167,11 @@ export default {
     issues: "Problèmes de validation",
     valid: "La configuration semble valide",
     pasteJson: "Coller MCP JSON"
+  ,
+    usageTitle: "Mode d'emploi",
+    step1: "Saisissez le nom du serveur et une commande ou une URL distante, puis generez le JSON mcpServers local.",
+    step2: "Copiez la sortie et collez-la dans le fichier de configuration MCP de Cursor ou de Claude Desktop. Pas dans le prompt systeme.",
+    step3: "Rouvrez ce client et verifiez que le nom du serveur apparait et que les problemes de structure signales ont disparu."
   },
   es: {
     name: "Generador/validador de configuración de MCP",
@@ -166,6 +196,11 @@ export default {
     issues: "Problemas de validación",
     valid: "La configuración parece válida",
     pasteJson: "Pegar MCP JSON"
+  ,
+    usageTitle: "Como usarlo",
+    step1: "Escriba el nombre del servidor y un comando o una URL remota, y genere el JSON mcpServers local.",
+    step2: "Copie la salida y peguela en el archivo de configuracion MCP de Cursor o Claude Desktop. No en el prompt de sistema.",
+    step3: "Vuelva a abrir ese cliente y compruebe que el nombre del servidor aparece y que los problemas de estructura ya no estan."
   },
   "pt-BR": {
     name: "Construtor/validador de configuração MCP",
@@ -190,5 +225,10 @@ export default {
     issues: "Problemas de validação",
     valid: "A configuração parece válida",
     pasteJson: "Colar JSON do MCP"
+  ,
+    usageTitle: "Como usar",
+    step1: "Preencha o nome do servidor e um comando ou URL remota, e gere o JSON mcpServers local.",
+    step2: "Copie a saida e cole no arquivo de configuracao MCP do Cursor ou do Claude Desktop. Nao no prompt de sistema.",
+    step3: "Abra de novo esse cliente e confira se o nome do servidor aparece e se os problemas de estrutura sumiram."
   }
 }

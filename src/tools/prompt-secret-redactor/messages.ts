@@ -15,6 +15,11 @@ export default {
     jwt: "JWT",
     email: "邮箱",
     pem: "PEM 私钥"
+  ,
+    usageTitle: "使用方法",
+    step1: "把可能含密钥的提示词贴进左侧，并打开需要遮盖的类别。",
+    step2: "复制右侧脱敏后的文本，贴进 ChatGPT、Claude 或 Cursor 的对话或系统提示。",
+    step3: "回到原文再搜一遍密钥片段，确认贴出去的文本里已经没有这些片段。"
   },
   en: {
     name: "Prompt Secret Redactor",
@@ -32,6 +37,11 @@ export default {
     jwt: "JWT",
     email: "Email",
     pem: "PEM private key"
+  ,
+    usageTitle: "How to use",
+    step1: "Paste the prompt that may contain secrets on the left, and turn on the categories you need to hide.",
+    step2: "Copy the redacted text on the right and paste it into the chat or system prompt of ChatGPT, Claude, or Cursor.",
+    step3: "Search the original again for the secret fragments and confirm those fragments are absent from the text you pasted."
   },
   ja: {
     name: "プロンプトシークレットリダクター",
@@ -49,6 +59,11 @@ export default {
     jwt: "JWT",
     email: "電子メール",
     pem: "PEM秘密鍵"
+  ,
+    usageTitle: "使い方",
+    step1: "秘密を含むかもしれないプロンプトを左へ貼り、隠す種別をオンにします。",
+    step2: "右の伏せた本文をコピーし、ChatGPT、Claude、または Cursor の会話かシステムプロンプトへ貼ります。",
+    step3: "元の文でもう一度秘密の断片を探し、貼った本文にその断片が残っていないことを確認します。"
   },
   ko: {
     name: "프롬프트 비밀 편집자",
@@ -66,6 +81,11 @@ export default {
     jwt: "JWT",
     email: "이메일",
     pem: "PEM 개인 키"
+  ,
+    usageTitle: "사용 방법",
+    step1: "비밀이 있을 수 있는 프롬프트를 왼쪽에 붙이고 가릴 종류를 켭니다.",
+    step2: "오른쪽의 가린 본문을 복사해 ChatGPT, Claude 또는 Cursor의 대화나 시스템 프롬프트에 붙입니다.",
+    step3: "원문에서 비밀 조각을 다시 찾아, 붙인 본문에 그 조각이 없는지 확인합니다."
   },
   de: {
     name: "Prompt Secret Redactor",
@@ -83,6 +103,11 @@ export default {
     jwt: "JWT",
     email: "E-Mail",
     pem: "Privater PEM-Schlüssel"
+  ,
+    usageTitle: "So geht es",
+    step1: "Den Prompt, der Geheimnisse enthalten kann, links einkleben und die zu verbergenden Arten einschalten.",
+    step2: "Den geschwaerzten Text rechts kopieren und in den Chat oder Systemprompt von ChatGPT, Claude oder Cursor kleben.",
+    step3: "Im Original noch einmal nach den Geheimnisfragmenten suchen und pruefen, dass sie im eingefuegten Text fehlen."
   },
   fr: {
     name: "Rédacteur secret rapide",
@@ -100,6 +125,11 @@ export default {
     jwt: "JWT",
     email: "E-mail",
     pem: "Clé privée PEM"
+  ,
+    usageTitle: "Mode d'emploi",
+    step1: "Collez a gauche le prompt qui peut contenir des secrets, et activez les categories a masquer.",
+    step2: "Copiez le texte masque a droite et collez-le dans le chat ou le prompt systeme de ChatGPT, Claude ou Cursor.",
+    step3: "Cherchez encore les fragments secrets dans l'original et verifiez qu'ils sont absents du texte que vous avez colle."
   },
   es: {
     name: "Redactor secreto rápido",
@@ -117,6 +147,11 @@ export default {
     jwt: "JWT",
     email: "Correo electrónico",
     pem: "clave privada PEM"
+  ,
+    usageTitle: "Como usarlo",
+    step1: "Pegue a la izquierda el prompt que pueda contener secretos y active las categorias que hay que ocultar.",
+    step2: "Copie el texto oculto de la derecha y peguelo en el chat o en el prompt de sistema de ChatGPT, Claude o Cursor.",
+    step3: "Busque otra vez los fragmentos secretos en el original y compruebe que no estan en el texto que pego."
   },
   "pt-BR": {
     name: "Redator secreto imediato",
@@ -134,5 +169,10 @@ export default {
     jwt: "JWT",
     email: "E-mail",
     pem: "Chave privada PEM"
+  ,
+    usageTitle: "Como usar",
+    step1: "Cole a esquerda o prompt que possa ter segredos e ligue as categorias que devem ser ocultadas.",
+    step2: "Copie o texto oculto da direita e cole no chat ou no prompt de sistema do ChatGPT, Claude ou Cursor.",
+    step3: "Procure de novo os trechos secretos no original e confira se eles nao estao no texto que voce colou."
   }
 }

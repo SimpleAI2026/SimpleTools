@@ -9,6 +9,11 @@ export default {
     error: "错误",
     warn: "警告",
     info: "信息"
+  ,
+    usageTitle: "使用方法",
+    step1: "把现有 system prompt 贴进输入，先看错误、警告和建议。",
+    step2: "按建议改输入框里的原文，再复制改后的全文，贴回模型的系统提示位置，不要贴进用户消息。",
+    step3: "再检查一次，确认空章节、互相矛盾的 MUST 和未填占位符已经不在结果里。"
   },
   en: {
     name: "System Prompt Linter",
@@ -20,6 +25,11 @@ export default {
     error: "Error",
     warn: "Warning",
     info: "Info"
+  ,
+    usageTitle: "How to use",
+    step1: "Paste the current system prompt into the input and read the errors, warnings, and tips first.",
+    step2: "Edit the original text in the input from those tips, then copy the revised full text into the model's system-prompt slot. Do not paste it into the user message.",
+    step3: "Run the check again and confirm empty sections, clashing MUST lines, and unfilled placeholders are gone from the findings."
   },
   ja: {
     name: "システムプロンプトリンター",
@@ -31,6 +41,11 @@ export default {
     error: "エラー",
     warn: "警告",
     info: "情報"
+  ,
+    usageTitle: "使い方",
+    step1: "今の system prompt を入力へ貼り、エラー、警告、提案を先に見ます。",
+    step2: "提案に沿って入力の原文を直し、直した全文をコピーしてモデルのシステムプロンプト欄へ戻します。ユーザーメッセージには貼りません。",
+    step3: "もう一度検査し、空の節、矛盾する MUST、未記入のプレースホルダが結果から消えたことを確認します。"
   },
   ko: {
     name: "시스템 프롬프트 린터",
@@ -42,6 +57,11 @@ export default {
     error: "오류",
     warn: "경고",
     info: "정보"
+  ,
+    usageTitle: "사용 방법",
+    step1: "현재 system prompt를 입력에 붙이고 오류, 경고, 제안을 먼저 봅니다.",
+    step2: "제안에 따라 입력의 원문을 고친 뒤, 고친 전문을 복사해 모델의 시스템 프롬프트 자리에 되돌립니다. 사용자 메시지에는 붙이지 않습니다.",
+    step3: "다시 검사해 빈 절, 서로 충돌하는 MUST, 채우지 않은 자리표시자가 결과에서 없어졌는지 확인합니다."
   },
   de: {
     name: "System-Prompt-Linter",
@@ -53,6 +73,11 @@ export default {
     error: "Fehler",
     warn: "Warnung",
     info: "Info"
+  ,
+    usageTitle: "So geht es",
+    step1: "Den aktuellen Systemprompt in die Eingabe kleben und zuerst Fehler, Warnungen und Hinweise lesen.",
+    step2: "Den Originaltext in der Eingabe nach den Hinweisen aendern, dann den ganzen neuen Text in das Systemprompt-Feld des Modells kopieren. Nicht in die Nutzernachricht.",
+    step3: "Noch einmal pruefen und bestaetigen, dass leere Abschnitte, widerspruechliche MUST-Zeilen und offene Platzhalter aus den Befunden weg sind."
   },
   fr: {
     name: "Linter d’invite système",
@@ -64,6 +89,11 @@ export default {
     error: "Erreur",
     warn: "Avertissement",
     info: "Informations"
+  ,
+    usageTitle: "Mode d'emploi",
+    step1: "Collez le prompt systeme actuel dans l'entree et lisez d'abord les erreurs, les avertissements et les conseils.",
+    step2: "Corrigez le texte original dans l'entree selon ces conseils, puis copiez le texte entier revise dans l'emplacement de prompt systeme du modele. Pas dans le message utilisateur.",
+    step3: "Relancez le controle et verifiez que les sections vides, les MUST contradictoires et les espaces non remplis ont disparu des resultats."
   },
   es: {
     name: "Linter de aviso del sistema",
@@ -75,6 +105,11 @@ export default {
     error: "Error",
     warn: "Advertencia",
     info: "Información"
+  ,
+    usageTitle: "Como usarlo",
+    step1: "Pegue el prompt de sistema actual en la entrada y lea primero errores, avisos y sugerencias.",
+    step2: "Corrija el texto original en la entrada segun esas sugerencias, luego copie el texto completo revisado en el lugar de prompt de sistema del modelo. No en el mensaje del usuario.",
+    step3: "Vuelva a comprobar y confirme que las secciones vacias, los MUST contradictorios y los huecos sin rellenar ya no estan en los resultados."
   },
   "pt-BR": {
     name: "Linter de prompt do sistema",
@@ -86,5 +121,10 @@ export default {
     error: "Erro",
     warn: "Aviso",
     info: "Informações"
+  ,
+    usageTitle: "Como usar",
+    step1: "Cole o prompt de sistema atual na entrada e leia primeiro erros, avisos e sugestoes.",
+    step2: "Corrija o texto original na entrada segundo essas sugestoes, depois copie o texto inteiro revisado no lugar de prompt de sistema do modelo. Nao na mensagem do usuario.",
+    step3: "Confira de novo e veja se secoes vazias, MUST contraditorios e espacos nao preenchidos sumiram dos resultados."
   }
 }

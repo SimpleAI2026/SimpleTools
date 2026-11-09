@@ -49,6 +49,7 @@ const ptBR: MessageSchema = {
     convert: "Converter",
     text: "Texto",
     media: "Imagem",
+    audiovisual: "Áudio e vídeo",
     compress: "Compressa",
     office: "Escritório",
     pdf: "PDF"
@@ -89,7 +90,19 @@ const ptBR: MessageSchema = {
     preview: "Visualização",
     settings: "Configurações",
     file: "Arquivo",
-    scrollHint: "Deslize horizontalmente para ver mais colunas"
+    scrollHint: "Deslize horizontalmente para ver mais colunas",
+    importFile: "Importar arquivo",
+    downloadJson: "Baixar JSON",
+    downloadCsv: "Baixar CSV",
+    tooLarge: "A importação passou do limite local de 2 MB.",
+    emptyInput: "Não há nada para processar.",
+    invalidJson: "Não foi possível ler o JSON.",
+    forbiddenKey: "O JSON contém uma chave proibida.",
+    tooDeep: "O JSON está aninhado demais.",
+    tooManyRows: "Há linhas demais.",
+    invalidCsv: "As aspas ou a estrutura do CSV são inválidas.",
+    badInput: "A entrada não corresponde a esta ferramenta.",
+    localNote: "Só o texto colado ou o arquivo escolhido é processado. Nada é enviado pela rede."
   },
   tools: {
     "json-formatter": {

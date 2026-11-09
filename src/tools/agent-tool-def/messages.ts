@@ -20,6 +20,11 @@ export default {
     nameErrorEmpty: "名称不能为空",
     nameErrorPattern: "名称需匹配 [a-zA-Z0-9_-]，最长 64",
     convertError: "无法识别的工具 JSON 结构"
+  ,
+    usageTitle: "使用方法",
+    step1: "填写工具名、说明和参数，并选择 MCP、OpenAI 或 Anthropic 其中一种导出格式。",
+    step2: "只复制所选格式的 JSON，贴到该平台的工具或函数定义，不要贴进普通对话。",
+    step3: "用一条缺少必填参数的调用试一次，确认平台按这个定义拒绝，而不是自己补上字段。"
   },
   en: {
     name: "Tool / Function Def Builder",
@@ -42,6 +47,11 @@ export default {
     nameErrorEmpty: "Name is required",
     nameErrorPattern: "Name must match [a-zA-Z0-9_-], max 64",
     convertError: "Unrecognized tool JSON shape"
+  ,
+    usageTitle: "How to use",
+    step1: "Enter the tool name, description, and parameters, and choose MCP, OpenAI, or Anthropic as the export format.",
+    step2: "Copy only that format's JSON and paste it into the platform's tool or function definition. Do not paste it into an ordinary chat.",
+    step3: "Try one call that omits a required parameter and confirm the platform rejects it from this definition instead of filling the field in."
   },
   ja: {
     name: "ツール/関数定義ビルダー",
@@ -64,6 +74,11 @@ export default {
     nameErrorEmpty: "名前は必須です",
     nameErrorPattern: "名前は [a-zA-Z0-9_-] と一致する必要があります (最大 64)",
     convertError: "認識されないツールの JSON 形状"
+  ,
+    usageTitle: "使い方",
+    step1: "ツール名、説明、引数を入れ、MCP、OpenAI、Anthropic のどれか一つを書き出し形式にします。",
+    step2: "選んだ形式の JSON だけをコピーし、その基盤のツール定義または関数定義へ貼ります。通常の会話には貼りません。",
+    step3: "必須引数を欠いた呼び出しを一度試し、基盤がこの定義どおり拒否し、項目を勝手に補わないことを確認します。"
   },
   ko: {
     name: "도구/기능 정의 빌더",
@@ -86,6 +101,11 @@ export default {
     nameErrorEmpty: "이름은 필수입니다",
     nameErrorPattern: "이름은 [a-zA-Z0-9_-]와 일치해야 하며 최대 64자입니다.",
     convertError: "인식할 수 없는 도구 JSON 형태"
+  ,
+    usageTitle: "사용 방법",
+    step1: "도구 이름, 설명, 매개변수를 넣고 MCP, OpenAI, Anthropic 중 하나의 내보내기 형식을 고릅니다.",
+    step2: "고른 형식의 JSON만 복사해 그 플랫폼의 도구 또는 함수 정의에 붙입니다. 일반 대화에는 붙이지 않습니다.",
+    step3: "필수 매개변수를 뺀 호출을 한 번 시험해, 플랫폼이 이 정의대로 거부하고 필드를 스스로 채우지 않는지 확인합니다."
   },
   de: {
     name: "Tool-/Funktions-Def-Builder",
@@ -108,6 +128,11 @@ export default {
     nameErrorEmpty: "Name ist erforderlich",
     nameErrorPattern: "Der Name muss mit [a-zA-Z0-9_-] übereinstimmen, maximal 64",
     convertError: "Unbekannte JSON-Form des Werkzeugs"
+  ,
+    usageTitle: "So geht es",
+    step1: "Werkzeugname, Beschreibung und Parameter eintragen und MCP, OpenAI oder Anthropic als Exportformat waehlen.",
+    step2: "Nur das JSON dieses Formats kopieren und in die Werkzeug- oder Funktionsdefinition der Plattform kleben. Nicht in einen gewoehnlichen Chat.",
+    step3: "Einen Aufruf ohne Pflichtparameter probieren und pruefen, dass die Plattform ihn nach dieser Definition ablehnt und das Feld nicht selbst fuellt."
   },
   fr: {
     name: "Outil / Fonction Def Builder",
@@ -130,6 +155,11 @@ export default {
     nameErrorEmpty: "Le nom est requis",
     nameErrorPattern: "Le nom doit correspondre à [a-zA-Z0-9_-], maximum 64",
     convertError: "Forme JSON de l'outil non reconnu"
+  ,
+    usageTitle: "Mode d'emploi",
+    step1: "Saisissez le nom, la description et les parametres, puis choisissez MCP, OpenAI ou Anthropic comme format d'export.",
+    step2: "Copiez seulement le JSON de ce format et collez-le dans la definition d'outil ou de fonction de la plateforme. Pas dans un chat ordinaire.",
+    step3: "Essayez un appel sans un parametre obligatoire et verifiez que la plateforme le refuse selon cette definition au lieu de remplir le champ."
   },
   es: {
     name: "Herramienta/Función Def Builder",
@@ -152,6 +182,11 @@ export default {
     nameErrorEmpty: "El nombre es obligatorio",
     nameErrorPattern: "El nombre debe coincidir con [a-zA-Z0-9_-], máximo 64",
     convertError: "Forma JSON de herramienta no reconocida"
+  ,
+    usageTitle: "Como usarlo",
+    step1: "Escriba el nombre, la descripcion y los parametros, y elija MCP, OpenAI o Anthropic como formato de exportacion.",
+    step2: "Copie solo el JSON de ese formato y peguelo en la definicion de herramienta o funcion de la plataforma. No en un chat normal.",
+    step3: "Pruebe una llamada sin un parametro obligatorio y compruebe que la plataforma la rechaza segun esta definicion en lugar de rellenar el campo."
   },
   "pt-BR": {
     name: "Construtor de definição de ferramenta/função",
@@ -174,5 +209,10 @@ export default {
     nameErrorEmpty: "O nome é obrigatório",
     nameErrorPattern: "O nome deve corresponder a [a-zA-Z0-9_-], máx. 64",
     convertError: "Formato JSON da ferramenta não reconhecida"
+  ,
+    usageTitle: "Como usar",
+    step1: "Preencha o nome, a descricao e os parametros, e escolha MCP, OpenAI ou Anthropic como formato de exportacao.",
+    step2: "Copie so o JSON desse formato e cole na definicao de ferramenta ou funcao da plataforma. Nao em um chat comum.",
+    step3: "Tente uma chamada sem um parametro obrigatorio e confira se a plataforma recusa segundo esta definicao em vez de preencher o campo."
   }
 }

@@ -12,6 +12,6 @@ const tools: ToolMeta[] = [
   { slug: 'image-splitter', category: 'media', icon: Grid3x3, keywords: ['image', 'split', 'grid', 'tiles', '切割', '九宫格'], component: () => import('@/tools/image-splitter/index.vue') },
   { slug: 'imagemagick', category: 'media', icon: Sparkles, keywords: ['imagemagick', 'magick', 'wasm', 'convert', 'resize', 'compress', '图片'], component: () => import('@/tools/imagemagick/index.vue') },
   { slug: 'image-ocr', category: 'media', icon: ScanText, keywords: ['ocr', 'tesseract', 'wasm', 'recognize', '文字识别', '中文'], component: () => import('@/tools/image-ocr/index.vue') },
-  { slug: 'ffmpeg', category: 'media', icon: Film, keywords: ['ffmpeg', 'wasm', 'video', 'audio', 'transcode', 'convert', 'trim', 'mp4', 'mp3', '音视频', '转码'], component: () => import('@/tools/ffmpeg/index.vue') },
+  { slug: 'ffmpeg', category: 'audiovisual', icon: Film, keywords: ['ffmpeg', 'wasm', 'video', 'audio', 'transcode', 'convert', 'trim', 'mp4', 'mp3', '音视频', '转码'], component: () => import('@/tools/ffmpeg/index.vue') },
 ]
 export default tools
