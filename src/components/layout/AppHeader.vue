@@ -6,10 +6,11 @@ import { Button } from '@/components/ui/button'
 import InstallExtensionModal, { type ExtensionKind } from '@/components/layout/InstallExtensionModal.vue'
 import { LOCALE_META, SUPPORTED_LOCALES, type AppLocale } from '@/i18n'
 import { useSettingsStore } from '@/stores/settings'
+import { isImmersiveSlug } from '@/router/immersive'
 
 const settings = useSettingsStore()
 const route = useRoute()
-const isAgent = computed(() => route.name === 'tool' && route.params.slug === 'agent')
+const isImmersive = computed(() => route.name === 'tool' && isImmersiveSlug(route.params.slug))
 
 function onLocaleChange(event: Event) {
   settings.setLocale((event.target as HTMLSelectElement).value as AppLocale)
@@ -52,7 +53,7 @@ onBeforeUnmount(() => {
 
 <template>
   <header class="bg-background/80 sticky top-0 z-10 border-b backdrop-blur">
-    <div class="mx-auto flex h-14 items-center gap-3 px-4" :class="isAgent ? 'max-w-7xl' : 'max-w-6xl'">
+    <div class="mx-auto flex h-14 items-center gap-3 px-4" :class="isImmersive ? 'max-w-7xl' : 'max-w-6xl'">
       <RouterLink to="/" class="flex items-center gap-2 font-semibold">
         <Wrench class="size-5" />
         {{ $t('app.name') }}

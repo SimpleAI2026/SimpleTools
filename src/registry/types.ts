@@ -1,6 +1,6 @@
 import type { Component } from 'vue'
 
-export const CATEGORIES = ['developer', 'ai', 'encode', 'generate', 'convert', 'text', 'media', 'audiovisual', 'pdf', 'office', 'compress'] as const
+export const CATEGORIES = ['developer', 'programming', 'ai', 'encode', 'generate', 'convert', 'text', 'media', 'audiovisual', 'pdf', 'office', 'compress'] as const
 export type CategoryId = (typeof CATEGORIES)[number]
 
 export interface ToolMeta {

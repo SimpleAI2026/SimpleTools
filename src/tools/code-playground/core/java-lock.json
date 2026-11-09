@@ -1,0 +1,28 @@
+{
+  "files": {
+    "compiler.wasm": {
+      "bytes": 4294850,
+      "sha256": "7f3828e4b7bddf5504dadebfc4016e40f4441e15ee0519071781813ba2ed3a4c",
+      "sameOrigin": "offline/code/java/compiler.wasm",
+      "upstream": "https://teavm.org/playground/3/compiler.wasm"
+    },
+    "compiler.wasm-runtime.js": {
+      "bytes": 13573,
+      "sha256": "9ff6a6771f698be00ab9d5c7b46d904350a8d4115dc0b409553f31ed66688a55",
+      "sameOrigin": "offline/code/java/compiler.wasm-runtime.js",
+      "upstream": "https://teavm.org/playground/3/compiler.wasm-runtime.js"
+    },
+    "compile-classlib-teavm.bin": {
+      "bytes": 200623,
+      "sha256": "e80ae10423a39290c5f20b6bb6da34d21c3ad0a75cd8dbdda4998d2813045e15",
+      "sameOrigin": "offline/code/java/compile-classlib-teavm.bin",
+      "upstream": "https://teavm.org/playground/3/compile-classlib-teavm.bin"
+    },
+    "runtime-classlib-teavm.bin": {
+      "bytes": 2387011,
+      "sha256": "ea670e71967eda93828cb894c1741a8ed2e94b3422eb99cb9eccec0de67daaa8",
+      "sameOrigin": "offline/code/java/runtime-classlib-teavm.bin",
+      "upstream": "https://teavm.org/playground/3/runtime-classlib-teavm.bin"
+    }
+  }
+}

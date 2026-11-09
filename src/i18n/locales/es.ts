@@ -44,6 +44,7 @@ const es: MessageSchema = {
   },
   categories: {
     developer: "Revelador",
+    programming: "Programación",
     ai: "IA / Agente",
     encode: "Codificar y decodificar",
     generate: "Generar",

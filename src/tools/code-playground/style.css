@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'SimpleCode CJK';
+  src: local('PingFang SC'), local('PingFangSC-Regular'), local('Hiragino Sans GB'), local('Microsoft YaHei'), local('Noto Sans CJK SC'), local('Noto Sans SC');
+  unicode-range: U+1100-11FF, U+2E80-9FFF, U+AC00-D7AF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+20000-2FA1F;
+  size-adjust: 120%;
+}
+
+.code-playground,
+.doc-drawer {
+  --editor-toolbar-h: 2.5rem;
+}
+
+.code-playground {
+  --terminal-bg: #0a0a0a;
+}
+
+.code-playground .xterm .xterm-viewport {
+  background-color: transparent !important;
+}
+
+.code-playground .xterm .xterm-viewport::-webkit-scrollbar {
+  width: 8px;
+}
+
+.code-playground .xterm .xterm-viewport::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 4px;
+}

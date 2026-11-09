@@ -44,6 +44,7 @@ const ja: MessageSchema = {
   },
   categories: {
     developer: "開発",
+    programming: "プログラミング",
     ai: "AI / エージェント",
     encode: "エンコードとデコード",
     generate: "生成する",

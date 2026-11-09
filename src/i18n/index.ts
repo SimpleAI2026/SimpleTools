@@ -8,6 +8,7 @@ import de from './locales/de'
 import fr from './locales/fr'
 import es from './locales/es'
 import ptBR from './locales/pt-BR'
+import { PROGRAMMING_MESSAGES } from './programming'
 
 export const SUPPORTED_LOCALES = ['zh-CN', 'en', 'ja', 'ko', 'de', 'fr', 'es', 'pt-BR'] as const
 export type AppLocale = (typeof SUPPORTED_LOCALES)[number]
@@ -64,7 +65,8 @@ export const TOOL_MESSAGES: Record<string, ToolMessages> = Object.fromEntries(
 
 function withTools(base: MessageSchema, lang: AppLocale): MessageSchema {
   const extra = Object.fromEntries(Object.entries(TOOL_MESSAGES).map(([slug, m]) => [slug, m[lang]]))
-  return { ...base, tools: { ...base.tools, ...extra } } as MessageSchema
+  const programming = Object.fromEntries(Object.entries(PROGRAMMING_MESSAGES).map(([slug, m]) => [slug, m[lang]]))
+  return { ...base, tools: { ...base.tools, ...extra, ...programming } } as MessageSchema
 }
 
 export const i18n = createI18n<[MessageSchema], AppLocale>({

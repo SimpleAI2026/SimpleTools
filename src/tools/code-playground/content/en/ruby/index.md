@@ -1,0 +1,47 @@
+---
+language: ruby
+chapter: 0
+title: "Ruby Tutorial"
+minutes: 8
+goals:
+  - "Print one line with puts"
+  - "Remember that gem install does not run here"
+  - "Write a tiny program that includes a comment"
+sources:
+  - lxiy-ruby
+updated: "2026-10-16"
+---
+
+This book runs the current file with Ruby 3.2. There is no page to fetch and no extra gem to load. Press Run on a block to see what that block prints.
+
+### The first line
+
+`puts` writes its argument and then adds a newline. The argument here is a quoted string. Those characters stay as written in the program.
+
+```ruby run expect="Hi" title="Say hello"
+puts "Hi"
+```
+
+The printed line is `Hi`.
+
+### gem install is unavailable
+
+`gem install` needs a network connection and a directory on the machine. The Run button will not carry out that command. Read the line as a reminder of what this page skips.
+
+```ruby norun title="Not source"
+gem install rails
+```
+
+### A hash starts a comment
+
+Text after `#` on the same line is skipped. It never shows up in the output. The `puts` before the hash still runs.
+
+```ruby run expect="kept" title="Skip the comment"
+puts "kept" # hidden
+```
+
+The printed line is `kept`.
+
+### After chapter 23
+
+A proc adds 2 and 5 into 7, a short lambda prints arity, Enumerable select and tally handle a short list, Struct stores sku and qty, Comparable sorts by milliliters, method_missing returns the method name, define_method installs sku, a change after freeze prints locked, and instance_eval records a menu name.

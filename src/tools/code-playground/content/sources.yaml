@@ -1,0 +1,357 @@
+# 教程参考资料登记。adapt: true 的资料允许改编代码示例（须在章节中署名）；
+# adapt: false 只可在“延伸阅读”中链接，不得搬入原文。
+python-tutorial:
+  title: The Python Tutorial
+  url: https://docs.python.org/3/tutorial/
+  license: PSF
+  adapt: false
+lxiy-python:
+  title: Learn X in Y minutes — Python
+  url: https://learnxinyminutes.com/python/
+  license: CC-BY-SA-3.0
+  adapt: true
+byte-of-python:
+  title: A Byte of Python
+  url: https://python.swaroopch.com/
+  license: CC-BY-SA-4.0
+  adapt: true
+think-python:
+  title: Think Python 3e
+  url: https://greenteapress.com/wp/think-python-3rd-edition/
+  license: CC-BY-NC-SA-4.0
+  adapt: false
+automate:
+  title: Automate the Boring Stuff with Python
+  url: https://automatetheboringstuff.com/
+  license: CC-BY-NC-SA-3.0
+  adapt: false
+ruby-twenty:
+  title: Ruby in Twenty Minutes
+  url: https://www.ruby-lang.org/en/documentation/quickstart/
+  license: ruby-lang.org
+  adapt: false
+ruby-koans:
+  title: Ruby Koans
+  url: https://github.com/edgecase/ruby_koans
+  license: CC-BY-NC-SA-3.0
+  adapt: false
+poignant:
+  title: Why's (Poignant) Guide to Ruby
+  url: https://poignant.guide/
+  license: CC-BY-SA-2.5
+  adapt: true
+lxiy-ruby:
+  title: Learn X in Y minutes — Ruby
+  url: https://learnxinyminutes.com/ruby/
+  license: CC-BY-SA-3.0
+  adapt: true
+mdn-js:
+  title: MDN JavaScript Guide
+  url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide
+  license: CC-BY-SA-2.5
+  adapt: true
+ts-handbook:
+  title: TypeScript Handbook
+  url: https://www.typescriptlang.org/docs/handbook/intro.html
+  license: CC-BY-4.0
+  adapt: true
+javascript-info:
+  title: javascript.info
+  url: https://javascript.info/
+  license: CC-BY-NC-SA-4.0
+  adapt: false
+eloquent-js:
+  title: Eloquent JavaScript
+  url: https://eloquentjavascript.net/
+  license: CC-BY-NC-3.0
+  adapt: false
+lxiy-js:
+  title: Learn X in Y minutes — JavaScript
+  url: https://learnxinyminutes.com/javascript/
+  license: CC-BY-SA-3.0
+  adapt: true
+sqlite-lang:
+  title: SQLite SQL Language Reference
+  url: https://www.sqlite.org/lang.html
+  license: Public-Domain
+  adapt: true
+sqlbolt:
+  title: SQLBolt
+  url: https://sqlbolt.com/
+  license: All-rights-reserved
+  adapt: false
+select-star:
+  title: Select Star SQL
+  url: https://selectstarsql.com/
+  license: Unknown
+  adapt: false
+beej-c:
+  title: Beej's Guide to C Programming
+  url: https://beej.us/guide/bgc/
+  license: CC-BY-NC-ND-3.0
+  adapt: false
+modern-c:
+  title: Modern C
+  url: https://gustedt.gitlabpages.inria.fr/modern-c/
+  license: CC-BY-NC-ND
+  adapt: false
+learn-c:
+  title: learn-c.org
+  url: https://www.learn-c.org/
+  license: Unknown
+  adapt: false
+learncpp:
+  title: LearnCpp
+  url: https://www.learncpp.com/
+  license: All-rights-reserved
+  adapt: false
+cpp-core:
+  title: C++ Core Guidelines
+  url: https://github.com/isocpp/CppCoreGuidelines
+  license: MIT-style
+  adapt: false
+cppreference:
+  title: cppreference
+  url: https://en.cppreference.com/
+  license: CC-BY-SA-3.0
+  adapt: true
+php-manual:
+  title: PHP Manual
+  url: https://www.php.net/manual/en/
+  license: CC-BY-3.0
+  adapt: true
+php-right-way:
+  title: PHP The Right Way
+  url: https://github.com/codeguy/php-the-right-way
+  license: CC-BY-NC-SA-3.0
+  adapt: false
+pil:
+  title: Programming in Lua (1st edition)
+  url: https://www.lua.org/pil/
+  license: All-rights-reserved
+  adapt: false
+lua-manual:
+  title: Lua 5.4 Reference Manual
+  url: https://www.lua.org/manual/5.4/
+  license: Lua.org
+  adapt: false
+lxiy-lua:
+  title: Learn X in Y minutes — Lua
+  url: https://learnxinyminutes.com/lua/
+  license: CC-BY-SA-3.0
+  adapt: true
+gobyexample:
+  title: Go by Example
+  url: https://gobyexample.com/
+  license: CC-BY-3.0
+  adapt: true
+go-tour:
+  title: A Tour of Go
+  url: https://go.dev/tour/
+  license: Unknown
+  adapt: false
+little-go-book:
+  title: The Little Go Book
+  url: https://github.com/karlseguin/the-little-go-book
+  license: CC-BY-NC-SA-4.0
+  adapt: false
+learn-go-tests:
+  title: Learn Go with Tests
+  url: https://github.com/quii/learn-go-with-tests
+  license: MIT
+  adapt: true
+effective-go:
+  title: Effective Go
+  url: https://go.dev/doc/effective_go
+  license: Unknown
+  adapt: false
+norvig-ten:
+  title: Teach Yourself Programming in Ten Years
+  url: https://norvig.com/21-days.html
+  license: All-rights-reserved
+  adapt: false
+
+wasi-sh:
+  title: wasi-sh
+  url: https://github.com/linkxzhou/SimpleCode/blob/main/scripts/builders/shell/wasi-sh.c
+  license: MIT
+  adapt: true
+runoob-rust:
+  title: 菜鸟教程 Rust
+  url: https://www.runoob.com/rust/rust-tutorial.html
+  license: 目录形状参考，正文原创
+  adapt: false
+runoob-java:
+  title: 菜鸟教程 Java
+  url: https://www.runoob.com/java/java-tutorial.html
+  license: 目录形状参考，正文原创
+  adapt: false
+oracle-java-tutorial:
+  title: The Java Tutorials
+  url: https://docs.oracle.com/javase/tutorial/java/nutsandbolts/index.html
+  license: Oracle
+  adapt: false
+v86-buildroot:
+  title: v86 Buildroot Linux 6.8 image
+  url: https://github.com/copy/v86
+  license: BSD-2-Clause / GPL-2.0
+  adapt: false
+
+python-100-days:
+  title: Python-100-Days
+  url: https://github.com/jackfrued/Python-100-Days
+  license: No-license-declared
+  adapt: false
+fluent-python:
+  title: Fluent Python
+  url: https://book.douban.com/subject/27028517
+  license: All-rights-reserved
+  adapt: false
+python-crash-course:
+  title: Python Crash Course
+  url: https://book.douban.com/subject/26829016
+  license: All-rights-reserved
+  adapt: false
+ydkjs:
+  title: You Don't Know JS
+  url: https://github.com/getify/You-Dont-Know-JS
+  license: CC-BY-NC-ND-4.0
+  adapt: false
+js-professional:
+  title: Professional JavaScript for Web Developers (4th ed.)
+  url: https://book.douban.com/subject/35175321
+  license: All-rights-reserved
+  adapt: false
+javaguide:
+  title: JavaGuide
+  url: https://github.com/Snailclimb/JavaGuide
+  license: Apache-2.0
+  adapt: true
+advanced-java:
+  title: advanced-java
+  url: https://github.com/doocs/advanced-java
+  license: CC-BY-SA-4.0
+  adapt: true
+java-core-vol1:
+  title: Core Java Volume I
+  url: https://book.douban.com/subject/35920145
+  license: All-rights-reserved
+  adapt: false
+effective-java:
+  title: Effective Java
+  url: https://book.douban.com/subject/30412517
+  license: All-rights-reserved
+  adapt: false
+
+numpy-manual:
+  title: NumPy user guide
+  url: https://numpy.org/doc/stable/user/index.html
+  license: BSD-3-Clause
+  adapt: false
+fashion-mnist:
+  title: Fashion-MNIST
+  url: https://github.com/zalandoresearch/fashion-mnist
+  license: MIT
+  adapt: true
+
+modern-cpp-tutorial:
+  title: Modern C++ Tutorial
+  url: https://github.com/changkun/modern-cpp-tutorial
+  license: MIT
+  adapt: true
+modern-cpp-features:
+  title: C++11/14/17/20 Features
+  url: https://github.com/AnthonyCalandra/modern-cpp-features
+  license: MIT
+  adapt: true
+quick-sql:
+  title: Quick SQL Cheatsheet
+  url: https://github.com/enochtangg/quick-SQL-cheatsheet
+  license: MIT
+  adapt: true
+kr-c:
+  title: The C Programming Language
+  url: https://book.douban.com/subject/1139336
+  license: All-rights-reserved
+  adapt: false
+c-primer-plus:
+  title: C Primer Plus
+  url: https://book.douban.com/subject/26792521
+  license: All-rights-reserved
+  adapt: false
+csapp:
+  title: Computer Systems: A Programmer's Perspective
+  url: https://book.douban.com/subject/1230413
+  license: All-rights-reserved
+  adapt: false
+cpp-primer:
+  title: C++ Primer
+  url: https://book.douban.com/subject/25708312
+  license: All-rights-reserved
+  adapt: false
+effective-cpp:
+  title: Effective C++
+  url: https://book.douban.com/subject/1842426
+  license: All-rights-reserved
+  adapt: false
+sql-must-know:
+  title: SQL必知必会
+  url: https://book.douban.com/subject/35167240
+  license: All-rights-reserved
+  adapt: false
+
+rust-book:
+  title: The Rust Programming Language
+  url: https://github.com/rust-lang/book
+  license: MIT OR Apache-2.0
+  adapt: true
+rust-by-example:
+  title: Rust By Example
+  url: https://github.com/rust-lang/rust-by-example
+  license: Apache-2.0
+  adapt: true
+numpy-100:
+  title: 100 numpy exercises
+  url: https://github.com/rougier/numpy-100
+  license: MIT
+  adapt: true
+micrograd:
+  title: micrograd
+  url: https://github.com/karpathy/micrograd
+  license: MIT
+  adapt: true
+nn-zero-to-hero:
+  title: Neural Networks: Zero to Hero
+  url: https://github.com/karpathy/nn-zero-to-hero
+  license: MIT
+  adapt: true
+d2l-zh:
+  title: Dive into Deep Learning
+  url: https://github.com/d2l-ai/d2l-zh
+  license: Apache-2.0
+  adapt: true
+gopl:
+  title: The Go Programming Language
+  url: https://book.douban.com/subject/27044219
+  license: All-rights-reserved
+  adapt: false
+rust-programming:
+  title: Programming Rust
+  url: https://book.douban.com/subject/36547630
+  license: All-rights-reserved
+  adapt: false
+rust-course:
+  title: Rust Course
+  url: https://github.com/sunface/rust-course
+  license: No-license-declared
+  adapt: false
+py-data-handbook:
+  title: Python Data Science Handbook
+  url: https://book.douban.com/subject/27667378
+  license: All-rights-reserved
+  adapt: false
+dl-flower:
+  title: Deep Learning
+  url: https://book.douban.com/subject/27087503
+  license: All-rights-reserved
+  adapt: false

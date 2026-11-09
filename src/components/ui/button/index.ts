@@ -12,10 +12,12 @@ export const buttonVariants = cva(
         outline: 'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
         secondary: 'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
+        'ghost-destructive': 'text-destructive hover:bg-destructive/10 hover:text-destructive',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-9 px-4 py-2',
+        xs: 'h-7 rounded-md gap-1 px-2 text-xs',
         sm: 'h-8 rounded-md gap-1.5 px-3',
         lg: 'h-10 rounded-md px-6',
         icon: 'size-9',

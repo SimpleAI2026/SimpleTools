@@ -5,8 +5,10 @@ export default defineConfigWithVueTs(
   {
     ignores: [
       'dist/**',
+      'test-results/**',
       'node_modules/**',
       'thirdparty/**',
+      'src/tools/code-playground/rustc/shim/**',
       'plan/**',
       '.yarn/**',
       'public/pdfjs/**',

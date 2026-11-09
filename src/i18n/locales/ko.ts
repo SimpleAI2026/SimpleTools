@@ -44,6 +44,7 @@ const ko: MessageSchema = {
   },
   categories: {
     developer: "개발자",
+    programming: "프로그래밍",
     ai: "AI/에이전트",
     encode: "인코딩 및 디코딩",
     generate: "생성하다",

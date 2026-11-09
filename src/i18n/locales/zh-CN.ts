@@ -42,6 +42,7 @@ const zhCN = {
   },
   categories: {
     developer: '开发',
+    programming: '编程',
     ai: 'AI / Agent',
     encode: '编码解码',
     generate: '生成器',

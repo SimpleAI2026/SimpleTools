@@ -44,6 +44,7 @@ const ptBR: MessageSchema = {
   },
   categories: {
     developer: "Desenvolvedor",
+    programming: "Programação",
     ai: "IA / Agente",
     encode: "Codificar e decodificar",
     generate: "Gerar",
