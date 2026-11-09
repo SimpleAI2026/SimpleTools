@@ -53,6 +53,8 @@
 
 每个工具目录都包含 `index.vue`、`logic.ts`、`logic.test.ts`、`messages.ts`。注册在 `src/registry/tools/growth-workflows.ts`、`market-workflows.ts`、`creator-workflows.ts`。界面八语在各自 `messages.ts`，公共导入错误在八个 locale 的 `common` 段。
 
+2026-11-09 提交后复跑：`eslint .` 通过，`vue-tsc -b` 通过，`vitest run` 为 212 个文件、575 个测试全部通过，`./build.sh build` 与 `./build.sh chrome` 通过。Chrome 包版本仍是 5.0.0，包内无 Pandoc 目录，FFmpeg WASM 仍在包内。
+
 ## 与计划不一致、但保留能力的地方
 
 - 用户正则没有走可终止的原生 `RegExp` Worker。MV3 CSP 不允许 blob worker，而 V8 的同步正则无法用 `AbortController` 打断。等价实现是 `src/lib/workflow/regexBudget.ts` 的步进解释器：超限返回 `timeout`，工具记为 `incomplete`，不算通过。前瞻、反向引用直接拒绝。
