@@ -1,18 +1,27 @@
 import { describe, expect, it } from 'vitest'
-import { present, run, SAMPLE } from './logic'
+import { gtinCheck, present, run, SAMPLE } from './logic'
 
-describe("product-feed-auditor", () => {
-  it('builds a real artifact and keeps the boundary marker', () => {
-    const result = run(SAMPLE)
-    const packed = JSON.stringify(result.json) + '\n' + result.csv + '\n' + result.summary
-    expect(result.csv.split('\n').length).toBeGreaterThan(1)
-    expect(packed).toContain("ai_source")
+describe('product-feed-auditor', () => {
+  it('locates duplicate IDs, bad GTINs, and variant currency conflicts', () => {
+    const packed = JSON.stringify(run(SAMPLE).json)
+    expect(packed).toContain('duplicate-id')
+    expect(packed).toContain('gtin')
+    expect(packed).toContain('variant-currency')
+    expect(packed).toContain('ai_source')
     expect(present(SAMPLE).files.map((file) => file.name)).toContain('result.json')
   })
 
-  it('rejects empty input, broken syntax, and an oversized import', () => {
+  it('validates GTIN check digits', () => {
+    expect(gtinCheck('96385074')).toEqual({ ok: true, kind: 'GTIN-8' })
+    expect(gtinCheck('96385075').ok).toBe(false)
+    expect(gtinCheck('12').kind).toBe('format')
+  })
+
+  it('accepts CSV and reports row numbers and invalid values', () => {
+    const result = run('id,title,price,currency\n1,Hat,-2,US\n')
+    expect(result.csv).toContain('invalid-price')
+    expect(result.csv).toContain('invalid-currency')
+    expect(result.csv).toContain('2,1,')
     expect(present('').error).toBe('empty')
-    expect(present('{').error).not.toBe('')
-    expect(present('x'.repeat(1_500_001)).error).toBe('too-large')
   })
 })

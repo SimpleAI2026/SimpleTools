@@ -16,13 +16,13 @@ describe('registry', () => {
   })
   it('splits audio and video from images without changing tool slugs', () => {
     expect(CATEGORIES).toContain('audiovisual')
-    for (const slug of ['ffmpeg', 'subtitle-toolkit', 'video-delivery-preflight', 'audio-level-auditor', 'edit-decision-log', 'chapter-author', 'voiceover-timing-planner', 'ai-storyboard-variants']) {
+    for (const slug of ['ffmpeg', 'subtitle-toolkit', 'video-delivery-preflight']) {
       expect(getTool(slug)?.slug).toBe(slug)
       expect(getTool(slug)?.category).toBe('audiovisual')
     }
     expect(getTool('image-editor')?.category).toBe('media')
-    expect(getTool('image-alt-review')?.category).toBe('media')
-    expect(getTool('visual-selects-board')?.category).toBe('media')
+    expect(getTool('audio-level-auditor')).toBeUndefined()
+    expect(getTool('visual-selects-board')).toBeUndefined()
   })
   it('looks up and filters', () => {
     expect(getTool('base64')?.category).toBe('encode')

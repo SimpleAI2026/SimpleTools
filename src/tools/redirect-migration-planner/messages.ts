@@ -1,74 +1,10 @@
 export default {
-  "zh-CN": {
-    "name": "迁移重定向规划",
-    "description": "检查环、链、冲突、缺目标和状态码。",
-    "disclaimer": "只产出复核表，不生成服务器配置，也不发送请求。",
-    "usageTitle": "使用方法",
-    "step1": "按旧 URL、新 URL 和状态码导入迁移映射。",
-    "step2": "处理环、过长链、冲突和缺目标，逐条确认最终落点。",
-    "step3": "导出复核表交给实施人员；它不是可直接部署的服务器配置。"
-  },
-  "en": {
-    "name": "Redirect migration plan",
-    "description": "Find cycles, chains, conflicts, missing targets, and status codes.",
-    "disclaimer": "The output is a review table, not a server config, and no request is sent.",
-    "usageTitle": "How to use",
-    "step1": "Import migration mappings with old URLs, new URLs, and status codes.",
-    "step2": "Resolve cycles, long chains, conflicts, and missing targets, confirming each final destination.",
-    "step3": "Export the review table for implementation; it is not a deployable server configuration."
-  },
-  "ja": {
-    "name": "リダイレクト計画",
-    "description": "循環、連鎖、衝突、欠落、状態コードを見ます。",
-    "disclaimer": "出力は確認表であり、サーバ設定ではなく、リクエストも送りません。",
-    "usageTitle": "使い方",
-    "step1": "サンプルを読み込むか、自分の入力を貼り付けて、結果を確認します。",
-    "step2": "不足や不一致を入力で直し、もう一度実行して結果を更新します。",
-    "step3": "最終結果をコピーまたはダウンロードし、作業記録と一緒に保存します。"
-  },
-  "ko": {
-    "name": "리다이렉트 이전 계획",
-    "description": "순환, 연쇄, 충돌, 빠진 대상, 상태 코드를 봅니다.",
-    "disclaimer": "결과는 검토표이며 서버 설정이 아니고 요청도 보내지 않습니다.",
-    "usageTitle": "사용 방법",
-    "step1": "샘플을 불러오거나 직접 입력을 붙여 넣고 결과를 확인합니다.",
-    "step2": "누락되거나 일치하지 않는 항목을 수정한 후 도구를 다시 실행하여 결과를 새로 고칩니다.",
-    "step3": "최종 결과를 복사하거나 다운로드하여 작업 기록과 함께 저장합니다."
-  },
-  "de": {
-    "name": "Umleitungsplan",
-    "description": "Findet Kreise, Ketten, Konflikte, fehlende Ziele und Statuscodes.",
-    "disclaimer": "Das Ergebnis ist eine Pruftabelle, keine Serverkonfiguration.",
-    "usageTitle": "So geht es",
-    "step1": "Laden Sie das Beispiel oder fügen Sie eigene Eingaben ein, und prüfen Sie das Ergebnis.",
-    "step2": "Korrigieren Sie fehlende oder widersprüchliche Einträge in der Eingabe und führen Sie das Tool erneut aus.",
-    "step3": "Kopieren oder laden Sie das Endergebnis und speichern Sie es mit Ihren Projektaufzeichnungen."
-  },
-  "fr": {
-    "name": "Plan de redirections",
-    "description": "Trouve boucles, chaines, conflits, cibles absentes et codes.",
-    "disclaimer": "Le resultat est un tableau de revue, pas une config serveur.",
-    "usageTitle": "Mode d'emploi",
-    "step1": "Chargez l'exemple ou collez votre propre entrée, puis examinez le résultat.",
-    "step2": "Corrigez les éléments manquants ou incohérents dans l'entrée, puis relancez l'outil.",
-    "step3": "Copiez ou téléchargez le résultat final et enregistrez-le avec les documents du projet."
-  },
-  "es": {
-    "name": "Plan de redirecciones",
-    "description": "Encuentra ciclos, cadenas, conflictos, destinos ausentes y codigos.",
-    "disclaimer": "El resultado es una tabla de revision, no una config de servidor.",
-    "usageTitle": "Como usarlo",
-    "step1": "Cargue el ejemplo o pegue su propia entrada y revise el resultado.",
-    "step2": "Corrija los elementos que faltan o no coinciden en la entrada y ejecute la herramienta otra vez.",
-    "step3": "Copie o descargue el resultado final y guárdelo con los registros del proyecto."
-  },
-  "pt-BR": {
-    "name": "Plano de redirecionamentos",
-    "description": "Encontra ciclos, cadeias, conflitos, destinos ausentes e codigos.",
-    "disclaimer": "O resultado e uma tabela de revisao, nao uma config de servidor.",
-    "usageTitle": "Como usar",
-    "step1": "Carregue o exemplo ou cole sua própria entrada e revise o resultado.",
-    "step2": "Corrija os itens ausentes ou inconsistentes na entrada e execute a ferramenta novamente.",
-    "step3": "Copie ou baixe o resultado final e salve-o com os registros do projeto."
-  }
+  'zh-CN': { name: '迁移重定向规划', description: '检查环、链、冲突、缺目标和状态码。', disclaimer: '只产出复核表，不生成服务器配置，也不发送请求。', from: '旧 URL', to: '新 URL', downloadMap: '下载映射 CSV', usageTitle: '使用方法', step1: '逐行填写旧 URL、新 URL 和状态码。', step2: '处理环、链、冲突和缺目标，逐条确认最终落点。', step3: '下载映射和问题表交给实施人员；它们不是可直接部署的服务器配置。' },
+  en: { name: 'Redirect migration plan', description: 'Find cycles, chains, conflicts, missing targets, and invalid status codes.', disclaimer: 'The output is a review table, not a server config, and no request is sent.', from: 'Old URL', to: 'New URL', downloadMap: 'Download mapping CSV', usageTitle: 'How to use', step1: 'Enter old URLs, new URLs, and status codes row by row.', step2: 'Resolve cycles, chains, conflicts, and missing targets, confirming each final destination.', step3: 'Download the mapping and issues for implementation; neither is a deployable server configuration.' },
+  ja: { name: 'リダイレクト計画', description: '循環、連鎖、衝突、欠落、状態コードを検査します。', disclaimer: '確認表を出力するだけで、サーバ設定の生成やリクエスト送信はしません。', from: '旧URL', to: '新URL', downloadMap: '対応表CSVを保存', usageTitle: '使い方', step1: '旧URL、新URL、状態コードを行ごとに入力します。', step2: '循環、連鎖、衝突、欠落を処理し、最終移動先を確認します。', step3: '対応表と問題表を保存します。そのまま導入できるサーバ設定ではありません。' },
+  ko: { name: '리다이렉트 이전 계획', description: '순환, 연쇄, 충돌, 빠진 대상과 상태 코드를 검사합니다.', disclaimer: '검토표만 만들며 서버 설정 생성이나 요청 전송은 하지 않습니다.', from: '기존 URL', to: '새 URL', downloadMap: '매핑 CSV 다운로드', usageTitle: '사용 방법', step1: '기존 URL, 새 URL, 상태 코드를 행별로 입력합니다.', step2: '순환, 연쇄, 충돌, 누락을 수정하고 최종 도착지를 확인합니다.', step3: '매핑과 문제 표를 다운로드합니다. 바로 배포 가능한 서버 설정은 아닙니다.' },
+  de: { name: 'Umleitungsplan', description: 'Findet Kreise, Ketten, Konflikte, fehlende Ziele und ungültige Statuscodes.', disclaimer: 'Nur Prüftabellen, keine Serverkonfiguration und keine Anfragen.', from: 'Alte URL', to: 'Neue URL', downloadMap: 'Zuordnung als CSV', usageTitle: 'So geht es', step1: 'Geben Sie alte URLs, neue URLs und Statuscodes zeilenweise ein.', step2: 'Beheben Sie Kreise, Ketten, Konflikte und fehlende Ziele und prüfen Sie das Endziel.', step3: 'Laden Sie Zuordnung und Probleme für die Umsetzung herunter; sie sind keine Serverkonfiguration.' },
+  fr: { name: 'Plan de redirections', description: 'Trouve boucles, chaînes, conflits, cibles absentes et codes invalides.', disclaimer: 'Le résultat est un tableau de revue, pas une config serveur, sans requête.', from: 'Ancienne URL', to: 'Nouvelle URL', downloadMap: 'Télécharger le mapping CSV', usageTitle: 'Mode d’emploi', step1: 'Saisissez anciennes URL, nouvelles URL et codes ligne par ligne.', step2: 'Résolvez boucles, chaînes, conflits et cibles absentes en vérifiant la destination finale.', step3: 'Téléchargez mapping et problèmes pour l’implémentation ; ce ne sont pas des configurations serveur.' },
+  es: { name: 'Plan de redirecciones', description: 'Encuentra ciclos, cadenas, conflictos, destinos ausentes y códigos inválidos.', disclaimer: 'El resultado es una tabla de revisión, no una config de servidor ni solicitudes.', from: 'URL anterior', to: 'URL nueva', downloadMap: 'Descargar mapeo CSV', usageTitle: 'Cómo usarlo', step1: 'Introduce URL anteriores, nuevas y códigos fila por fila.', step2: 'Resuelve ciclos, cadenas, conflictos y destinos ausentes comprobando el destino final.', step3: 'Descarga mapeo y problemas para implementarlos; no son configuración de servidor.' },
+  'pt-BR': { name: 'Plano de redirecionamentos', description: 'Encontra ciclos, cadeias, conflitos, destinos ausentes e códigos inválidos.', disclaimer: 'O resultado é uma tabela de revisão, não config de servidor, e não envia solicitações.', from: 'URL antiga', to: 'URL nova', downloadMap: 'Baixar mapeamento CSV', usageTitle: 'Como usar', step1: 'Informe URLs antigas, novas e códigos linha por linha.', step2: 'Resolva ciclos, cadeias, conflitos e destinos ausentes, conferindo o destino final.', step3: 'Baixe mapeamento e problemas para implementação; não são configurações de servidor.' },
 }

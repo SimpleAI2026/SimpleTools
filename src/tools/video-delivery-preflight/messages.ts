@@ -1,74 +1,10 @@
 export default {
-  "zh-CN": {
-    "name": "音视频交付预检",
-    "description": "从现有 FFmpeg 日志提取尺寸和声道，并对照你写的合同。",
-    "disclaimer": "解析不到的字段是未知而不是通过。不会自动转码。",
-    "usageTitle": "使用方法",
-    "step1": "选择本地媒体取得 FFmpeg 信息，或粘贴现有日志，并填写交付合同要求。",
-    "step2": "逐项核对尺寸、声道和其他规格；解析不到的字段按未知处理。",
-    "step3": "导出预检结果，交给交付人员修正媒体后重新验证。"
-  },
-  "en": {
-    "name": "Media delivery preflight",
-    "description": "Read size and channels from an existing FFmpeg log and compare them with your contract.",
-    "disclaimer": "A field that cannot be read is unknown, not a pass. Nothing is re-encoded.",
-    "usageTitle": "How to use",
-    "step1": "Select local media for FFmpeg details or paste an existing log, then enter the delivery contract.",
-    "step2": "Check dimensions, channels, and other specifications; unreadable fields remain unknown.",
-    "step3": "Export the preflight for the delivery owner to correct the media and verify it again."
-  },
-  "ja": {
-    "name": "納品前チェック",
-    "description": "既存の FFmpeg ログからサイズとチャンネルを読み、契約と照らします。",
-    "disclaimer": "読めない項目は合格ではなく不明です。自動で再エンコードしません。",
-    "usageTitle": "使い方",
-    "step1": "サンプルを読み込むか、自分の入力を貼り付けて、結果を確認します。",
-    "step2": "不足や不一致を入力で直し、もう一度実行して結果を更新します。",
-    "step3": "最終結果をコピーまたはダウンロードし、作業記録と一緒に保存します。"
-  },
-  "ko": {
-    "name": "납품 사전 검사",
-    "description": "기존 FFmpeg 로그에서 크기와 채널을 읽어 계약과 비교합니다.",
-    "disclaimer": "읽지 못한 항목은 통과가 아니라 알 수 없음입니다. 자동으로 다시 인코딩하지 않습니다.",
-    "usageTitle": "사용 방법",
-    "step1": "샘플을 불러오거나 직접 입력을 붙여 넣고 결과를 확인합니다.",
-    "step2": "누락되거나 일치하지 않는 항목을 수정한 후 도구를 다시 실행하여 결과를 새로 고칩니다.",
-    "step3": "최종 결과를 복사하거나 다운로드하여 작업 기록과 함께 저장합니다."
-  },
-  "de": {
-    "name": "Liefervorprufung",
-    "description": "Liest Grosse und Kanale aus einem vorhandenen FFmpeg-Log und vergleicht sie mit dem Vertrag.",
-    "disclaimer": "Unlesbare Felder sind unbekannt, kein Bestehen. Nichts wird neu kodiert.",
-    "usageTitle": "So geht es",
-    "step1": "Laden Sie das Beispiel oder fügen Sie eigene Eingaben ein, und prüfen Sie das Ergebnis.",
-    "step2": "Korrigieren Sie fehlende oder widersprüchliche Einträge in der Eingabe und führen Sie das Tool erneut aus.",
-    "step3": "Kopieren oder laden Sie das Endergebnis und speichern Sie es mit Ihren Projektaufzeichnungen."
-  },
-  "fr": {
-    "name": "Precontrole de livraison",
-    "description": "Lit taille et canaux dans un journal FFmpeg deja produit et les compare au contrat.",
-    "disclaimer": "Un champ illisible est inconnu, pas un succes. Rien n'est reencode.",
-    "usageTitle": "Mode d'emploi",
-    "step1": "Chargez l'exemple ou collez votre propre entrée, puis examinez le résultat.",
-    "step2": "Corrigez les éléments manquants ou incohérents dans l'entrée, puis relancez l'outil.",
-    "step3": "Copiez ou téléchargez le résultat final et enregistrez-le avec les documents du projet."
-  },
-  "es": {
-    "name": "Prechequeo de entrega",
-    "description": "Lee tamano y canales de un registro FFmpeg ya hecho y los compara con el contrato.",
-    "disclaimer": "Un campo ilegible es desconocido, no un aprobado. Nada se recodifica.",
-    "usageTitle": "Como usarlo",
-    "step1": "Cargue el ejemplo o pegue su propia entrada y revise el resultado.",
-    "step2": "Corrija los elementos que faltan o no coinciden en la entrada y ejecute la herramienta otra vez.",
-    "step3": "Copie o descargue el resultado final y guárdelo con los registros del proyecto."
-  },
-  "pt-BR": {
-    "name": "Pre-checagem de entrega",
-    "description": "Le tamanho e canais de um registro FFmpeg ja feito e compara com o contrato.",
-    "disclaimer": "Um campo ilegivel e desconhecido, nao uma aprovacao. Nada e recodificado.",
-    "usageTitle": "Como usar",
-    "step1": "Carregue o exemplo ou cole sua própria entrada e revise o resultado.",
-    "step2": "Corrija os itens ausentes ou inconsistentes na entrada e execute a ferramenta novamente.",
-    "step3": "Copie ou baixe o resultado final e salve-o com os registros do projeto."
-  }
+  'zh-CN': { name: '音视频交付预检', description: '读取本地媒体的尺寸、帧率和声道，并对照交付规格。', disclaimer: '解析不到的字段是未知而不是通过。不会自动转码或修改文件。', drop: '选择或拖放一个本地音视频文件', contract: '交付规格', width: '宽度', height: '高度', fps: '帧率', channels: '声道数', runProbe: '读取媒体信息', cancel: '取消', probeError: '无法读取该媒体。请检查格式，或使用现有 FFmpeg 工具生成 probe 日志。', usageTitle: '使用方法', step1: '选择本地媒体，点击读取媒体信息，并填写交付规格。', step2: '逐项核对尺寸、帧率和声道；解析不到的字段按未知处理。', step3: '下载预检报告，修正媒体后重新验证。' },
+  en: { name: 'Media delivery preflight', description: 'Read local media dimensions, frame rate, and channels and compare them with delivery specifications.', disclaimer: 'Unreadable fields are unknown, not a pass. Nothing is re-encoded or modified.', drop: 'Choose or drop one local audio/video file', contract: 'Delivery specifications', width: 'Width', height: 'Height', fps: 'Frame rate', channels: 'Audio channels', runProbe: 'Read media details', cancel: 'Cancel', probeError: 'The media could not be read. Check its format or use the existing FFmpeg tool to produce a probe log.', usageTitle: 'How to use', step1: 'Choose local media, click Read media details, and enter the delivery specifications.', step2: 'Compare dimensions, frame rate, and channels; unreadable fields remain unknown.', step3: 'Download the preflight report, correct the media, and verify it again.' },
+  ja: { name: '納品前チェック', description: 'ローカルメディアのサイズ、フレームレート、チャンネルを納品仕様と照合します。', disclaimer: '読めない項目は合格ではなく不明です。再エンコードやファイル変更はしません。', drop: 'ローカル音声・動画を1つ選択またはドロップ', contract: '納品仕様', width: '幅', height: '高さ', fps: 'フレームレート', channels: '音声チャンネル', runProbe: 'メディア情報を読む', cancel: 'キャンセル', probeError: 'メディアを読めませんでした。形式を確認するか、既存のFFmpegツールでprobeログを作成してください。', usageTitle: '使い方', step1: 'ローカルメディアを選び、情報を読み、納品仕様を入力します。', step2: 'サイズ、フレームレート、チャンネルを比較し、不明項目を確認します。', step3: '事前検査報告を保存し、メディア修正後にもう一度確認します。' },
+  ko: { name: '납품 사전 검사', description: '로컬 미디어의 크기, 프레임률, 채널을 납품 사양과 비교합니다.', disclaimer: '읽지 못한 항목은 통과가 아니라 알 수 없음이며 파일을 변환하거나 수정하지 않습니다.', drop: '로컬 오디오/비디오 파일 하나를 선택하거나 놓으세요', contract: '납품 사양', width: '너비', height: '높이', fps: '프레임률', channels: '오디오 채널', runProbe: '미디어 정보 읽기', cancel: '취소', probeError: '미디어를 읽지 못했습니다. 형식을 확인하거나 기존 FFmpeg 도구로 probe 로그를 만드세요.', usageTitle: '사용 방법', step1: '로컬 미디어를 고르고 정보를 읽은 뒤 납품 사양을 입력합니다.', step2: '크기, 프레임률, 채널을 비교하고 읽지 못한 항목을 확인합니다.', step3: '사전 검사 보고서를 다운로드하고 미디어 수정 후 다시 확인합니다.' },
+  de: { name: 'Liefervorprüfung', description: 'Liest lokale Mediengröße, Bildrate und Kanäle und vergleicht sie mit den Lieferdaten.', disclaimer: 'Unlesbare Felder sind unbekannt, nicht bestanden. Es wird nichts kodiert oder verändert.', drop: 'Eine lokale Audio-/Videodatei wählen oder ablegen', contract: 'Lieferanforderungen', width: 'Breite', height: 'Höhe', fps: 'Bildrate', channels: 'Audiokanäle', runProbe: 'Mediendaten lesen', cancel: 'Abbrechen', probeError: 'Die Datei konnte nicht gelesen werden. Prüfen Sie das Format oder erzeugen Sie mit FFmpeg ein Probe-Protokoll.', usageTitle: 'So geht es', step1: 'Wählen Sie lokale Medien, lesen Sie die Daten und geben Sie die Anforderungen ein.', step2: 'Vergleichen Sie Größe, Bildrate und Kanäle; unlesbare Felder bleiben unbekannt.', step3: 'Laden Sie den Bericht herunter, korrigieren Sie die Datei und prüfen Sie erneut.' },
+  fr: { name: 'Précontrôle de livraison', description: 'Lit dimensions, cadence et canaux d’un média local et les compare aux spécifications.', disclaimer: 'Un champ illisible est inconnu, pas réussi. Rien n’est réencodé ni modifié.', drop: 'Choisissez ou déposez un fichier audio/vidéo local', contract: 'Spécifications de livraison', width: 'Largeur', height: 'Hauteur', fps: 'Cadence', channels: 'Canaux audio', runProbe: 'Lire les données du média', cancel: 'Annuler', probeError: 'Impossible de lire ce média. Vérifiez son format ou créez un journal probe avec FFmpeg.', usageTitle: 'Mode d’emploi', step1: 'Choisissez un média local, lisez ses données et saisissez les spécifications.', step2: 'Comparez dimensions, cadence et canaux ; les champs illisibles restent inconnus.', step3: 'Téléchargez le rapport, corrigez le média et vérifiez-le à nouveau.' },
+  es: { name: 'Prechequeo de entrega', description: 'Lee dimensiones, fotogramas y canales de medios locales y los compara con la entrega.', disclaimer: 'Un campo ilegible es desconocido, no aprobado. No se recodifica ni modifica nada.', drop: 'Elige o suelta un archivo local de audio/vídeo', contract: 'Especificaciones de entrega', width: 'Anchura', height: 'Altura', fps: 'Fotogramas por segundo', channels: 'Canales de audio', runProbe: 'Leer datos del medio', cancel: 'Cancelar', probeError: 'No se pudo leer el medio. Comprueba el formato o crea un registro probe con FFmpeg.', usageTitle: 'Cómo usarlo', step1: 'Elige un medio local, lee sus datos e introduce las especificaciones.', step2: 'Compara dimensiones, fotogramas y canales; los campos ilegibles quedan desconocidos.', step3: 'Descarga el informe, corrige el medio y vuelve a verificarlo.' },
+  'pt-BR': { name: 'Pré-checagem de entrega', description: 'Lê dimensões, quadros e canais de mídia local e compara com as especificações.', disclaimer: 'Campos ilegíveis são desconhecidos, não aprovados. Nada é recodificado ou modificado.', drop: 'Escolha ou solte um arquivo local de áudio/vídeo', contract: 'Especificações de entrega', width: 'Largura', height: 'Altura', fps: 'Quadros por segundo', channels: 'Canais de áudio', runProbe: 'Ler dados da mídia', cancel: 'Cancelar', probeError: 'Não foi possível ler a mídia. Confira o formato ou crie um log probe com FFmpeg.', usageTitle: 'Como usar', step1: 'Escolha uma mídia local, leia os dados e informe as especificações.', step2: 'Compare dimensões, quadros e canais; campos ilegíveis ficam desconhecidos.', step3: 'Baixe o relatório, corrija a mídia e verifique novamente.' },
 }

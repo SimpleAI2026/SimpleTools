@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { Code2, Github, Languages, Menu, Moon, Puzzle, Sun, Wrench } from 'lucide-vue-next'
+import { Code2, Github, Languages, Menu, Moon, Sun } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
+import AppIcon from '@/components/shared/AppIcon.vue'
 import InstallExtensionModal, { type ExtensionKind } from '@/components/layout/InstallExtensionModal.vue'
 import { LOCALE_META, SUPPORTED_LOCALES, type AppLocale } from '@/i18n'
 import { useSettingsStore } from '@/stores/settings'
@@ -55,7 +56,7 @@ onBeforeUnmount(() => {
   <header class="bg-background/80 sticky top-0 z-10 border-b backdrop-blur">
     <div class="mx-auto flex h-14 items-center gap-3 px-4" :class="isImmersive ? 'max-w-7xl' : 'max-w-6xl'">
       <RouterLink to="/" class="flex items-center gap-2 font-semibold">
-        <Wrench class="size-5" />
+        <AppIcon class="size-5" />
         {{ $t('app.name') }}
       </RouterLink>
       <div class="ml-auto flex items-center gap-1">
@@ -69,7 +70,7 @@ onBeforeUnmount(() => {
             data-testid="chrome-extension-entry"
             @click="openInstall('chrome')"
           >
-            <Puzzle />
+            <AppIcon />
             <span class="max-w-[7.5rem] truncate">{{ $t('app.extensions.chrome') }}</span>
           </Button>
           <Button
@@ -172,7 +173,7 @@ onBeforeUnmount(() => {
                 data-testid="chrome-extension-entry-icon"
                 @click="openInstall('chrome')"
               >
-                <Puzzle /> {{ $t('app.extensions.chrome') }}
+                <AppIcon /> {{ $t('app.extensions.chrome') }}
               </Button>
               <Button
                 variant="ghost"

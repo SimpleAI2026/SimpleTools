@@ -33,6 +33,14 @@ rm -rf "$EXT/media/downloads"
 # Pandoc is web-only — never ship offline/pandoc (~56MB) in the VS Code package
 rm -rf "$EXT/media/offline/pandoc"
 
+info "Syncing extension icon from site favicon"
+if command -v rsvg-convert >/dev/null 2>&1; then
+  rsvg-convert -w 128 -h 128 "$ROOT/public/favicon.svg" -o "$EXT/icon.png"
+else
+  error "rsvg-convert not found. Install librsvg so vscode-extension/icon.png can be generated from public/favicon.svg"
+  exit 1
+fi
+
 info "Packaging .vsix"
 # vsce needs a clean package; --no-dependencies because runtime has none
 npx vsce package --no-dependencies --allow-missing-repository --allow-package-secrets slack --allow-package-secrets privatekey

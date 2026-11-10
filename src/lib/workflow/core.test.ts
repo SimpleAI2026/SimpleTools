@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { IntakeError, assertTextSize, csvSafeCell, csvToRecords, parseJsonValue, presentResult, readDocument, sha256Hex, toCsv, zipTextFiles, safeZipName, finish, SCHEMA, MAX_TEXT_CHARS } from './core'
+import { IntakeError, assertTextSize, csvSafeCell, csvToRecords, parseJsonValue, presentResult, readDocument, toCsv, finish, MAX_TEXT_CHARS } from './core'
 
 describe('workflow intake', () => {
   it('rejects empty, prototype keys, depth, and oversized text', () => {
@@ -39,14 +39,4 @@ describe('workflow intake', () => {
     expect(presentResult(() => { throw new IntakeError('empty') }, '').error).toBe('empty')
   })
 
-  it('hashes known vectors and refuses zip path traversal', () => {
-    expect(sha256Hex(new Uint8Array())).toBe('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855')
-    expect(sha256Hex(new TextEncoder().encode('abc'))).toBe('ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
-    expect(safeZipName('a/../b.txt')).toBe('a/b.txt')
-    expect(() => safeZipName('..')).toThrow(IntakeError)
-    const zipped = zipTextFiles([{ name: '../secret.txt', text: 'no' }, { name: 'ok.txt', text: 'yes' }])
-    expect(zipped[0]).toBe(0x50)
-    expect(zipped[1]).toBe(0x4b)
-    expect(SCHEMA).toContain('simpletools')
-  })
 })

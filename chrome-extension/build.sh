@@ -15,17 +15,15 @@ info() { printf '%s[info]%s %s\n' "$C_INFO" "$C_RST" "$*"; }
 ok() { printf '%s[ok]%s %s\n' "$C_OK" "$C_RST" "$*"; }
 error() { printf '%s[error]%s %s\n' "$C_ERR" "$C_RST" "$*" >&2; }
 
-# Ensure icons exist (regenerate from favicon if missing)
-if [[ ! -f "$EXT/icons/icon-128.png" ]]; then
-  if command -v rsvg-convert >/dev/null 2>&1; then
-    mkdir -p "$EXT/icons"
-    for s in 16 32 48 128; do
-      rsvg-convert -w "$s" -h "$s" "$ROOT/public/favicon.svg" -o "$EXT/icons/icon-${s}.png"
-    done
-  else
-    error "Missing icons and rsvg-convert not found. Install librsvg or add chrome-extension/icons/*.png"
-    exit 1
-  fi
+# Sync icons from the site favicon so the website and extension use the same mark
+if command -v rsvg-convert >/dev/null 2>&1; then
+  mkdir -p "$EXT/icons"
+  for s in 16 32 48 128; do
+    rsvg-convert -w "$s" -h "$s" "$ROOT/public/favicon.svg" -o "$EXT/icons/icon-${s}.png"
+  done
+else
+  error "rsvg-convert not found. Install librsvg so chrome-extension/icons/*.png can be generated from public/favicon.svg"
+  exit 1
 fi
 
 info "Building SPA for Chrome (base=./, hash router) → chrome-extension/dist"

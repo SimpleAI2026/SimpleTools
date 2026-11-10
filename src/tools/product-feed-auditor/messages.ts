@@ -1,74 +1,10 @@
 export default {
-  "zh-CN": {
-    "name": "商品 Feed 审计",
-    "description": "检查必填、重复 ID、变体币种和 GTIN 校验位。",
-    "disclaimer": "不检查远端图片、库存或 GS1 是否真实分配。AI 来源列会保留。",
-    "usageTitle": "使用方法",
-    "step1": "导入商品 Feed，检查必填字段、ID、变体币种和 GTIN。",
-    "step2": "修正重复 ID、缺失字段和 GTIN 校验位问题，远端库存与图片仍需另行确认。",
-    "step3": "重新审计并导出结果，保留 AI 来源列供后续追踪。"
-  },
-  "en": {
-    "name": "Product feed audit",
-    "description": "Check required fields, duplicate IDs, variant currency, and the GTIN check digit.",
-    "disclaimer": "Remote images, stock, and real GS1 allocation are not checked. AI columns stay.",
-    "usageTitle": "How to use",
-    "step1": "Import the product feed to check required fields, IDs, variant currencies, and GTINs.",
-    "step2": "Fix duplicate IDs, missing fields, and check-digit errors; verify remote stock and images separately.",
-    "step3": "Run the audit again and export it, retaining AI-source columns for later tracing."
-  },
-  "ja": {
-    "name": "商品フィード監査",
-    "description": "必須、重複 ID、バリエーション通貨、GTIN の検査桁を見ます。",
-    "disclaimer": "遠隔画像や在庫、GS1 の実在は見ません。AI 列は残します。",
-    "usageTitle": "使い方",
-    "step1": "サンプルを読み込むか、自分の入力を貼り付けて、結果を確認します。",
-    "step2": "不足や不一致を入力で直し、もう一度実行して結果を更新します。",
-    "step3": "最終結果をコピーまたはダウンロードし、作業記録と一緒に保存します。"
-  },
-  "ko": {
-    "name": "상품 피드 감사",
-    "description": "필수값, 중복 ID, 변형 통화, GTIN 체크 숫자를 봅니다.",
-    "disclaimer": "원격 이미지, 재고, GS1 실제 할당은 보지 않습니다. AI 열은 남깁니다.",
-    "usageTitle": "사용 방법",
-    "step1": "샘플을 불러오거나 직접 입력을 붙여 넣고 결과를 확인합니다.",
-    "step2": "누락되거나 일치하지 않는 항목을 수정한 후 도구를 다시 실행하여 결과를 새로 고칩니다.",
-    "step3": "최종 결과를 복사하거나 다운로드하여 작업 기록과 함께 저장합니다."
-  },
-  "de": {
-    "name": "Produkt-Feed-Prufung",
-    "description": "Pruft Pflichtfelder, doppelte IDs, Variantenwahrung und die GTIN-Prufziffer.",
-    "disclaimer": "Keine Fernbilder, kein Bestand, keine GS1-Zuteilung. KI-Spalten bleiben.",
-    "usageTitle": "So geht es",
-    "step1": "Laden Sie das Beispiel oder fügen Sie eigene Eingaben ein, und prüfen Sie das Ergebnis.",
-    "step2": "Korrigieren Sie fehlende oder widersprüchliche Einträge in der Eingabe und führen Sie das Tool erneut aus.",
-    "step3": "Kopieren oder laden Sie das Endergebnis und speichern Sie es mit Ihren Projektaufzeichnungen."
-  },
-  "fr": {
-    "name": "Audit de flux produit",
-    "description": "Controle les champs requis, les ID doubles, la devise de variante et le chiffre GTIN.",
-    "disclaimer": "Pas d'images distantes, de stock ou d'allocation GS1. Les colonnes IA restent.",
-    "usageTitle": "Mode d'emploi",
-    "step1": "Chargez l'exemple ou collez votre propre entrée, puis examinez le résultat.",
-    "step2": "Corrigez les éléments manquants ou incohérents dans l'entrée, puis relancez l'outil.",
-    "step3": "Copiez ou téléchargez le résultat final et enregistrez-le avec les documents du projet."
-  },
-  "es": {
-    "name": "Auditoria de feed",
-    "description": "Revisa obligatorios, IDs duplicados, moneda de variante y el digito GTIN.",
-    "disclaimer": "Sin imagenes remotas, stock ni asignacion GS1. Las columnas de IA se conservan.",
-    "usageTitle": "Como usarlo",
-    "step1": "Cargue el ejemplo o pegue su propia entrada y revise el resultado.",
-    "step2": "Corrija los elementos que faltan o no coinciden en la entrada y ejecute la herramienta otra vez.",
-    "step3": "Copie o descargue el resultado final y guárdelo con los registros del proyecto."
-  },
-  "pt-BR": {
-    "name": "Auditoria de feed",
-    "description": "Confere obrigatorios, IDs duplicados, moeda da variante e o digito GTIN.",
-    "disclaimer": "Sem imagens remotas, estoque ou alocacao GS1. Colunas de IA permanecem.",
-    "usageTitle": "Como usar",
-    "step1": "Carregue o exemplo ou cole sua própria entrada e revise o resultado.",
-    "step2": "Corrija os itens ausentes ou inconsistentes na entrada e execute a ferramenta novamente.",
-    "step3": "Copie ou baixe o resultado final e salve-o com os registros do projeto."
-  }
+  'zh-CN': { name: '商品 Feed 审计', description: '检查必填、重复 ID、价格、变体币种和 GTIN 校验位。', disclaimer: '不检查远端图片、库存或 GS1 是否真实分配。AI 来源列会保留。', feedHint: '粘贴 CSV/TSV，首行包含 id、title、price、currency，可选 gtin 和 item_group_id。', products: '商品数', usageTitle: '使用方法', step1: '导入或粘贴商品 Feed，首行必须是字段名。', step2: '按行号修正重复 ID、缺失字段、价格、币种和 GTIN 问题。', step3: '重新审计并下载问题表，保留 AI 来源列供后续追踪。' },
+  en: { name: 'Product feed audit', description: 'Check required fields, duplicate IDs, prices, variant currencies, and GTIN check digits.', disclaimer: 'Remote images, stock, and real GS1 allocation are not checked. AI columns stay.', feedHint: 'Paste CSV/TSV with id, title, price, and currency headers; gtin and item_group_id are optional.', products: 'Products', usageTitle: 'How to use', step1: 'Import or paste a product feed with a header row.', step2: 'Use the row numbers to fix duplicate IDs, missing fields, prices, currencies, and GTINs.', step3: 'Run the audit again and download issues, retaining AI-source columns.' },
+  ja: { name: '商品フィード監査', description: '必須項目、重複ID、価格、バリエーション通貨、GTINを検査します。', disclaimer: '遠隔画像、在庫、GS1の実在は確認せず、AI来源列は保持します。', feedHint: 'id、title、price、currency の見出しを含むCSV/TSVを貼り付けます。gtinとitem_group_idは任意です。', products: '商品数', usageTitle: '使い方', step1: '見出し行のある商品フィードを読み込むか貼り付けます。', step2: '行番号を見て重複ID、必須項目、価格、通貨、GTINを修正します。', step3: '再検査して問題表を保存し、AI来源列を保持します。' },
+  ko: { name: '상품 피드 감사', description: '필수값, 중복 ID, 가격, 변형 통화와 GTIN을 검사합니다.', disclaimer: '원격 이미지, 재고, GS1 실제 할당은 확인하지 않으며 AI 출처 열은 유지합니다.', feedHint: 'id, title, price, currency 머리글을 포함한 CSV/TSV를 붙여 넣으세요. gtin과 item_group_id는 선택입니다.', products: '상품 수', usageTitle: '사용 방법', step1: '머리글 행이 있는 상품 피드를 가져오거나 붙여 넣습니다.', step2: '행 번호를 따라 중복 ID, 누락값, 가격, 통화와 GTIN을 수정합니다.', step3: '다시 감사하고 문제 표를 다운로드하며 AI 출처 열을 유지합니다.' },
+  de: { name: 'Produkt-Feed-Prüfung', description: 'Prüft Pflichtfelder, doppelte IDs, Preise, Variantenwährungen und GTIN.', disclaimer: 'Keine Prüfung von Fernbildern, Bestand oder GS1-Zuteilung. KI-Spalten bleiben.', feedHint: 'CSV/TSV mit den Spalten id, title, price und currency einfügen; gtin und item_group_id sind optional.', products: 'Produkte', usageTitle: 'So geht es', step1: 'Importieren oder fügen Sie einen Produkt-Feed mit Kopfzeile ein.', step2: 'Korrigieren Sie anhand der Zeilen IDs, Pflichtfelder, Preise, Währungen und GTIN.', step3: 'Prüfen Sie erneut, laden Sie die Probleme herunter und behalten Sie KI-Spalten.' },
+  fr: { name: 'Audit de flux produit', description: 'Contrôle champs requis, ID doubles, prix, devises des variantes et GTIN.', disclaimer: 'Images distantes, stock et attribution GS1 ne sont pas vérifiés. Les colonnes IA restent.', feedHint: 'Collez un CSV/TSV avec id, title, price et currency ; gtin et item_group_id sont facultatifs.', products: 'Produits', usageTitle: 'Mode d’emploi', step1: 'Importez ou collez un flux produit avec une ligne d’en-tête.', step2: 'Corrigez les ID, champs requis, prix, devises et GTIN grâce aux numéros de ligne.', step3: 'Relancez l’audit, téléchargez les problèmes et conservez les colonnes IA.' },
+  es: { name: 'Auditoría de feed', description: 'Revisa obligatorios, IDs duplicados, precios, monedas de variantes y GTIN.', disclaimer: 'No revisa imágenes remotas, stock ni asignación GS1. Conserva las columnas de IA.', feedHint: 'Pega CSV/TSV con id, title, price y currency; gtin y item_group_id son opcionales.', products: 'Productos', usageTitle: 'Cómo usarlo', step1: 'Importa o pega un feed de productos con encabezados.', step2: 'Usa las filas para corregir IDs, campos, precios, monedas y GTIN.', step3: 'Repite la auditoría, descarga los problemas y conserva las columnas de IA.' },
+  'pt-BR': { name: 'Auditoria de feed', description: 'Confere obrigatórios, IDs duplicados, preços, moedas de variantes e GTIN.', disclaimer: 'Não verifica imagens remotas, estoque ou atribuição GS1. Colunas de IA permanecem.', feedHint: 'Cole CSV/TSV com id, title, price e currency; gtin e item_group_id são opcionais.', products: 'Produtos', usageTitle: 'Como usar', step1: 'Importe ou cole um feed de produtos com cabeçalhos.', step2: 'Use as linhas para corrigir IDs, campos, preços, moedas e GTIN.', step3: 'Repita a auditoria, baixe os problemas e mantenha as colunas de IA.' },
 }
