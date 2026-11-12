@@ -17,6 +17,7 @@
 - Chrome 与 VS Code 扩展只支持 JavaScript、TypeScript、SQLite、Lua、Shell、Java；网站专用语言不得仅隐藏卡片而仍把代码或资源打进扩展。
 - 扩展只允许打包 QuickJS、SQLite、Lua、Shell 和 Java 的明确白名单资源；Python、Ruby、C/C++、PHP、Go、Rust、Pyodide、v86 等资源只进入网站产物。
 - 所有运行时资源必须本地、同源并按需加载。首页不得加载 Monaco、xterm、WASM 或虚拟机；`runtime-manifest.json` 加载不得触发全部运行时下载，扩展目录中不得再出现其他 `manifest.json`。
+- 编程运行时清单提交在 `src/tools/code-playground/core/runtime-manifest.json`（含 `java-lock.json`、`rust-lock.json`），正常构建只发布该快照并校验已存在的二进制；`../SimpleCode` 运行时更新后，执行 `node scripts/code-playground-assets.mjs --sync` 刷新快照并一起提交，不得手改哈希。
 - 大资源可以在网站中使用，不再按 10 MiB 上限排除；扩展裁剪是为了包体大小，不得反向删除网站能力。
 - 教程按章节懒加载。书籍、示例和运行时必须保留来源及许可证；运行按钮只在当前端和当前语言真正可执行时出现。
 - 路由切换和组件卸载必须停止对应 WASI、Rust、TeaVM、Pyodide 或 v86 任务并释放资源，旧输出不得写入新页面。
@@ -24,3 +25,10 @@
 - 编程工具继续使用 SimpleTools 的主题、八语 UI、收藏、最近使用和响应式规范，不复制 SimpleCode 的独立主题、语言切换或全局 overflow。
 
 详细设计与验收矩阵见 `plan/2026-11-09-simplecode-programming-integration-plan.md`；调整上述边界时必须先更新该计划和本文件。
+
+## 工具开发约定
+
+- 新工具放在 `src/tools/<slug>/`（`index.vue`、`logic.ts`、`logic.test.ts`、`messages.ts`），并在 `src/registry/tools/*.ts` 注册；README 的数量与分类以注册表为准，增删工具时同步更新 `README.md` 和 `README_EN.md`。
+- 界面文案必须覆盖 8 种语言：zh-CN、en、ja、ko、de、fr、es、pt-BR；窄屏 390px 下主流程可完成。
+- 输出区的复制按钮统一放在输出面板标题行右上角；输出会粘贴给 AI / Agent 使用的工具，底部提供「使用方法」，按 `step1 -> step2 -> step3` 书写。
+- 只在浏览器本地处理，不引入后端、云 API 或 CDN 代码；新依赖只用宽松许可证（MIT、BSD、Apache 等），不引入 GPL / AGPL 依赖，`thirdparty/` 仅作参考，不复制其代码。
