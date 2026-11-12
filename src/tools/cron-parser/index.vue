@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -50,6 +51,7 @@ function loadSample() {
         <Input id="cnt" v-model.number="count" type="number" min="1" max="50" class="w-20" />
       </div>
     </div>
+    <RouterLink to="/tools/crontab-generator" class="text-primary text-sm underline">{{ $t('tools.cron-parser.openGenerator') }}</RouterLink>
     <div class="flex flex-wrap items-center gap-1">
       <span class="text-muted-foreground mr-1 text-sm">{{ $t('tools.cron-parser.presets') }}</span>
       <Button v-for="p in presets" :key="p" size="sm" variant="outline" class="font-mono" @click="expr = p">{{ p }}</Button>

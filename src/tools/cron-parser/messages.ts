@@ -7,6 +7,7 @@ export default {
     tz: "时区",
     presets: "常用",
     next: "接下来的执行时间",
+    openGenerator: "打开可视化生成器",
     fields: {
       second: "秒",
       minute: "分",
@@ -24,6 +25,7 @@ export default {
     tz: "Time zone",
     presets: "Presets",
     next: "Next run times",
+    openGenerator: "Open the visual generator",
     fields: {
       second: "Second",
       minute: "Minute",
@@ -41,6 +43,7 @@ export default {
     tz: "タイムゾーン",
     presets: "プリセット",
     next: "次回の実行時間",
+    openGenerator: "ビジュアル生成を開く",
     fields: {
       second: "2番",
       minute: "分",
@@ -58,6 +61,7 @@ export default {
     tz: "시간대",
     presets: "사전 설정",
     next: "다음 실행 시간",
+    openGenerator: "시각적 생성기 열기",
     fields: {
       second: "두번째",
       minute: "분",
@@ -75,6 +79,7 @@ export default {
     tz: "Zeitzone",
     presets: "Voreinstellungen",
     next: "Nächste Laufzeiten",
+    openGenerator: "Visuellen Generator öffnen",
     fields: {
       second: "Zweite",
       minute: "Minute",
@@ -92,6 +97,7 @@ export default {
     tz: "Fuseau horaire",
     presets: "Préréglages",
     next: "Prochaines exécutions",
+    openGenerator: "Ouvrir le générateur visuel",
     fields: {
       second: "Deuxième",
       minute: "Minute",
@@ -109,6 +115,7 @@ export default {
     tz: "Huso horario",
     presets: "Preajustes",
     next: "Próximos tiempos de ejecución",
+    openGenerator: "Abrir el generador visual",
     fields: {
       second: "Segundo",
       minute: "Minuto",
@@ -126,6 +133,7 @@ export default {
     tz: "Fuso horário",
     presets: "Predefinições",
     next: "Próximos tempos de execução",
+    openGenerator: "Abrir o gerador visual",
     fields: {
       second: "Segundo",
       minute: "Minuto",
