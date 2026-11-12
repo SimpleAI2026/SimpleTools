@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "SimpleTools",
-  "version": "5.0.13",
-  "description": "Offline-first developer toolbox. All processing stays on your device. / 纯前端离线开发者工具箱，数据不离开本机。",
+  "version": "5.0.16",
+  "description": "Offline-first developer toolbox: 180+ tools in 8 languages. All processing stays on your device. / 纯前端离线工具箱，支持 8 种语言，数据不离开本机。",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",

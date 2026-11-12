@@ -16,10 +16,6 @@
 
 ![截图 3](./docs/screenshots/3.png)
 
-![截图 4](./docs/screenshots/4.png)
-
-![截图 5](./docs/screenshots/5.png)
-
 ## 特性
 
 - **125 个工具**（以 `src/registry` 注册表为准，非 `src/tools` 目录计数）

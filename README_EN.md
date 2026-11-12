@@ -16,10 +16,6 @@ Repository: https://github.com/SimpleAI2026/SimpleTools
 
 ![Screenshot 3](./docs/screenshots/3.png)
 
-![Screenshot 4](./docs/screenshots/4.png)
-
-![Screenshot 5](./docs/screenshots/5.png)
-
 ## Features
 
 - **125 tools** (counted from the `src/registry` registry, not from `src/tools` folder count)
