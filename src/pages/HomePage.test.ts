@@ -1,5 +1,5 @@
 /** @vitest-environment jsdom */
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { createI18n } from 'vue-i18n'
@@ -9,7 +9,7 @@ import HomePage from './HomePage.vue'
 import { CATEGORIES, hotTools, TOOLS, toolsInCategory } from '@/registry'
 import { i18n as appI18n } from '@/i18n'
 
-async function mountHome(locale: 'en' | 'zh-CN' = 'en') {
+async function mountHome(locale: 'en' | 'zh-CN' = 'en', component: typeof HomePage = HomePage) {
   const pinia = createPinia()
   setActivePinia(pinia)
   const router = createRouter({
@@ -30,7 +30,7 @@ async function mountHome(locale: 'en' | 'zh-CN' = 'en') {
       'zh-CN': appI18n.global.getLocaleMessage('zh-CN'),
     },
   })
-  const wrapper = mount(HomePage, { global: { plugins: [pinia, router, i18n] } })
+  const wrapper = mount(component, { global: { plugins: [pinia, router, i18n] } })
   return { wrapper, i18n }
 }
 
@@ -48,7 +48,10 @@ describe('HomePage', () => {
     const nav = wrapper.get('[data-testid="category-navigation"]')
     expect(nav.attributes('aria-label')).toBe('Tool categories')
     expect(nav.find('svg').exists()).toBe(false)
-    expect(wrapper.get('[data-testid="category-all"]').attributes('aria-pressed')).toBe('true')
+    expect(wrapper.get('[data-testid="category-hot"]').attributes('aria-pressed')).toBe('true')
+    expect(wrapper.get('[data-testid="category-all"]').attributes('aria-pressed')).toBe('false')
+    expect(listedSlugs(wrapper)).toEqual(hotTools().map((tool) => tool.slug))
+    expect(wrapper.get('[data-testid="tool-list-title"]').text()).toBe(`Hot · ${hotTools().length} tools`)
     expect(wrapper.get('[data-testid="category-all"]').text()).toContain(`All${TOOLS.length}`)
     for (const category of CATEGORIES) {
       const count = toolsInCategory(category).length
@@ -56,6 +59,7 @@ describe('HomePage', () => {
       expect(button.exists()).toBe(count > 0)
       if (count > 0) expect(button.text()).toContain(String(count))
     }
+    await wrapper.get('[data-testid="category-all"]').trigger('click')
     expect(listedSlugs(wrapper)).toHaveLength(TOOLS.length)
     expect(wrapper.get('[data-testid="tool-list-title"]').text()).toBe(`All · ${TOOLS.length} tools`)
     expect(wrapper.get('[data-testid="tool-card-base64"]').attributes('href')).toBe('/tools/base64')
@@ -75,7 +79,7 @@ describe('HomePage', () => {
     expect(wrapper.find('[data-testid="recent-section"]').exists()).toBe(false)
     expect(JSON.parse(localStorage.getItem('st_recent') ?? '[]')).toEqual([])
     expect(JSON.parse(localStorage.getItem('st_favorites') ?? '[]')).toEqual(['base64'])
-    expect(listedSlugs(wrapper)).toHaveLength(TOOLS.length)
+    expect(listedSlugs(wrapper)).toEqual(hotTools().map((tool) => tool.slug))
   })
 
   it('filters by category and searches within the selected category', async () => {
@@ -113,6 +117,7 @@ describe('HomePage', () => {
     expect(options).toHaveLength(CATEGORIES.filter((category) => toolsInCategory(category).length > 0).length + 2)
     expect(options[0]!.attributes('value')).toBe('hot')
     expect(options[0]!.text()).toBe(`Hot · ${hotTools().length}`)
+    expect((select.element as HTMLSelectElement).value).toBe('hot')
     expect(wrapper.get('aside').classes()).toContain('hidden')
 
     await select.setValue('generate')
@@ -126,12 +131,14 @@ describe('HomePage', () => {
     expect(buttons[0]!.attributes('data-testid')).toBe('category-hot')
     expect(buttons[1]!.attributes('data-testid')).toBe('category-all')
     expect(buttons[0]!.text()).toContain(`Hot${hotTools().length}`)
+    await wrapper.get('[data-testid="category-all"]').trigger('click')
     await buttons[0]!.trigger('click')
     expect(wrapper.get('[data-testid="category-hot"]').attributes('aria-pressed')).toBe('true')
     expect(listedSlugs(wrapper)).toEqual(['id-photo', 'agent', 'imagemagick', 'image-ocr', 'ffmpeg'])
     expect(wrapper.get('[data-testid="tool-list-title"]').text()).toBe('Hot · 5 tools')
-    await wrapper.get('[data-testid="search"]').setValue('ocr')
-    expect(listedSlugs(wrapper)).toEqual(['image-ocr'])
+    await wrapper.get('[data-testid="search"]').setValue('base64')
+    expect(wrapper.get('[data-testid="category-all"]').attributes('aria-pressed')).toBe('true')
+    expect(listedSlugs(wrapper)).toContain('base64')
     await wrapper.get('[data-testid="search"]').setValue('')
 
     await wrapper.get('[data-testid="category-media"]').trigger('click')
@@ -144,6 +151,22 @@ describe('HomePage', () => {
     i18n.global.locale.value = 'zh-CN'
     await nextTick()
     expect(wrapper.get('[data-testid="category-hot"]').text()).toContain('热门')
+  })
+
+  it('falls back to all tools when the build has no hot tools', async () => {
+    vi.resetModules()
+    vi.doMock('@/registry', async (orig) => ({ ...(await orig<typeof import('@/registry')>()), hotTools: () => [] }))
+    try {
+      const { default: Home } = await import('./HomePage.vue')
+      const { wrapper } = await mountHome('en', Home)
+      expect(wrapper.find('[data-testid="category-hot"]').exists()).toBe(false)
+      expect(wrapper.get('[data-testid="category-all"]').attributes('aria-pressed')).toBe('true')
+      expect(listedSlugs(wrapper)).toHaveLength(TOOLS.length)
+      expect((wrapper.get('[data-testid="category-select"]').element as HTMLSelectElement).value).toBe('all')
+    } finally {
+      vi.doUnmock('@/registry')
+      vi.resetModules()
+    }
   })
 
   it('updates localized category labels and localized search results', async () => {

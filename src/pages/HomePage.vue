@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Search } from 'lucide-vue-next'
 import { Input } from '@/components/ui/input'
@@ -12,8 +12,14 @@ const { t } = useI18n()
 const user = useUserStore()
 const query = ref('')
 type NavId = CategoryId | 'all' | 'hot'
-const category = ref<NavId>('all')
 const HOT = hotTools()
+/** Landing selection: the pinned hot group, or all tools when this build has no hot tools. */
+const DEFAULT_NAV: NavId = HOT.length ? 'hot' : 'all'
+const category = ref<NavId>(DEFAULT_NAV)
+// Hot is a short pinned list, not a search scope: typing a query from it searches all tools.
+watch(query, (q) => {
+  if (q.trim() && category.value === 'hot') category.value = 'all'
+})
 
 const categoryCounts = new Map<CategoryId, number>()
 for (const tool of TOOLS) categoryCounts.set(tool.category, (categoryCounts.get(tool.category) ?? 0) + 1)
@@ -35,7 +41,7 @@ const selectedCategoryName = computed(() => navLabel(category.value))
 const toTools = (slugs: string[]) => slugs.map(getTool).filter((x): x is ToolMeta => !!x)
 const favoriteTools = computed(() => toTools(user.favorites))
 const recentTools = computed(() => toTools(user.recent).slice(0, 6))
-const browsing = computed(() => !query.value.trim() && category.value === 'all')
+const browsing = computed(() => !query.value.trim() && (category.value === 'all' || category.value === DEFAULT_NAV))
 </script>
 
 <template>
