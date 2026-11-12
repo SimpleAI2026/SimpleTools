@@ -6,6 +6,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { docsPlugin } from './scripts/code-playground/vite-plugin-docs'
 import tailwindcss from '@tailwindcss/vite'
+import { ID_PHOTO_BUDGET_BYTES, ID_PHOTO_WASM } from './src/tools/id-photo/assets'
 
 const root = fileURLToPath(new URL('.', import.meta.url))
 
@@ -86,6 +87,48 @@ function offlineAssets() {
       const ffmpeg = join(root, 'public/offline/ffmpeg')
       copyIfMissing(join(root, 'node_modules/@ffmpeg/core/dist/esm/ffmpeg-core.js'), join(ffmpeg, 'ffmpeg-core.js'))
       copyIfMissing(join(root, 'node_modules/@ffmpeg/core/dist/esm/ffmpeg-core.wasm'), join(ffmpeg, 'ffmpeg-core.wasm'))
+
+      // ID photo: single-thread tfjs wasm + committed models (always refreshed so model updates land)
+      const idphoto = join(root, 'public/offline/idphoto')
+      for (const f of ID_PHOTO_WASM) {
+        copyIfMissing(join(root, 'node_modules/@tensorflow/tfjs-backend-wasm/dist', f), join(idphoto, 'tfjs', f))
+      }
+      for (const dir of ['blazeface-short', 'hivision-modnet-q8']) {
+        cpSync(join(root, 'assets/models/id-photo', dir), join(idphoto, 'models', dir), { recursive: true, force: true })
+      }
+    },
+  }
+}
+
+/** Fail the build when the ID photo tool (models + wasm + its JS chunks incl. tfjs) exceeds its 10 MB budget. */
+function idPhotoSizeGuard() {
+  return {
+    name: 'id-photo-size-guard',
+    apply: 'build' as const,
+    writeBundle(options: { dir?: string }, bundle: Record<string, { type: string; modules?: Record<string, { renderedLength: number }> }>) {
+      if (!options.dir) return
+      const owned = /[\\/]src[\\/]tools[\\/]id-photo[\\/]|[\\/]node_modules[\\/]@tensorflow(-models)?[\\/]|[\\/]node_modules[\\/](long|seedrandom)[\\/]/
+      let js = 0
+      for (const out of Object.values(bundle)) {
+        if (out.type !== 'chunk' || !out.modules) continue
+        for (const [id, m] of Object.entries(out.modules)) if (owned.test(id)) js += m.renderedLength
+      }
+      let files = 0
+      const walk = (dir: string) => {
+        if (!existsSync(dir)) return
+        for (const e of readdirSync(dir, { withFileTypes: true })) {
+          const p = join(dir, e.name)
+          if (e.isDirectory()) walk(p)
+          else files += readFileSync(p).byteLength
+        }
+      }
+      walk(join(options.dir, 'offline', 'idphoto'))
+      const sample = join(options.dir, 'samples', 'portrait.jpg')
+      if (existsSync(sample)) files += readFileSync(sample).byteLength
+      const total = js + files
+      const mb = (n: number) => (n / 1e6).toFixed(2)
+      console.log(`[id-photo] added size ${mb(total)} MB (assets ${mb(files)} MB + JS ${mb(js)} MB before minify), budget ${mb(ID_PHOTO_BUDGET_BYTES)} MB`)
+      if (total > ID_PHOTO_BUDGET_BYTES) throw new Error(`id-photo exceeds its size budget: ${total} > ${ID_PHOTO_BUDGET_BYTES} bytes`)
     },
   }
 }
@@ -189,10 +232,13 @@ export default defineConfig({
     offlineAssets(),
     stripOfflinePandoc(),
     stripWebOnlyCode(),
+    idPhotoSizeGuard(),
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // id-photo uses only the TF.js runtime of @tensorflow-models/face-detection; never bundle MediaPipe's solution.
+      '@mediapipe/face_detection': fileURLToPath(new URL('./src/tools/id-photo/mediapipe-stub.ts', import.meta.url)),
       // Deep import of pandoc-wasm core (not in package exports) to feed vendored wasm bytes.
       ...(enablePandoc
         ? {

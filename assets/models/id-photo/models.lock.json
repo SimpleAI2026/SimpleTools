@@ -1,0 +1,35 @@
+{
+  "description": "Offline models for src/tools/id-photo. Copied to public/offline/idphoto/models at build start. Regenerate with scripts/id-photo-model/convert.sh; verify with node scripts/id-photo-model/lock.mjs.",
+  "sources": {
+    "hivision-modnet-q8": {
+      "upstream": "https://github.com/Zeyi-Lin/HivisionIDPhotos/releases/download/pretrained-model/hivision_modnet.onnx",
+      "upstreamBytes": 25888609,
+      "architecture": "MODNet (https://github.com/ZHKKKe/MODNet)",
+      "license": "Apache-2.0 (HivisionIDPhotos and MODNet)",
+      "conversion": "onnx2tf (input 1x3x512x512) -> TF SavedModel -> tensorflowjs_converter float32 -> scripts/id-photo-model/pack_q8.py (per-channel uint8)"
+    },
+    "blazeface-short": {
+      "upstream": "https://tfhub.dev/mediapipe/tfjs-model/face_detection/short/1",
+      "architecture": "MediaPipe BlazeFace short-range",
+      "license": "Apache-2.0"
+    }
+  },
+  "files": {
+    "blazeface-short/group1-shard1of1.bin": {
+      "bytes": 201268,
+      "sha256": "e9b69ee1c1f8cd33c58120bcd75bf8c56bfba20c880f447e9d293ec102059d4b"
+    },
+    "blazeface-short/model.json": {
+      "bytes": 75722,
+      "sha256": "c131145fade749f714d39811f282e973760a69cb9e1a9c22f91e132bd8dcd396"
+    },
+    "hivision-modnet-q8/model.json": {
+      "bytes": 230574,
+      "sha256": "5651d323cc3c184587ef9548fe4f210b390fc92ffb06358d207989b3d0c9f522"
+    },
+    "hivision-modnet-q8/weights.q8.bin": {
+      "bytes": 6766612,
+      "sha256": "48ad83f36d7f2e85083702b660139c725f92fdfc8630dc1e135a7d9981a943d6"
+    }
+  }
+}
