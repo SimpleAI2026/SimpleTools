@@ -11,8 +11,13 @@ export type LineOp =
   | 'number'
   | 'addPrefix'
   | 'filter'
+  | 'convert'
 
-export const LINE_OPS: LineOp[] = ['sortAsc', 'sortDesc', 'sortNatural', 'sortLength', 'reverse', 'shuffle', 'dedupe', 'removeEmpty', 'trim', 'number', 'addPrefix', 'filter']
+export type ListSeparator = 'newline' | 'comma' | 'semicolon' | 'pipe' | 'whitespace'
+export type ListSort = 'none' | 'asc' | 'desc'
+
+export const LINE_OPS: LineOp[] = ['convert', 'sortAsc', 'sortDesc', 'sortNatural', 'sortLength', 'reverse', 'shuffle', 'dedupe', 'removeEmpty', 'trim', 'number', 'addPrefix', 'filter']
+export const LIST_SEPARATORS: ListSeparator[] = ['newline', 'comma', 'semicolon', 'pipe', 'whitespace']
 
 export interface LineOptions {
   caseInsensitive: boolean
@@ -20,6 +25,12 @@ export interface LineOptions {
   suffix: string
   filter: string
   invertFilter: boolean
+  split: ListSeparator
+  join: ListSeparator
+  dropEmpty: boolean
+  dedupe: boolean
+  sort: ListSort
+  trimItems: boolean
 }
 
 export function processLines(text: string, op: LineOp, o: LineOptions, rand: () => number = Math.random): string {
@@ -62,5 +73,40 @@ export function processLines(text: string, op: LineOp, o: LineOptions, rand: () 
       const needle = key(o.filter)
       return lines.filter((l) => key(l).includes(needle) !== o.invertFilter).join('\n')
     }
+    case 'convert':
+      return convertList(text, o)
   }
+}
+
+const SPLIT: Record<ListSeparator, RegExp> = {
+  newline: /\r?\n/,
+  comma: /,/,
+  semicolon: /;/,
+  pipe: /\|/,
+  whitespace: /\s+/,
+}
+
+const JOIN: Record<ListSeparator, string> = {
+  newline: '\n',
+  comma: ', ',
+  semicolon: '; ',
+  pipe: ' | ',
+  whitespace: ' ',
+}
+
+/** Split, trim, drop empties, dedupe, sort, wrap, and join in one pass. */
+export function convertList(text: string, o: LineOptions): string {
+  let items = text.split(SPLIT[o.split] ?? SPLIT.newline)
+  if (o.trimItems) items = items.map((item) => item.trim())
+  if (o.dropEmpty) items = items.filter((item) => item.trim())
+  const identity = (item: string) => (o.caseInsensitive ? item.toLowerCase() : item)
+  if (o.dedupe) {
+    const seen = new Set<string>()
+    items = items.filter((item) => (seen.has(identity(item)) ? false : (seen.add(identity(item)), true)))
+  }
+  if (o.sort !== 'none') {
+    const coll = new Intl.Collator(undefined, { sensitivity: o.caseInsensitive ? 'base' : 'variant' })
+    items = [...items].sort((a, b) => (o.sort === 'desc' ? coll.compare(b, a) : coll.compare(a, b)))
+  }
+  return items.map((item) => `${o.prefix}${item}${o.suffix}`).join(JOIN[o.join] ?? '\n')
 }

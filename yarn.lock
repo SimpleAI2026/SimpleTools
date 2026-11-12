@@ -1297,6 +1297,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/mime-db@npm:^1":
+  version: 1.43.6
+  resolution: "@types/mime-db@npm:1.43.6"
+  checksum: 10c0/709e93c31d92177ef6bb90d17917c82b1c6c30f1735c345d85e53238f4efacc00b26c5bfa479f4d2139596a8a054df15fb1a011a6e6cc1c14a32710c3c680733
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*, @types/node@npm:^26.6.2, @types/node@npm:^26.6.5":
   version: 26.6.5
   resolution: "@types/node@npm:26.6.5"
@@ -4874,6 +4881,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mime-db@npm:1.54.0":
+  version: 1.54.0
+  resolution: "mime-db@npm:1.54.0"
+  checksum: 10c0/8d907917bc2a90fa2df842cdf5dfeaf509adc15fe0531e07bb2f6ab15992416479015828d6a74200041c492e42cce3ebf78e5ce714388a0a538ea9c53eece284
+  languageName: node
+  linkType: hard
+
 "minimalistic-assert@npm:^1.0.1":
   version: 1.0.1
   resolution: "minimalistic-assert@npm:1.0.1"
@@ -6109,6 +6123,7 @@ __metadata:
     "@tesseract.js-data/chi_sim": "npm:^1.0.0"
     "@tesseract.js-data/eng": "npm:^1.0.0"
     "@types/markdown-it": "npm:^14.2.0"
+    "@types/mime-db": "npm:^1"
     "@types/node": "npm:^26.6.5"
     "@types/pako": "npm:^2.0.3"
     "@types/papaparse": "npm:^5.5.2"
@@ -6143,6 +6158,7 @@ __metadata:
     mammoth: "npm:^1.13.0"
     markdown-it: "npm:^15.0.2"
     marked: "npm:^18.1.1"
+    mime-db: "npm:1.54.0"
     minisearch: "npm:^7.2.0"
     monaco-editor: "npm:0.52.2"
     pako: "npm:^2.1.0"

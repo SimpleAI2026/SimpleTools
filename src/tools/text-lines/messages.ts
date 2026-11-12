@@ -14,14 +14,27 @@ export default {
       trim: "去首尾空白",
       number: "编号",
       addPrefix: "加前后缀",
-      filter: "过滤"
+      filter: "过滤",
+      convert: "列表转换"
     },
     caseInsensitive: "忽略大小写",
     prefix: "前缀",
     suffix: "后缀",
     filter: "包含文本",
     invert: "反向过滤",
-    lines: "{n} 行"
+    lines: "{n} 行",
+    split: "拆分",
+    join: "合并",
+    trimItems: "去掉每项空白",
+    dropEmpty: "去掉空项",
+    dedupe: "去重",
+    sort: "排序",
+    separators: { newline: "换行", comma: "逗号", semicolon: "分号", pipe: "竖线", whitespace: "空白" },
+    sorts: { none: "不排序", asc: "升序", desc: "降序" },
+    usageTitle: "使用方法",
+    step1: "粘贴列表，选择拆分符号。",
+    step2: "按需要去空白、去空项、去重、排序，并加上前后缀。",
+    step3: "选择合并符号，复制结果到配置、表格或助手提示。"
   },
   en: {
     name: "Line Tools",
@@ -38,14 +51,27 @@ export default {
       trim: "Trim",
       number: "Number",
       addPrefix: "Prefix/suffix",
-      filter: "Filter"
+      filter: "Filter",
+      convert: "Convert list"
     },
     caseInsensitive: "Case-insensitive",
     prefix: "Prefix",
     suffix: "Suffix",
     filter: "Contains",
     invert: "Invert filter",
-    lines: "{n} lines"
+    lines: "{n} lines",
+    split: "Split on",
+    join: "Join with",
+    trimItems: "Trim items",
+    dropEmpty: "Drop empty",
+    dedupe: "Dedupe",
+    sort: "Sort",
+    separators: { newline: "New line", comma: "Comma", semicolon: "Semicolon", pipe: "Pipe", whitespace: "Whitespace" },
+    sorts: { none: "None", asc: "A to Z", desc: "Z to A" },
+    usageTitle: "How to use",
+    step1: "Paste a list and choose how items are separated.",
+    step2: "Trim, drop empty items, dedupe, sort, and add a prefix or suffix.",
+    step3: "Choose the output separator and copy the list into a config, sheet, or assistant prompt."
   },
   ja: {
     name: "ラインツール",
@@ -62,14 +88,27 @@ export default {
       trim: "トリム",
       number: "番号",
       addPrefix: "プレフィックス/サフィックス",
-      filter: "フィルター"
+      filter: "フィルター",
+      convert: "リスト変換"
     },
     caseInsensitive: "大文字と小文字を区別しない",
     prefix: "プレフィックス",
     suffix: "サフィックス",
     filter: "含まれています",
     invert: "反転フィルター",
-    lines: "{n} 行"
+    lines: "{n} 行",
+    split: "分割",
+    join: "結合",
+    trimItems: "各項目の空白を除く",
+    dropEmpty: "空項目を除く",
+    dedupe: "重複を除く",
+    sort: "並べ替え",
+    separators: { newline: "改行", comma: "カンマ", semicolon: "セミコロン", pipe: "縦棒", whitespace: "空白" },
+    sorts: { none: "並べ替えない", asc: "昇順", desc: "降順" },
+    usageTitle: "使い方",
+    step1: "リストを貼り、区切りを選びます。",
+    step2: "空白除去、空項目の削除、重複排除、並べ替え、前後の文字を設定します。",
+    step3: "結合文字を選び、設定や表、助手への依頼にコピーします。"
   },
   ko: {
     name: "선 도구",
@@ -86,14 +125,27 @@ export default {
       trim: "손질",
       number: "숫자",
       addPrefix: "접두사/접미사",
-      filter: "필터"
+      filter: "필터",
+      convert: "목록 변환"
     },
     caseInsensitive: "대소문자를 구분하지 않음",
     prefix: "접두사",
     suffix: "접미사",
     filter: "포함",
     invert: "필터 반전",
-    lines: "{n} 줄"
+    lines: "{n} 줄",
+    split: "나누기",
+    join: "합치기",
+    trimItems: "항목 공백 제거",
+    dropEmpty: "빈 항목 제거",
+    dedupe: "중복 제거",
+    sort: "정렬",
+    separators: { newline: "줄바꿈", comma: "쉼표", semicolon: "세미콜론", pipe: "세로줄", whitespace: "공백" },
+    sorts: { none: "정렬 안 함", asc: "오름차순", desc: "내림차순" },
+    usageTitle: "사용 방법",
+    step1: "목록을 붙여 넣고 구분 기호를 고릅니다.",
+    step2: "공백 제거, 빈 항목 삭제, 중복 제거, 정렬, 앞뒤 문자를 설정합니다.",
+    step3: "합칠 기호를 고르고 설정, 표, 도우미 프롬프트에 복사합니다."
   },
   de: {
     name: "Linienwerkzeuge",
@@ -110,14 +162,27 @@ export default {
       trim: "Trimmen",
       number: "Nummer",
       addPrefix: "Präfix/Suffix",
-      filter: "Filter"
+      filter: "Filter",
+      convert: "Liste umwandeln"
     },
     caseInsensitive: "Groß- und Kleinschreibung wird nicht beachtet",
     prefix: "Präfix",
     suffix: "Suffix",
     filter: "Enthält",
     invert: "Filter umkehren",
-    lines: "{n} Zeilen"
+    lines: "{n} Zeilen",
+    split: "Trennen an",
+    join: "Verbinden mit",
+    trimItems: "Einträge kürzen",
+    dropEmpty: "Leere entfernen",
+    dedupe: "Duplikate entfernen",
+    sort: "Sortieren",
+    separators: { newline: "Zeilenumbruch", comma: "Komma", semicolon: "Semikolon", pipe: "Senkrechter Strich", whitespace: "Leerraum" },
+    sorts: { none: "Keine", asc: "Aufsteigend", desc: "Absteigend" },
+    usageTitle: "Verwendung",
+    step1: "Eine Liste einfügen und das Trennzeichen wählen.",
+    step2: "Kürzen, leere Einträge entfernen, deduplizieren, sortieren und Präfix oder Suffix setzen.",
+    step3: "Das Ausgabe-Trennzeichen wählen und die Liste in eine Konfiguration, Tabelle oder einen Assistenten kopieren."
   },
   fr: {
     name: "Outils de ligne",
@@ -134,14 +199,27 @@ export default {
       trim: "Garniture",
       number: "Nombre",
       addPrefix: "Préfixe/suffixe",
-      filter: "Filtre"
+      filter: "Filtre",
+      convert: "Convertir la liste"
     },
     caseInsensitive: "Insensible à la casse",
     prefix: "Préfixe",
     suffix: "Suffixe",
     filter: "Contient",
     invert: "Inverser le filtre",
-    lines: "{n} lignes"
+    lines: "{n} lignes",
+    split: "Séparer par",
+    join: "Joindre avec",
+    trimItems: "Rogner chaque élément",
+    dropEmpty: "Retirer les vides",
+    dedupe: "Dédupliquer",
+    sort: "Trier",
+    separators: { newline: "Saut de ligne", comma: "Virgule", semicolon: "Point-virgule", pipe: "Barre verticale", whitespace: "Espace" },
+    sorts: { none: "Aucun", asc: "Croissant", desc: "Décroissant" },
+    usageTitle: "Mode d’emploi",
+    step1: "Collez une liste et choisissez le séparateur.",
+    step2: "Rognez, retirez les vides, dédupliquez, triez et ajoutez un préfixe ou un suffixe.",
+    step3: "Choisissez le séparateur de sortie et copiez la liste dans une config, un tableau ou un prompt."
   },
   es: {
     name: "Herramientas de línea",
@@ -158,14 +236,27 @@ export default {
       trim: "Recortar",
       number: "Número",
       addPrefix: "Prefijo/sufijo",
-      filter: "Filtrar"
+      filter: "Filtrar",
+      convert: "Convertir lista"
     },
     caseInsensitive: "No distingue entre mayúsculas y minúsculas",
     prefix: "Prefijo",
     suffix: "Sufijo",
     filter: "Contiene",
     invert: "Filtro invertido",
-    lines: "{n} líneas"
+    lines: "{n} líneas",
+    split: "Separar por",
+    join: "Unir con",
+    trimItems: "Recortar cada elemento",
+    dropEmpty: "Quitar vacíos",
+    dedupe: "Quitar duplicados",
+    sort: "Ordenar",
+    separators: { newline: "Salto de línea", comma: "Coma", semicolon: "Punto y coma", pipe: "Barra vertical", whitespace: "Espacio" },
+    sorts: { none: "Ninguno", asc: "Ascendente", desc: "Descendente" },
+    usageTitle: "Cómo usarlo",
+    step1: "Pega una lista y elige el separador.",
+    step2: "Recorta, quita vacíos, deduplica, ordena y añade prefijo o sufijo.",
+    step3: "Elige el separador de salida y copia la lista a una config, una hoja o un asistente."
   },
   "pt-BR": {
     name: "Ferramentas de linha",
@@ -182,13 +273,26 @@ export default {
       trim: "Aparar",
       number: "Número",
       addPrefix: "Prefixo/sufixo",
-      filter: "Filtro"
+      filter: "Filtro",
+      convert: "Converter lista"
     },
     caseInsensitive: "Não diferencia maiúsculas de minúsculas",
     prefix: "Prefixo",
     suffix: "Sufixo",
     filter: "Contém",
     invert: "Inverter filtro",
-    lines: "{n} linhas"
+    lines: "{n} linhas",
+    split: "Separar por",
+    join: "Juntar com",
+    trimItems: "Aparar cada item",
+    dropEmpty: "Remover vazios",
+    dedupe: "Remover duplicados",
+    sort: "Ordenar",
+    separators: { newline: "Quebra de linha", comma: "Vírgula", semicolon: "Ponto e vírgula", pipe: "Barra vertical", whitespace: "Espaço" },
+    sorts: { none: "Nenhum", asc: "Crescente", desc: "Decrescente" },
+    usageTitle: "Como usar",
+    step1: "Cole uma lista e escolha o separador.",
+    step2: "Apare, remova vazios, deduplique, ordene e adicione prefixo ou sufixo.",
+    step3: "Escolha o separador de saída e copie a lista para uma config, planilha ou assistente."
   }
 }

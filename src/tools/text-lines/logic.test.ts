@@ -1,7 +1,19 @@
 import { describe, expect, it } from 'vitest'
 import { processLines, type LineOptions } from './logic'
 
-const o: LineOptions = { caseInsensitive: false, prefix: '', suffix: '', filter: '', invertFilter: false }
+const o: LineOptions = {
+  caseInsensitive: false,
+  prefix: '',
+  suffix: '',
+  filter: '',
+  invertFilter: false,
+  split: 'newline',
+  join: 'comma',
+  dropEmpty: true,
+  dedupe: false,
+  sort: 'none',
+  trimItems: true,
+}
 describe('text-lines', () => {
   it('sorts', () => {
     expect(processLines('b\na\nc', 'sortAsc', o)).toBe('a\nb\nc')
@@ -20,5 +32,9 @@ describe('text-lines', () => {
     expect(processLines('apple\nbanana', 'filter', { ...o, filter: 'an' })).toBe('banana')
     expect(processLines('apple\nbanana', 'filter', { ...o, filter: 'an', invertFilter: true })).toBe('apple')
     expect(processLines('a\nb\nc', 'shuffle', o, () => 0).split('\n').sort()).toEqual(['a', 'b', 'c'])
+  })
+  it('converts a list in one pass', () => {
+    const text = ' banana, apple, apple, , cherry '
+    expect(processLines(text, 'convert', { ...o, split: 'comma', join: 'newline', dedupe: true, sort: 'asc', prefix: '- ', suffix: '' })).toBe('- apple\n- banana\n- cherry')
   })
 })
