@@ -1,7 +1,5 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-20T14:38:50.414Z",
-  "source": "wasm/ files on disk",
   "assets": {
     "python-wasm": {
       "file": "python-3.11.3.wasm",
@@ -65,8 +63,8 @@
     },
     "lua-wasm": {
       "file": "lua-5.4.9.wasm",
-      "size": 720144,
-      "sha256": "06a6f1aa34d854386f962b270720373bd5a3951aac441e22323295b720ad1adb",
+      "size": 720592,
+      "sha256": "804bb94d77720bfd6b1fcaf7f99bedf8e6ee3e252096f7cff348f03fe13395ca",
       "kind": "wasm"
     },
     "go-wasm": {
@@ -113,8 +111,8 @@
     },
     "linux-state": {
       "file": "linux-state.zst",
-      "size": 18201083,
-      "sha256": "09c380226065527a2c448f437d127be1ee216afbcbc3b6265a63671b6be88166",
+      "size": 18182755,
+      "sha256": "cd6d1a386288f8ac7783864803cde7723c021d647e49af87bc94ae0b76bbee41",
       "kind": "bin"
     },
     "pyodide-mjs": {
@@ -424,7 +422,7 @@
       "id": "rust",
       "label": "Rust",
       "short": "Rs",
-      "version": "weblings \u00b7 \u684c\u9762",
+      "version": "weblings · 桌面",
       "syntax": "rust",
       "fileName": "main.rs",
       "license": "MIT OR Apache-2.0",
