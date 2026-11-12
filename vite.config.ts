@@ -255,7 +255,8 @@ export default defineConfig({
       ...(enablePandoc ? (['pandoc-wasm'] as const) : []),
       '@imagemagick/magick-wasm',
       '@hyzyla/pdfium',
-      'tesseract.js',
+      // tesseract.js is CommonJS-only (main: src/index.js): it must be pre-bundled, or dev serves raw CJS
+      // and `import { createWorker }` fails. Its worker/core/lang paths are passed explicitly (offline/ocr).
       '@ffmpeg/ffmpeg',
       '@ffmpeg/util',
     ],
