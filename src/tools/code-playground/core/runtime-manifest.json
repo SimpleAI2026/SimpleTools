@@ -1,0 +1,502 @@
+{
+  "version": 1,
+  "generatedAt": "2026-10-20T14:38:50.414Z",
+  "source": "wasm/ files on disk",
+  "assets": {
+    "python-wasm": {
+      "file": "python-3.11.3.wasm",
+      "size": 20538911,
+      "sha256": "658cb6add2bbf8dfe84d67fb85430956d5a8b2b1d694d33432d654cdf048f813",
+      "kind": "wasm"
+    },
+    "python-fs": {
+      "file": "python-3.11.3.tar.gz",
+      "size": 4066590,
+      "sha256": "8c42694e45f2f1162114c70507c3da4c7cf983663e2b95660af521a9685d2a0c",
+      "kind": "fs"
+    },
+    "ruby-wasm": {
+      "file": "ruby-3.2.0.wasm",
+      "size": 24496513,
+      "sha256": "abe348fba157a756f86194be445c77c99e8ed64ca76495ea07ed984f09eb66ae",
+      "kind": "wasm"
+    },
+    "ruby-fs": {
+      "file": "ruby-3.2.0.tar.gz",
+      "size": 174,
+      "sha256": "6185476bef279d3a00d9909fa7ba5fb39279f8650a6f723e956b879a12535da2",
+      "kind": "fs"
+    },
+    "quickjs-wasm": {
+      "file": "wasmedge_quickjs.wasm",
+      "size": 3974159,
+      "sha256": "85922baafd4385bc908d766989948df9ab28f8f0c8afd2ab6b35a4950570d0f6",
+      "kind": "wasm"
+    },
+    "sqlite-wasm": {
+      "file": "sqlite.wasm",
+      "size": 3573220,
+      "sha256": "992205b67977f9c7a0d1ea7568d745e055fa3015d1ab70428feed6d8da60d060",
+      "kind": "wasm"
+    },
+    "php-wasm": {
+      "file": "php-cgi-8.2.0.wasm",
+      "size": 13128903,
+      "sha256": "68c96239a9b8095f21dd80af1714e5f270e4e08ef516821d90290da72d829a0e",
+      "kind": "wasm"
+    },
+    "clang-wasm": {
+      "file": "clang.wasm",
+      "size": 31214472,
+      "sha256": "2a466f0e990329d3230b869d04fc20803eae96a7feb3a3f6c93e25a77b8aed1d",
+      "kind": "wasm"
+    },
+    "wasm-ld": {
+      "file": "wasm-ld.wasm",
+      "size": 19490094,
+      "sha256": "36419ed202011765222098d7701218378b67f634d50f0a4625059ae2c9860f48",
+      "kind": "wasm"
+    },
+    "clang-fs": {
+      "file": "clang-fs.tar.gz",
+      "size": 1790862,
+      "sha256": "7ed12063619882e4dfa710ab371fc91848b256f85a4075747e8bd5c167902b50",
+      "kind": "fs"
+    },
+    "lua-wasm": {
+      "file": "lua-5.4.9.wasm",
+      "size": 720144,
+      "sha256": "06a6f1aa34d854386f962b270720373bd5a3951aac441e22323295b720ad1adb",
+      "kind": "wasm"
+    },
+    "go-wasm": {
+      "file": "yaegi-0.16.1.wasm",
+      "size": 36736740,
+      "sha256": "570999c368119300b76785385555683355fb1a474819f30c603675070ee9db7d",
+      "kind": "wasm"
+    },
+    "shell-wasm": {
+      "file": "wasi-sh.wasm",
+      "size": 55023,
+      "sha256": "0dcaeccb81ad6ae506674171cfae935697ea2e6b5687067357bf38fd6d4e3807",
+      "kind": "wasm"
+    },
+    "v86-wasm": {
+      "file": "v86.wasm",
+      "size": 2007347,
+      "sha256": "2fc5609ae837fcbc77147155de6f1014677ecab5369f5584ebc670e9d56e6510",
+      "kind": "wasm"
+    },
+    "v86-lib": {
+      "file": "libv86.mjs",
+      "size": 359801,
+      "sha256": "c4e0281ed9566edfcff54e4660c635f14d32e136104b475763b19ac87b891dc1",
+      "kind": "bin"
+    },
+    "linux-bios": {
+      "file": "seabios.bin",
+      "size": 131072,
+      "sha256": "73e3f359102e3a9982c35fce98eb7cd08f18303ac7f1ba6ebfbe6cdc1c244d98",
+      "kind": "bin"
+    },
+    "linux-vgabios": {
+      "file": "vgabios.bin",
+      "size": 36352,
+      "sha256": "a4bc0d80cc3ca028c73dafa8fee396b8d054ce87ebd8abfbd31b06b437607880",
+      "kind": "bin"
+    },
+    "linux-bzimage": {
+      "file": "linux-bzimage.bin",
+      "size": 10068480,
+      "sha256": "507a759c70ab7a490a233be454d0b5b88bc667956a410b531cb4edc091e2eb1c",
+      "kind": "bin"
+    },
+    "linux-state": {
+      "file": "linux-state.zst",
+      "size": 18201083,
+      "sha256": "09c380226065527a2c448f437d127be1ee216afbcbc3b6265a63671b6be88166",
+      "kind": "bin"
+    },
+    "pyodide-mjs": {
+      "file": "pyodide/pyodide.mjs",
+      "size": 17883,
+      "sha256": "76929920a035086b8610a87940da26a46f7b6d216bc95c83f6b9f6be1cf4fed8",
+      "kind": "bin"
+    },
+    "pyodide-asm-mjs": {
+      "file": "pyodide/pyodide.asm.mjs",
+      "size": 1250344,
+      "sha256": "f7cdc8ece80678ceb712f8e65ebe6d3a83203a180c399865f49612a051693635",
+      "kind": "bin"
+    },
+    "pyodide-wasm": {
+      "file": "pyodide/pyodide.asm.wasm",
+      "size": 9598218,
+      "sha256": "cc36e3cab04fdfc9a63ff13eb52eae2b911bf46c025cc7b281f394bd3de1d5e6",
+      "kind": "bin"
+    },
+    "pyodide-stdlib": {
+      "file": "pyodide/python_stdlib.zip",
+      "size": 2545637,
+      "sha256": "fa1957e5777068fc4f7437f96d860ae2fbe9c19732ba06c84e004ec16dd7dd7a",
+      "kind": "bin"
+    },
+    "pyodide-lock": {
+      "file": "pyodide/pyodide-lock.json",
+      "size": 119077,
+      "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010",
+      "kind": "bin"
+    },
+    "pyodide-numpy": {
+      "file": "pyodide/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "size": 2960568,
+      "sha256": "a292c1f5d7d8a2208cd5e94fc467604c131cabcd2fc14fed6eefde121e7fabdf",
+      "kind": "bin"
+    },
+    "pyodide-fashion": {
+      "file": "pyodide/fashion-mnist.bin",
+      "size": 4710012,
+      "sha256": "84e3d972cfd3c3dcd7d72e58055e5084366d32d6acf3482d635be2f63e5001de",
+      "kind": "bin"
+    }
+  },
+  "languages": [
+    {
+      "id": "python",
+      "label": "Python",
+      "short": "Py",
+      "version": "3.11.3",
+      "syntax": "python",
+      "fileName": "main.py",
+      "run": {
+        "asset": "python-wasm",
+        "binaryName": "python",
+        "args": [
+          "{entry}"
+        ],
+        "baseFS": "python-fs"
+      }
+    },
+    {
+      "id": "ruby",
+      "label": "Ruby",
+      "short": "Rb",
+      "version": "3.2.0",
+      "syntax": "ruby",
+      "fileName": "main.rb",
+      "run": {
+        "asset": "ruby-wasm",
+        "binaryName": "ruby",
+        "args": [
+          "-r",
+          "/ruby-3.2.0/.rubyopts.rb",
+          "{entry}"
+        ],
+        "baseFS": "ruby-fs"
+      }
+    },
+    {
+      "id": "quickjs",
+      "label": "JS/TS",
+      "short": "JS",
+      "version": "QuickJS",
+      "syntax": "javascript",
+      "fileName": "main.js",
+      "run": {
+        "asset": "quickjs-wasm",
+        "binaryName": "quickjs",
+        "args": [
+          "{entry}"
+        ]
+      }
+    },
+    {
+      "id": "sqlite",
+      "label": "SQLite",
+      "short": "SQL",
+      "version": "3",
+      "syntax": "sql",
+      "fileName": "main.sql",
+      "run": {
+        "asset": "sqlite-wasm",
+        "binaryName": "sqlite",
+        "args": [
+          "-batch",
+          "-cmd",
+          ".read {entry}"
+        ]
+      },
+      "autoEOF": true
+    },
+    {
+      "id": "clang",
+      "label": "C",
+      "short": "C",
+      "version": "clang 8",
+      "syntax": "c",
+      "fileName": "main.c",
+      "prepare": [
+        {
+          "step": "compile",
+          "asset": "clang-wasm",
+          "binaryName": "clang",
+          "baseFS": "clang-fs",
+          "args": [
+            "-cc1",
+            "-Werror",
+            "-triple",
+            "wasm32-unkown-wasi",
+            "-isysroot",
+            "/sys",
+            "-internal-isystem",
+            "/sys/include",
+            "-internal-isystem",
+            "/sys/lib/clang/8.0.1/include",
+            "-ferror-limit",
+            "4",
+            "-fmessage-length",
+            "80",
+            "-fcolor-diagnostics",
+            "-O2",
+            "-emit-obj",
+            "-o",
+            "/program.o",
+            "{entry}"
+          ]
+        },
+        {
+          "step": "link",
+          "asset": "wasm-ld",
+          "binaryName": "wasm-ld",
+          "args": [
+            "--no-threads",
+            "--export-dynamic",
+            "-z",
+            "stack-size=1048576",
+            "-L/sys/lib/wasm32-wasi",
+            "/sys/lib/wasm32-wasi/crt1.o",
+            "/program.o",
+            "-lc",
+            "-o",
+            "/program.wasm"
+          ]
+        }
+      ],
+      "run": {
+        "fsPath": "/program.wasm",
+        "binaryName": "program",
+        "args": []
+      }
+    },
+    {
+      "id": "clangpp",
+      "label": "C++",
+      "short": "C++",
+      "version": "clang 8",
+      "syntax": "cpp",
+      "fileName": "main.cpp",
+      "prepare": [
+        {
+          "step": "compile",
+          "asset": "clang-wasm",
+          "binaryName": "clang",
+          "baseFS": "clang-fs",
+          "args": [
+            "-cc1",
+            "-Werror",
+            "-emit-obj",
+            "-disable-free",
+            "-isysroot",
+            "/sys",
+            "-internal-isystem",
+            "/sys/include/c++/v1",
+            "-internal-isystem",
+            "/sys/include",
+            "-internal-isystem",
+            "/sys/lib/clang/8.0.1/include",
+            "-ferror-limit",
+            "4",
+            "-fmessage-length",
+            "80",
+            "-fcolor-diagnostics",
+            "-O2",
+            "-o",
+            "/program.o",
+            "-x",
+            "c++",
+            "{entry}"
+          ]
+        },
+        {
+          "step": "link",
+          "asset": "wasm-ld",
+          "binaryName": "wasm-ld",
+          "args": [
+            "--no-threads",
+            "--export-dynamic",
+            "-z",
+            "stack-size=1048576",
+            "-L/sys/lib/wasm32-wasi",
+            "/sys/lib/wasm32-wasi/crt1.o",
+            "/program.o",
+            "-lc",
+            "-lc++",
+            "-lc++abi",
+            "-o",
+            "/program.wasm"
+          ]
+        }
+      ],
+      "run": {
+        "fsPath": "/program.wasm",
+        "binaryName": "program",
+        "args": []
+      }
+    },
+    {
+      "id": "php-cgi",
+      "label": "PHP",
+      "short": "PHP",
+      "version": "8.2.0",
+      "syntax": "php",
+      "fileName": "main.php",
+      "run": {
+        "asset": "php-wasm",
+        "binaryName": "php",
+        "args": [
+          "-q",
+          "{entry}"
+        ]
+      }
+    },
+    {
+      "id": "lua",
+      "label": "Lua",
+      "short": "Lua",
+      "version": "5.4.9",
+      "syntax": "lua",
+      "fileName": "main.lua",
+      "license": "MIT",
+      "homepage": "https://www.lua.org/",
+      "run": {
+        "asset": "lua-wasm",
+        "binaryName": "lua",
+        "args": [
+          "{entry}"
+        ]
+      }
+    },
+    {
+      "id": "go",
+      "label": "Go",
+      "short": "Go",
+      "version": "Yaegi 0.16.1",
+      "syntax": "go",
+      "fileName": "main.go",
+      "license": "Apache-2.0",
+      "homepage": "https://github.com/traefik/yaegi",
+      "run": {
+        "asset": "go-wasm",
+        "binaryName": "yaegi",
+        "args": [
+          "{entry}"
+        ]
+      }
+    },
+    {
+      "id": "shell",
+      "label": "Shell",
+      "short": "Sh",
+      "version": "wasi-sh",
+      "syntax": "shell",
+      "fileName": "main.sh",
+      "license": "MIT",
+      "homepage": "https://github.com/linkxzhou/SimpleCode",
+      "run": {
+        "asset": "shell-wasm",
+        "binaryName": "sh",
+        "args": [
+          "{entry}"
+        ]
+      }
+    },
+    {
+      "id": "rust",
+      "label": "Rust",
+      "short": "Rs",
+      "version": "weblings \u00b7 \u684c\u9762",
+      "syntax": "rust",
+      "fileName": "main.rs",
+      "license": "MIT OR Apache-2.0",
+      "homepage": "https://github.com/AngelOnFira/weblings",
+      "compiler": "weblings",
+      "run": {
+        "fsPath": "/program.wasm",
+        "binaryName": "program",
+        "args": []
+      }
+    },
+    {
+      "id": "java",
+      "label": "Java",
+      "short": "Jv",
+      "version": "TeaVM",
+      "syntax": "java",
+      "fileName": "Main.java",
+      "license": "Apache-2.0",
+      "homepage": "https://github.com/konsoletyper/teavm",
+      "compiler": "teavm",
+      "run": {
+        "binaryName": "java",
+        "args": []
+      }
+    },
+    {
+      "id": "linux",
+      "label": "Linux",
+      "short": "Lx",
+      "version": "6.8.12",
+      "syntax": "shell",
+      "fileName": "main.sh",
+      "license": "BSD-2-Clause",
+      "homepage": "https://github.com/copy/v86",
+      "runtime": "v86",
+      "assets": [
+        "v86-wasm",
+        "v86-lib",
+        "linux-bios",
+        "linux-vgabios",
+        "linux-bzimage",
+        "linux-state"
+      ],
+      "run": {
+        "binaryName": "sh",
+        "args": []
+      }
+    },
+    {
+      "id": "numpy",
+      "label": "DeepLearning",
+      "short": "DL",
+      "version": "Python (NumPy)",
+      "syntax": "python",
+      "fileName": "main.py",
+      "license": "MPL-2.0",
+      "homepage": "https://pyodide.org/",
+      "compiler": "pyodide",
+      "assets": [
+        "pyodide-mjs",
+        "pyodide-asm-mjs",
+        "pyodide-wasm",
+        "pyodide-stdlib",
+        "pyodide-lock",
+        "pyodide-numpy",
+        "pyodide-fashion"
+      ],
+      "run": {
+        "binaryName": "python",
+        "args": []
+      }
+    }
+  ]
+}
