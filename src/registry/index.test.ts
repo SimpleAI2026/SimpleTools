@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { CATEGORIES, getTool, searchTools, TOOLS, toolsInCategory } from './index'
+import { CATEGORIES, getTool, HOT_TOOL_SLUGS, hotTools, searchTools, TOOLS, toolsInCategory } from './index'
 import zhCN from '@/i18n/locales/zh-CN'
 import { TOOL_MESSAGES } from '@/i18n'
 import { PROGRAMMING_MESSAGES } from '@/i18n/programming'
@@ -23,6 +23,25 @@ describe('registry', () => {
     expect(getTool('image-editor')?.category).toBe('media')
     expect(getTool('audio-level-auditor')).toBeUndefined()
     expect(getTool('visual-selects-board')).toBeUndefined()
+  })
+  it('pins the hot tools in order without moving them out of their categories', () => {
+    expect(hotTools().map((t) => t.slug)).toEqual(['id-photo', 'agent', 'imagemagick', 'image-ocr', 'ffmpeg'])
+    expect(hotTools().map((t) => t.category)).toEqual(['media', 'ai', 'media', 'media', 'audiovisual'])
+    for (const tool of hotTools()) expect(toolsInCategory(tool.category)).toContain(tool)
+    expect(hotTools((slug) => (slug === 'ffmpeg' ? undefined : getTool(slug))).map((t) => t.slug)).toEqual(HOT_TOOL_SLUGS.filter((s) => s !== 'ffmpeg'))
+  })
+  it('keeps every hot tool in extension builds', async () => {
+    vi.stubEnv('VITE_ENABLE_ALL_CODE_RUNTIMES', 'false')
+    vi.stubEnv('VITE_ENABLE_PANDOC', 'false')
+    vi.resetModules()
+    try {
+      const reg = await import('./index')
+      expect(reg.getTool('pandoc')).toBeUndefined()
+      expect(reg.hotTools().map((t) => t.slug)).toEqual([...HOT_TOOL_SLUGS])
+    } finally {
+      vi.unstubAllEnvs()
+      vi.resetModules()
+    }
   })
   it('looks up and filters', () => {
     expect(getTool('base64')?.category).toBe('encode')

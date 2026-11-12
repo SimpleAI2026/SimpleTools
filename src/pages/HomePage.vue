@@ -5,27 +5,32 @@ import { Search } from 'lucide-vue-next'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import ToolCard from '@/components/shared/ToolCard.vue'
-import { CATEGORIES, getTool, searchTools, TOOLS, type CategoryId, type ToolMeta } from '@/registry'
+import { CATEGORIES, getTool, hotTools, searchTools, TOOLS, type CategoryId, type ToolMeta } from '@/registry'
 import { useUserStore } from '@/stores/user'
 
 const { t } = useI18n()
 const user = useUserStore()
 const query = ref('')
-const category = ref<CategoryId | 'all'>('all')
+type NavId = CategoryId | 'all' | 'hot'
+const category = ref<NavId>('all')
+const HOT = hotTools()
 
 const categoryCounts = new Map<CategoryId, number>()
 for (const tool of TOOLS) categoryCounts.set(tool.category, (categoryCounts.get(tool.category) ?? 0) + 1)
 const usedCategories = CATEGORIES.filter((c) => (categoryCounts.get(c) ?? 0) > 0)
-const categoryItems: { id: CategoryId | 'all'; count: number }[] = [
+const categoryItems: { id: NavId; count: number }[] = [
+  ...(HOT.length ? [{ id: 'hot' as const, count: HOT.length }] : []),
   { id: 'all', count: TOOLS.length },
   ...usedCategories.map((id) => ({ id, count: categoryCounts.get(id) ?? 0 })),
 ]
 
 const filtered = computed(() => {
-  const pool = category.value === 'all' ? TOOLS : TOOLS.filter((tool) => tool.category === category.value)
+  const c = category.value
+  const pool = c === 'all' ? TOOLS : c === 'hot' ? HOT : TOOLS.filter((tool) => tool.category === c)
   return searchTools(query.value, (tool) => [t(`tools.${tool.slug}.name`), t(`tools.${tool.slug}.description`)], pool)
 })
-const selectedCategoryName = computed(() => category.value === 'all' ? t('app.all') : t(`categories.${category.value}`))
+const navLabel = (id: NavId) => (id === 'all' ? t('app.all') : id === 'hot' ? t('app.hot') : t(`categories.${id}`))
+const selectedCategoryName = computed(() => navLabel(category.value))
 
 const toTools = (slugs: string[]) => slugs.map(getTool).filter((x): x is ToolMeta => !!x)
 const favoriteTools = computed(() => toTools(user.favorites))
@@ -52,7 +57,7 @@ const browsing = computed(() => !query.value.trim() && category.value === 'all')
         data-testid="category-select"
       >
         <option v-for="item in categoryItems" :key="item.id" :value="item.id">
-          {{ item.id === 'all' ? $t('app.all') : $t(`categories.${item.id}`) }} · {{ item.count }}
+          {{ navLabel(item.id) }} · {{ item.count }}
         </option>
       </select>
 
@@ -72,7 +77,7 @@ const browsing = computed(() => !query.value.trim() && category.value === 'all')
             :data-testid="`category-${item.id}`"
             @click="category = item.id"
           >
-            <span>{{ item.id === 'all' ? $t('app.all') : $t(`categories.${item.id}`) }}</span>
+            <span>{{ navLabel(item.id) }}</span>
             <span class="ml-auto pl-3 text-xs opacity-70">{{ item.count }}</span>
           </Button>
         </nav>

@@ -5,6 +5,7 @@ const zhCN = {
     search: '搜索工具…',
     categoryNavigation: '工具分类',
     all: '全部',
+    hot: '热门',
     favorites: '收藏',
     recent: '最近使用',
     clearRecent: '清空',

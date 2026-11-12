@@ -6,7 +6,7 @@ import { createI18n } from 'vue-i18n'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { nextTick } from 'vue'
 import HomePage from './HomePage.vue'
-import { CATEGORIES, TOOLS, toolsInCategory } from '@/registry'
+import { CATEGORIES, hotTools, TOOLS, toolsInCategory } from '@/registry'
 import { i18n as appI18n } from '@/i18n'
 
 async function mountHome(locale: 'en' | 'zh-CN' = 'en') {
@@ -109,12 +109,41 @@ describe('HomePage', () => {
     const select = wrapper.get('[data-testid="category-select"]')
     expect(select.classes()).toContain('w-full')
     expect(select.classes()).toContain('md:hidden')
-    expect(select.findAll('option')).toHaveLength(CATEGORIES.filter((category) => toolsInCategory(category).length > 0).length + 1)
+    const options = select.findAll('option')
+    expect(options).toHaveLength(CATEGORIES.filter((category) => toolsInCategory(category).length > 0).length + 2)
+    expect(options[0]!.attributes('value')).toBe('hot')
+    expect(options[0]!.text()).toBe(`Hot · ${hotTools().length}`)
     expect(wrapper.get('aside').classes()).toContain('hidden')
 
     await select.setValue('generate')
     expect(listedSlugs(wrapper)).toEqual(toolsInCategory('generate').map((tool) => tool.slug))
     expect(wrapper.get('[data-testid="category-generate"]').attributes('aria-pressed')).toBe('true')
+  })
+
+  it('pins the hot group first and lists hot tools in order while keeping their categories', async () => {
+    const { wrapper, i18n } = await mountHome()
+    const buttons = wrapper.get('[data-testid="category-navigation"]').findAll('button')
+    expect(buttons[0]!.attributes('data-testid')).toBe('category-hot')
+    expect(buttons[1]!.attributes('data-testid')).toBe('category-all')
+    expect(buttons[0]!.text()).toContain(`Hot${hotTools().length}`)
+    await buttons[0]!.trigger('click')
+    expect(wrapper.get('[data-testid="category-hot"]').attributes('aria-pressed')).toBe('true')
+    expect(listedSlugs(wrapper)).toEqual(['id-photo', 'agent', 'imagemagick', 'image-ocr', 'ffmpeg'])
+    expect(wrapper.get('[data-testid="tool-list-title"]').text()).toBe('Hot · 5 tools')
+    await wrapper.get('[data-testid="search"]').setValue('ocr')
+    expect(listedSlugs(wrapper)).toEqual(['image-ocr'])
+    await wrapper.get('[data-testid="search"]').setValue('')
+
+    await wrapper.get('[data-testid="category-media"]').trigger('click')
+    expect(listedSlugs(wrapper)).toEqual(expect.arrayContaining(['id-photo', 'imagemagick', 'image-ocr']))
+    await wrapper.get('[data-testid="category-ai"]').trigger('click')
+    expect(listedSlugs(wrapper)).toContain('agent')
+    await wrapper.get('[data-testid="category-audiovisual"]').trigger('click')
+    expect(listedSlugs(wrapper)).toContain('ffmpeg')
+
+    i18n.global.locale.value = 'zh-CN'
+    await nextTick()
+    expect(wrapper.get('[data-testid="category-hot"]').text()).toContain('热门')
   })
 
   it('updates localized category labels and localized search results', async () => {

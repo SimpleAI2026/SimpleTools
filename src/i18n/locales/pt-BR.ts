@@ -7,6 +7,7 @@ const ptBR: MessageSchema = {
     search: "Pesquisar ferramentas…",
     categoryNavigation: "Categorias de ferramentas",
     all: "Todos",
+    hot: "Populares",
     favorites: "Favoritos",
     recent: "Recente",
     clearRecent: "Claro",

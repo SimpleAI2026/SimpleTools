@@ -7,6 +7,7 @@ const en: MessageSchema = {
     search: 'Search tools…',
     categoryNavigation: 'Tool categories',
     all: 'All',
+    hot: 'Hot',
     favorites: 'Favorites',
     recent: 'Recent',
     clearRecent: 'Clear',

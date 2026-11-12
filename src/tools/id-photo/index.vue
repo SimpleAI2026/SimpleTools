@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, reactive, ref, shallowRef, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Download, LayoutGrid, RotateCcw } from 'lucide-vue-next'
+import { Download, LayoutGrid, LoaderCircle, RotateCcw } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -96,9 +96,11 @@ function setUrl(target: typeof photoUrl, blob: Blob | null) {
 }
 
 async function onFile(f: File) {
+  if (busy.value) return
   error.value = ''
   warning.value = ''
   busy.value = true
+  status.value = p('readingImage')
   try {
     fileName.value = f.name.replace(/\.[^.]+$/, '') || 'id-photo'
     source.value = await fileToCanvas(f)
@@ -122,6 +124,7 @@ async function onFile(f: File) {
 }
 
 async function loadSample() {
+  if (busy.value) return
   await onFile(await loadSampleImage('portrait.jpg'))
 }
 
@@ -281,17 +284,20 @@ onBeforeUnmount(() => {
     <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
       <!-- Controls -->
       <div class="flex min-w-0 flex-col gap-4">
-        <FileDropzone accept="image/*" :label="p('drop')" @file="onFile" />
+        <div :class="busy ? 'pointer-events-none opacity-50' : ''" :aria-disabled="busy">
+          <FileDropzone accept="image/*" :label="p('drop')" @file="onFile" />
+        </div>
         <div class="flex flex-wrap items-center gap-2">
-          <Button size="sm" variant="outline" :disabled="busy" @click="loadSample">{{ $t('common.sample') }}</Button>
-          <span v-if="busy" class="text-muted-foreground text-sm">{{ status || $t('common.processing') }}</span>
+          <Button size="sm" variant="outline" :disabled="busy" @click="loadSample">
+            <LoaderCircle v-if="busy" class="animate-spin" /> {{ $t('common.sample') }}
+          </Button>
         </div>
         <ErrorAlert v-if="error" :message="error" />
         <p v-if="warning" class="rounded-md border border-amber-500/40 px-3 py-2 text-sm text-amber-700 dark:text-amber-400">{{ warning }}</p>
 
         <label class="flex flex-col gap-1 text-sm">
           <span>{{ p('specLabel') }}</span>
-          <select v-model="specId" class="border-input bg-background h-10 w-full min-w-0 rounded-md border px-3">
+          <select v-model="specId" :disabled="busy" class="border-input bg-background h-10 w-full min-w-0 rounded-md border px-3">
             <option v-for="o in specOptions" :key="o.id" :value="o.id">{{ o.label }}</option>
           </select>
         </label>
@@ -331,7 +337,7 @@ onBeforeUnmount(() => {
         <div class="flex flex-col gap-2">
           <div class="flex items-center justify-between">
             <span class="text-sm">{{ p('adjust') }}</span>
-            <Button size="sm" variant="ghost" @click="resetAdjust"><RotateCcw /> {{ $t('common.reset') }}</Button>
+            <Button size="sm" variant="ghost" :disabled="busy" @click="resetAdjust"><RotateCcw /> {{ $t('common.reset') }}</Button>
           </div>
           <RangeField v-model="adjust.zoom" :label="p('zoom')" :min="0.6" :max="1.6" :step="0.01" />
           <RangeField v-model="adjust.dx" :label="p('offsetX')" :min="-0.3" :max="0.3" :step="0.01" />
@@ -352,9 +358,20 @@ onBeforeUnmount(() => {
         <section class="rounded-lg border">
           <header class="flex flex-wrap items-center justify-between gap-2 border-b px-3 py-2">
             <span class="text-sm font-medium">{{ $t('common.result') }}</span>
-            <Button size="sm" :disabled="!encoded" @click="downloadPhoto"><Download /> {{ $t('common.download') }}</Button>
+            <Button size="sm" :disabled="busy || !encoded" @click="downloadPhoto"><Download /> {{ $t('common.download') }}</Button>
           </header>
-          <div class="flex flex-col items-center gap-2 p-3">
+          <div class="relative flex min-h-48 flex-col items-center gap-2 p-3" :aria-busy="busy">
+            <div
+              v-if="busy"
+              class="bg-background/80 absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 rounded-b-lg backdrop-blur-sm"
+              role="status"
+              aria-live="polite"
+              data-testid="id-photo-loading"
+            >
+              <LoaderCircle class="text-primary size-10 animate-spin" aria-hidden="true" />
+              <span class="text-sm font-medium">{{ status || $t('common.processing') }}</span>
+              <span class="text-muted-foreground text-xs">{{ p('busyHint') }}</span>
+            </div>
             <img v-if="photoUrl" :src="photoUrl" :alt="$t('common.preview')" class="max-h-80 max-w-full border shadow-sm" data-testid="id-photo-result" />
             <p v-else class="text-muted-foreground py-10 text-sm">{{ p('empty') }}</p>
             <p v-if="encoded" class="text-muted-foreground text-center text-xs">
@@ -373,7 +390,7 @@ onBeforeUnmount(() => {
             <span class="flex items-center gap-2 text-sm font-medium"><LayoutGrid class="size-4" /> {{ p('sheet') }}</span>
             <div class="flex flex-wrap items-center gap-2">
               <ModeToggle v-model="sheetId" :options="SHEETS.map((s) => [s.id, p(`sheets.${s.id}`)] as const)" />
-              <Button size="sm" variant="outline" :disabled="!sheetUrl" @click="downloadSheet"><Download /> {{ $t('common.download') }}</Button>
+              <Button size="sm" variant="outline" :disabled="busy || !sheetUrl" @click="downloadSheet"><Download /> {{ $t('common.download') }}</Button>
             </div>
           </header>
           <div class="flex flex-col items-center gap-2 p-3">

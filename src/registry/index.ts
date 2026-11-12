@@ -98,6 +98,17 @@ export function getTool(slug: string): ToolMeta | undefined {
   return BY_SLUG.get(slug)
 }
 
+/**
+ * Pinned "Hot" group shown first in the category navigation. Tools stay in their
+ * original categories too. Slugs missing from the current build (e.g. extension
+ * builds that drop a heavy tool) are filtered out.
+ */
+export const HOT_TOOL_SLUGS = ['id-photo', 'agent', 'imagemagick', 'image-ocr', 'ffmpeg'] as const
+
+export function hotTools(lookup: (slug: string) => ToolMeta | undefined = getTool): ToolMeta[] {
+  return HOT_TOOL_SLUGS.map((slug) => lookup(slug)).filter((t): t is ToolMeta => !!t)
+}
+
 export function toolsInCategory(category: CategoryId): ToolMeta[] {
   return TOOLS.filter((t) => t.category === category)
 }

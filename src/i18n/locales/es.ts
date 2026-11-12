@@ -7,6 +7,7 @@ const es: MessageSchema = {
     search: "Buscar herramientas…",
     categoryNavigation: "Categorías de herramientas",
     all: "Todo",
+    hot: "Populares",
     favorites: "Favoritos",
     recent: "Reciente",
     clearRecent: "Claro",

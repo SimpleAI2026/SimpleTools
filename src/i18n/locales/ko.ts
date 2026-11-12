@@ -7,6 +7,7 @@ const ko: MessageSchema = {
     search: "도구 검색…",
     categoryNavigation: "도구 카테고리",
     all: "전체",
+    hot: "인기",
     favorites: "즐겨찾기",
     recent: "최근",
     clearRecent: "분명한",

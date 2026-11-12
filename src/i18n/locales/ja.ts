@@ -7,6 +7,7 @@ const ja: MessageSchema = {
     search: "ツールを検索…",
     categoryNavigation: "ツールのカテゴリー",
     all: "すべて",
+    hot: "人気",
     favorites: "お気に入り",
     recent: "最近",
     clearRecent: "クリア",
