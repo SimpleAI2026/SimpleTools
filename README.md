@@ -54,7 +54,7 @@
 
 ## 快速开始
 
-要求：**Node.js ≥ 20**，启用 Corepack 以使用 Yarn 4。这些命令只说明怎样在本地生成和查看静态页面，不授予托管、修改或再分发的权利。
+要求：**Node.js ≥ 20**，启用 Corepack 以使用 Yarn 4。这些命令说明怎样在本地生成和查看静态页面。
 
 ```bash
 corepack enable
@@ -114,8 +114,8 @@ SimpleTools/
 - 编程运行时清单已提交在 `src/tools/code-playground/core/runtime-manifest.json`，正常构建不读取 `../SimpleCode`。若要在本地真正运行各语言，需先执行一次 `node scripts/code-playground-assets.mjs --sync`，从同级 `../SimpleCode` 复制 WASM 并刷新清单。
 - 每次 `./build.sh chrome` / `./build.sh vscode` 会把根项目、Chrome、VS Code 版本号同步 +0.0.1。
 
-## 权利
+## 分发
 
-源码在 GitHub 上公开，保留所有权利（All rights reserved）。版权归 SimpleAI2026 / 作者所有。未经许可，请勿公开分发。
+本项目允许自由分发。
 
-公开可见不是开源许可。本仓库根目录没有项目许可证。第三方组件仍按其各自许可证使用。上文的构建和预览步骤只描述技术过程，不授予新的权利。
+第三方依赖，以及编程运行时中的 WASM 等组件，仍适用其各自的原许可证、署名和义务。上面这句话不代替这些组件授予分发权。

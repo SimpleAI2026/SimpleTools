@@ -54,7 +54,7 @@ The website and the Chrome / VS Code extensions share one interface. The website
 
 ## Quick start
 
-Requires **Node.js ≥ 20** and Yarn 4 via Corepack. These commands describe how to build and preview the static site locally. They do not grant hosting, modification, or redistribution rights.
+Requires **Node.js ≥ 20** and Yarn 4 via Corepack. These commands describe how to build and preview the static site locally.
 
 ```bash
 corepack enable
@@ -114,8 +114,8 @@ SimpleTools/
 - The code runtime catalog is committed at `src/tools/code-playground/core/runtime-manifest.json`, so normal builds never read `../SimpleCode`. To actually run languages locally, run `node scripts/code-playground-assets.mjs --sync` once to copy WASM from a sibling `../SimpleCode` and refresh the catalog.
 - Each `./build.sh chrome` / `./build.sh vscode` bumps the root, Chrome, and VS Code versions together by 0.0.1.
 
-## Rights
+## Distribution
 
-The source is public on GitHub. All rights reserved by SimpleAI2026 / the authors. Do not distribute it publicly without permission.
+This project may be freely distributed.
 
-Public visibility is not an open-source license. This repository has no project license at the root. Third-party components stay under their own licenses. The build and preview steps above only describe a technical process and do not grant any new rights.
+Third-party dependencies, and WASM and other components in the programming runtimes, keep their own licenses, attribution, and obligations. The sentence above does not grant distribution rights for those components.
