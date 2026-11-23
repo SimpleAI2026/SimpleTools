@@ -5,6 +5,7 @@ import { Code2, Github, Languages, Menu, Moon, Sun } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import AppIcon from '@/components/shared/AppIcon.vue'
 import InstallExtensionModal, { type ExtensionKind } from '@/components/layout/InstallExtensionModal.vue'
+import { GITHUB_REPO_URL, appHost, handheldChrome, showExtensionInstall } from '@/components/layout/install-entry'
 import { LOCALE_META, SUPPORTED_LOCALES, type AppLocale } from '@/i18n'
 import { useSettingsStore } from '@/stores/settings'
 import { isImmersiveSlug } from '@/router/immersive'
@@ -17,11 +18,21 @@ function onLocaleChange(event: Event) {
   settings.setLocale((event.target as HTMLSelectElement).value as AppLocale)
 }
 
-const GITHUB_URL = 'https://github.com/SimpleAI2026/SimpleTools'
-
 /** Hide self-download when already running inside an extension build. */
-const showExtensionDownloads =
-  import.meta.env.VITE_TARGET !== 'chrome' && import.meta.env.VITE_TARGET !== 'vscode'
+const showExtensionDownloads = showExtensionInstall(appHost(import.meta.env.VITE_TARGET))
+
+const handheld = ref(false)
+const githubHint = ref(false)
+const mediaQueries: MediaQueryList[] = []
+
+function readHandheld() {
+  if (typeof window.matchMedia !== 'function') return false
+  return handheldChrome(window.matchMedia('(max-width: 767px)').matches, window.matchMedia('(pointer: coarse)').matches)
+}
+
+function syncHandheld() {
+  handheld.value = readHandheld()
+}
 
 const modalOpen = ref(false)
 const modalKind = ref<ExtensionKind>('chrome')
@@ -45,10 +56,18 @@ function onDocPointerDown(event: PointerEvent) {
 
 onMounted(() => {
   document.addEventListener('pointerdown', onDocPointerDown)
+  syncHandheld()
+  if (typeof window.matchMedia !== 'function') return
+  for (const query of ['(max-width: 767px)', '(pointer: coarse)']) {
+    const list = window.matchMedia(query)
+    list.addEventListener?.('change', syncHandheld)
+    mediaQueries.push(list)
+  }
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('pointerdown', onDocPointerDown)
+  for (const list of mediaQueries) list.removeEventListener?.('change', syncHandheld)
 })
 </script>
 
@@ -86,21 +105,27 @@ onBeforeUnmount(() => {
           </Button>
         </template>
 
-        <Button
-          variant="ghost"
-          size="icon"
-          class="hidden size-11 md:inline-flex"
-          as-child
-          data-testid="github-link"
-        >
+        <Button variant="ghost" size="icon" class="hidden size-11 md:inline-flex" as-child>
           <a
-            :href="GITHUB_URL"
+            data-testid="github-link"
+            class="relative"
+            :href="GITHUB_REPO_URL"
             target="_blank"
             rel="noopener noreferrer"
             :aria-label="$t('app.github')"
-            :title="$t('app.github')"
+            @mouseenter="githubHint = true"
+            @mouseleave="githubHint = false"
+            @focus="githubHint = true"
+            @blur="githubHint = false"
           >
             <Github />
+            <span
+              role="tooltip"
+              class="bg-popover text-popover-foreground pointer-events-none absolute top-full right-0 z-30 mt-1 w-64 rounded-md border p-2 text-left text-xs leading-relaxed font-normal whitespace-normal shadow-md"
+              :class="githubHint ? 'opacity-100' : 'opacity-0'"
+            >
+              {{ $t('app.github') }}
+            </span>
           </a>
         </Button>
 
@@ -131,8 +156,28 @@ onBeforeUnmount(() => {
         </Button>
 
         <!-- Mobile <md: GitHub + More overflow menu -->
-        <Button variant="ghost" size="icon" class="size-11 md:hidden" as-child data-testid="github-link-mobile">
-          <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" :aria-label="$t('app.github')"><Github /></a>
+        <Button variant="ghost" size="icon" class="size-11 md:hidden" as-child>
+          <a
+            data-testid="github-link-mobile"
+            class="relative"
+            :href="GITHUB_REPO_URL"
+            target="_blank"
+            rel="noopener noreferrer"
+            :aria-label="$t('app.github')"
+            @mouseenter="githubHint = true"
+            @mouseleave="githubHint = false"
+            @focus="githubHint = true"
+            @blur="githubHint = false"
+          >
+            <Github />
+            <span
+              role="tooltip"
+              class="bg-popover text-popover-foreground pointer-events-none absolute top-full right-0 z-30 mt-1 w-64 rounded-md border p-2 text-left text-xs leading-relaxed font-normal whitespace-normal shadow-md"
+              :class="githubHint ? 'opacity-100' : 'opacity-0'"
+            >
+              {{ $t('app.github') }}
+            </span>
+          </a>
         </Button>
         <div ref="moreRoot" class="relative md:hidden">
           <Button
@@ -188,6 +233,6 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </div>
-    <InstallExtensionModal v-if="showExtensionDownloads" v-model:open="modalOpen" :kind="modalKind" />
+    <InstallExtensionModal v-if="showExtensionDownloads" v-model:open="modalOpen" :kind="modalKind" :handheld="handheld" />
   </header>
 </template>

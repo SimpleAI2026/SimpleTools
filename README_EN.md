@@ -2,9 +2,15 @@
 
 [English](./README_EN.md) | [中文](./README.md)
 
-A front-end-only, offline-ready developer toolbox. Everything runs in your browser — **your data never leaves your device**.
+A developer toolbox in the browser: formats, encoding, text, images, PDFs, office files, and programming practice split by language. Ordinary calculations stay in the browser.
 
-Repository: https://github.com/SimpleAI2026/SimpleTools
+- Try it: https://simpletools-kappa.vercel.app/
+- Chrome Web Store: https://chromewebstore.google.com/detail/simpletools/fkokpmlmjopflpadegcjnhbelolaihgl
+- Source: https://github.com/SimpleAI2026/SimpleTools
+
+![Home](./docs/screenshots/1.png)
+
+The website and the Chrome / VS Code extensions share one interface. The website lists every registered tool; the extensions keep only JavaScript, TypeScript, SQLite, Lua, Shell, and Java in the programming category. Ordinary tools handle what you paste or select, and do not upload it to an application server. Larger files such as ImageMagick, Tesseract, PDFium, FFmpeg, and the code runtimes download from this site the first time you use them. Agent calls an API only after you save the endpoint and key you chose; the key stays on the device. The Chrome extension has no host permission, so a direct cloud API call from the extension may fail — use the website for that.
 
 ![SimpleTools](./public/samples/simpletools.png)
 
@@ -21,7 +27,7 @@ Repository: https://github.com/SimpleAI2026/SimpleTools
 - **199 tools on the web, 189 in the extensions** (counted from the `src/registry` registry; the extensions keep 6 programming languages)
 - **8 UI languages**: 简体中文, English, 日本語, 한국어, Deutsch, Français, Español, Português (Brasil), with persisted locale and light/dark theme
 - **Registry-driven** search, categories, favorites, recent tools, and per-tool code splitting
-- **No backend, works offline**: files are processed locally and downloaded from the browser; WASM engines (ImageMagick, Tesseract, PDFium, FFmpeg, code runtimes) are same-origin and load on demand
+- **No application backend**: files are processed in the browser; WASM engines (ImageMagick, Tesseract, PDFium, FFmpeg, code runtimes) download from this site on demand, not with the first page load
 - **Mobile-friendly**: responsive layout down to 390px
 - Stack: Vue 3, Vite, TypeScript, Tailwind CSS 4, shadcn-vue (reka-ui), vue-i18n, Pinia, Yarn 4
 - **Agent (BYOK, experimental):** in-app `/agent` OpenAI-compatible chat with your own key + HostTools; keys stay on-device. The Chrome extension has no host permissions yet, so direct cloud API calls may fail (prefer the web build).
@@ -48,22 +54,29 @@ Repository: https://github.com/SimpleAI2026/SimpleTools
 
 ## Quick start
 
-Requires **Node.js ≥ 20** and Yarn 4 via Corepack.
+Requires **Node.js ≥ 20** and Yarn 4 via Corepack. These commands describe how to build and preview the static site locally. They do not grant hosting, modification, or redistribution rights.
 
 ```bash
 corepack enable
+corepack yarn install
 ./build.sh dev          # Dev server (default http://127.0.0.1:5173)
 ./build.sh build        # Typecheck + production build → dist/
-./build.sh preview      # Serve dist/ locally
+./build.sh preview      # Preview an existing dist/ (default http://127.0.0.1:4173)
 ./build.sh lint         # ESLint + vue-tsc
 ./build.sh test         # Vitest
-./build.sh chrome       # Chrome MV3 extension → chrome-extension/dist + .zip
-./build.sh vscode       # VS Code extension → .vsix (webview)
 ```
 
-Yarn scripts also work: `yarn dev` / `yarn build` / `yarn preview` / `yarn lint` / `yarn test`.
+`./build.sh build` writes the website files. It does not include the full programming-runtime binaries. The website uses history routing, so a static host has to rewrite unknown paths to `index.html`. `./build.sh preview` already does that. The build publishes the committed catalog `src/tools/code-playground/core/runtime-manifest.json` and checks binaries that are already present. If a listed file is missing from `public/offline/code`, this build does not read a sibling `../SimpleCode`, and that language cannot actually run yet.
 
-Intended deployment is a **local static site** (`vite preview` or any static host for `dist/`).
+To fill in the website programming runtimes, a read-only sibling `../SimpleCode` has to already be on the machine. Then run:
+
+```bash
+node scripts/code-playground-assets.mjs --sync
+```
+
+That copies the WASM and other large files and refreshes the catalog. The repository does not ship those binaries, and a normal build does not depend on that directory. Chrome and VS Code packaging is in the next section. Each `./build.sh chrome` or `./build.sh vscode` also bumps the version by 0.0.1.
+
+Yarn scripts work too: `yarn dev` / `yarn build` / `yarn preview` / `yarn lint` / `yarn test`. Feedback and suggestions: [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Layout
 
@@ -89,7 +102,7 @@ SimpleTools/
 
 ## Extensions
 
-- **Chrome**: `./build.sh chrome` → enable Developer mode on `chrome://extensions` and Load unpacked `chrome-extension/dist/` (see `chrome-extension/README.md`).
+- **Chrome users**: install from https://chromewebstore.google.com/detail/simpletools/fkokpmlmjopflpadegcjnhbelolaihgl . From source, `./build.sh chrome` writes `chrome-extension/dist/`, which Developer mode on `chrome://extensions` can load unpacked (see `chrome-extension/README.md`). The ZIP is the manual path; the store listing is the entry for people installing it.
 - **VS Code**: `./build.sh vscode` → `code --install-extension vscode-extension/simpletools-*.vsix`, then **SimpleTools: Open** from the Command Palette (see `vscode-extension/README.md`).
 - Extension builds use relative `base: './'` + hash routing; the web build (`./build.sh build`) keeps history routing.
 - The web header offers downloads: `./build.sh chrome` / `./build.sh vscode` sync artifacts into `public/downloads/` (`simpletools-chrome.zip`, `simpletools-vscode.vsix`). `./build.sh build` copies them only if already present (no forced extension rebuild).
@@ -101,6 +114,8 @@ SimpleTools/
 - The code runtime catalog is committed at `src/tools/code-playground/core/runtime-manifest.json`, so normal builds never read `../SimpleCode`. To actually run languages locally, run `node scripts/code-playground-assets.mjs --sync` once to copy WASM from a sibling `../SimpleCode` and refresh the catalog.
 - Each `./build.sh chrome` / `./build.sh vscode` bumps the root, Chrome, and VS Code versions together by 0.0.1.
 
-## License
+## Rights
 
-Private repository. All rights reserved by SimpleAI2026 / the authors.
+The source is public on GitHub. All rights reserved by SimpleAI2026 / the authors. Do not distribute it publicly without permission.
+
+Public visibility is not an open-source license. This repository has no project license at the root. Third-party components stay under their own licenses. The build and preview steps above only describe a technical process and do not grant any new rights.
