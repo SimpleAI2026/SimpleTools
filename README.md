@@ -10,7 +10,7 @@
 
 ![首页](./docs/screenshots/1.png)
 
-网页版和 Chrome / VS Code 扩展是同一套界面。网页版列出注册表中的工具；扩展里的编程分类只保留 JavaScript、TypeScript、SQLite、Lua、Shell、Java。普通工具处理你粘贴或选择的内容，不上传到业务服务器。ImageMagick、Tesseract、PDFium、FFmpeg 和编程运行时等较大文件在第一次使用时从本站下载。Agent 只有在你保存所选接口和密钥之后才会调用该 API，密钥留在本机。Chrome 扩展没有 host 权限，扩展里直连云端 API 可能失败，这种用法请用网页版。
+网页版和 Chrome / VS Code 扩展是同一套界面。网页版列出注册表中的工具；扩展里的编程分类只保留 JavaScript、TypeScript、SQLite、Lua、Shell、Java。普通工具处理你粘贴或选择的内容，不上传到业务服务器。ImageMagick、Tesseract、PDFium、FFmpeg、anydoc 和编程运行时等较大文件在第一次使用时从本站下载。Agent 只有在你保存所选接口和密钥之后才会调用该 API，密钥留在本机。Chrome 扩展没有 host 权限，扩展里直连云端 API 可能失败，这种用法请用网页版。
 
 ![SimpleTools](./public/samples/simpletools.png)
 
@@ -24,10 +24,10 @@
 
 ## 特性
 
-- **网页版 199 个工具 / 插件版 189 个**（以 `src/registry` 注册表为准；插件版的编程分类只保留 6 种语言）
+- **网页版 200 个工具 / 插件版 190 个**（以 `src/registry` 注册表为准；插件版的编程分类只保留 6 种语言）
 - **8 种界面语言**：简体中文、English、日本語、한국어、Deutsch、Français、Español、Português (Brasil)，语言与主题（亮/暗）本地持久化
 - **注册表驱动**：搜索、分类、收藏、最近使用、按工具代码分割
-- **无业务后端**：文件在浏览器内处理并下载；ImageMagick、Tesseract、PDFium、FFmpeg 与编程运行时等 WASM 引擎从本站按需下载，不是随页面一次取回
+- **无业务后端**：文件在浏览器内处理并下载；ImageMagick、Tesseract、PDFium、FFmpeg、anydoc 与编程运行时等 WASM 引擎从本站按需下载，不是随页面一次取回
 - **移动端适配**：窄屏（390px）响应式布局
 - 技术栈：Vue 3、Vite、TypeScript、Tailwind CSS 4、shadcn-vue（reka-ui）、vue-i18n、Pinia、Yarn 4
 - **Agent（BYOK，实验）**：应用内 `/agent` 自带密钥的 OpenAI 兼容对话 + HostTools；密钥仅存本机。Chrome 插件版暂无 host 权限，扩展内直连云端 API 可能失败（优先网页版）。
@@ -46,9 +46,9 @@
 | 图片 | 14 | 14 | 证件照（本地人脸检测 + 抠图换底 + 排版）、缩放、编辑、滤镜、格式转换、切图、ImageMagick、OCR、SVG 占位图、设计辅助等 |
 | 音视频 | 3 | 3 | FFmpeg 处理、字幕工具、视频交付预检 |
 | PDF | 28 | 28 | 旋转、裁剪、水印、页码、加解密、脱敏、对比、编辑、签名信息、PDFium 预览，与 Office / 图片 / 文本互转 |
-| 办公 | 19 | 19 | Excel / Word / PPT 查看、转换、合并、创建；百分比、ETA、IBAN、电话号码解析、秒表、基准测试等 |
+| 办公 | 20 | 20 | Excel / Word / PPT 查看、转换、合并、创建；本地文档转 Markdown；百分比、ETA、IBAN、电话号码解析、秒表、基准测试等 |
 | 压缩 | 3 | 3 | gzip、图片压缩、PDF 压缩 |
-| **合计** | **199** | **189** | |
+| **合计** | **200** | **190** | |
 
 > 部分 `src/tools` 下的目录若未写入注册表，不会出现在首页；README 以注册表为准。相机录制工具在 `src/tools/camera-recorder`，归入图片分类。
 
@@ -110,7 +110,7 @@ SimpleTools/
 ## 说明
 
 - `thirdparty/`（如 it-tools、LiYing 等参考实现）仅供对照，**不得被应用 import / 依赖**，也不纳入版本库；GPL / AGPL 项目只参考思路，不复制代码。
-- `public/pdfjs/`、`public/offline/` 由构建 / 资源管线准备，已忽略。
+- `public/pdfjs/` 以及 `public/offline/` 里从 node_modules 复制的引擎由构建准备，不入库。`public/offline/anydoc/` 是已提交的文档转 Markdown 引擎。
 - 编程运行时清单已提交在 `src/tools/code-playground/core/runtime-manifest.json`，正常构建不读取 `../SimpleCode`。若要在本地真正运行各语言，需先执行一次 `node scripts/code-playground-assets.mjs --sync`，从同级 `../SimpleCode` 复制 WASM 并刷新清单。
 - 每次 `./build.sh chrome` / `./build.sh vscode` 会把根项目、Chrome、VS Code 版本号同步 +0.0.1。
 

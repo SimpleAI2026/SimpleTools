@@ -1,4 +1,4 @@
-import { FileSpreadsheet, FileText, Presentation, Sheet, Table2, FileOutput, Combine, FileJson, FileType2, FilePen, Eye } from 'lucide-vue-next'
+import { FileSpreadsheet, FileText, Presentation, Sheet, Table2, FileOutput, Combine, FileJson, FileType2, FilePen, Eye, Files } from 'lucide-vue-next'
 import type { ToolMeta } from '../types'
 
 const tools: ToolMeta[] = [
@@ -11,6 +11,7 @@ const tools: ToolMeta[] = [
   { slug: 'word-viewer', category: 'office', icon: Eye, keywords: ['word', 'docx', 'viewer'], component: () => import('@/tools/word-viewer/index.vue') },
   { slug: 'word-to-text', category: 'office', icon: FileText, keywords: ['word', 'docx', 'text', 'txt'], component: () => import('@/tools/word-to-text/index.vue') },
   { slug: 'word-to-markdown', category: 'office', icon: FileType2, keywords: ['word', 'docx', 'markdown', 'md'], component: () => import('@/tools/word-to-markdown/index.vue') },
+  { slug: 'document-to-markdown', category: 'office', icon: Files, keywords: ['document', 'markdown', 'docx', 'pptx', 'xlsx', 'pdf', 'odt', 'rtf', 'epub', 'csv', 'anydoc', '文档', '转换'], component: () => import('@/tools/document-to-markdown/index.vue') },
   { slug: 'word-creator', category: 'office', icon: FilePen, keywords: ['word', 'docx', 'create', 'markdown'], component: () => import('@/tools/word-creator/index.vue') },
   { slug: 'pptx-creator', category: 'office', icon: Presentation, keywords: ['ppt', 'pptx', 'slides', 'powerpoint', '幻灯片'], component: () => import('@/tools/pptx-creator/index.vue') },
 ]
