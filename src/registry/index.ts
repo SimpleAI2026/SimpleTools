@@ -103,7 +103,7 @@ export function getTool(slug: string): ToolMeta | undefined {
  * original categories too. Slugs missing from the current build (e.g. extension
  * builds that drop a heavy tool) are filtered out.
  */
-export const HOT_TOOL_SLUGS = ['id-photo', 'agent', 'imagemagick', 'image-ocr', 'ffmpeg'] as const
+export const HOT_TOOL_SLUGS = ['id-photo', 'agent', 'imagemagick', 'image-ocr', 'document-to-markdown', 'ffmpeg'] as const
 
 export function hotTools(lookup: (slug: string) => ToolMeta | undefined = getTool): ToolMeta[] {
   return HOT_TOOL_SLUGS.map((slug) => lookup(slug)).filter((t): t is ToolMeta => !!t)

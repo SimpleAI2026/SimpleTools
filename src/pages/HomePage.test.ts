@@ -134,8 +134,8 @@ describe('HomePage', () => {
     await wrapper.get('[data-testid="category-all"]').trigger('click')
     await buttons[0]!.trigger('click')
     expect(wrapper.get('[data-testid="category-hot"]').attributes('aria-pressed')).toBe('true')
-    expect(listedSlugs(wrapper)).toEqual(['id-photo', 'agent', 'imagemagick', 'image-ocr', 'ffmpeg'])
-    expect(wrapper.get('[data-testid="tool-list-title"]').text()).toBe('Hot · 5 tools')
+    expect(listedSlugs(wrapper)).toEqual(['id-photo', 'agent', 'imagemagick', 'image-ocr', 'document-to-markdown', 'ffmpeg'])
+    expect(wrapper.get('[data-testid="tool-list-title"]').text()).toBe('Hot · 6 tools')
     await wrapper.get('[data-testid="search"]').setValue('base64')
     expect(wrapper.get('[data-testid="category-all"]').attributes('aria-pressed')).toBe('true')
     expect(listedSlugs(wrapper)).toContain('base64')
@@ -147,6 +147,9 @@ describe('HomePage', () => {
     expect(listedSlugs(wrapper)).toContain('agent')
     await wrapper.get('[data-testid="category-audiovisual"]').trigger('click')
     expect(listedSlugs(wrapper)).toContain('ffmpeg')
+    await wrapper.get('[data-testid="category-office"]').trigger('click')
+    expect(listedSlugs(wrapper)).toContain('document-to-markdown')
+    expect(listedSlugs(wrapper)).toContain('word-to-markdown')
 
     i18n.global.locale.value = 'zh-CN'
     await nextTick()
