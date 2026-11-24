@@ -8,6 +8,7 @@ export default defineConfigWithVueTs(
       'test-results/**',
       'node_modules/**',
       'thirdparty/**',
+      'vendor/**',
       'src/tools/code-playground/rustc/shim/**',
       'plan/**',
       '.yarn/**',

@@ -1,0 +1,3 @@
+[submodule "vendor/anydoc"]
+	path = vendor/anydoc
+	url = https://github.com/firecrawl/anydoc.git
