@@ -23,8 +23,10 @@ public/downloads/*.zip
 public/downloads/*.vsix
 !public/downloads/.gitkeep
 
-# Offline WASM / OCR assets (copied from node_modules at Vite buildStart)
-public/offline/
+# Offline WASM / OCR assets copied from node_modules at Vite buildStart.
+# anydoc is prebuilt and committed; other public/offline/* entries stay ignored.
+public/offline/*
+!public/offline/anydoc/
 
 # i18n generation caches
 scripts/_gtx-cache.json

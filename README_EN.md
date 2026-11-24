@@ -10,7 +10,7 @@ A developer toolbox in the browser: formats, encoding, text, images, PDFs, offic
 
 ![Home](./docs/screenshots/1.png)
 
-The website and the Chrome / VS Code extensions share one interface. The website lists every registered tool; the extensions keep only JavaScript, TypeScript, SQLite, Lua, Shell, and Java in the programming category. Ordinary tools handle what you paste or select, and do not upload it to an application server. Larger files such as ImageMagick, Tesseract, PDFium, FFmpeg, and the code runtimes download from this site the first time you use them. Agent calls an API only after you save the endpoint and key you chose; the key stays on the device. The Chrome extension has no host permission, so a direct cloud API call from the extension may fail — use the website for that.
+The website and the Chrome / VS Code extensions share one interface. The website lists every registered tool; the extensions keep only JavaScript, TypeScript, SQLite, Lua, Shell, and Java in the programming category. Ordinary tools handle what you paste or select, and do not upload it to an application server. Larger files such as ImageMagick, Tesseract, PDFium, FFmpeg, anydoc, and the code runtimes download from this site the first time you use them. Agent calls an API only after you save the endpoint and key you chose; the key stays on the device. The Chrome extension has no host permission, so a direct cloud API call from the extension may fail — use the website for that.
 
 ![SimpleTools](./public/samples/simpletools.png)
 
@@ -24,10 +24,10 @@ The website and the Chrome / VS Code extensions share one interface. The website
 
 ## Features
 
-- **199 tools on the web, 189 in the extensions** (counted from the `src/registry` registry; the extensions keep 6 programming languages)
+- **200 tools on the web, 190 in the extensions** (counted from the `src/registry` registry; the extensions keep 6 programming languages)
 - **8 UI languages**: 简体中文, English, 日本語, 한국어, Deutsch, Français, Español, Português (Brasil), with persisted locale and light/dark theme
 - **Registry-driven** search, categories, favorites, recent tools, and per-tool code splitting
-- **No application backend**: files are processed in the browser; WASM engines (ImageMagick, Tesseract, PDFium, FFmpeg, code runtimes) download from this site on demand, not with the first page load
+- **No application backend**: files are processed in the browser; WASM engines (ImageMagick, Tesseract, PDFium, FFmpeg, anydoc, code runtimes) download from this site on demand, not with the first page load
 - **Mobile-friendly**: responsive layout down to 390px
 - Stack: Vue 3, Vite, TypeScript, Tailwind CSS 4, shadcn-vue (reka-ui), vue-i18n, Pinia, Yarn 4
 - **Agent (BYOK, experimental):** in-app `/agent` OpenAI-compatible chat with your own key + HostTools; keys stay on-device. The Chrome extension has no host permissions yet, so direct cloud API calls may fail (prefer the web build).
@@ -46,9 +46,9 @@ The website and the Chrome / VS Code extensions share one interface. The website
 | Image | 14 | 14 | ID photos (local face detection + background replacement + print sheets), resize, edit, filters, format convert, split, ImageMagick, OCR, SVG placeholders, design helpers |
 | Audio & video | 3 | 3 | FFmpeg, subtitle toolkit, video delivery preflight |
 | PDF | 28 | 28 | Rotate, crop, watermark, page numbers, encrypt, redact, compare, edit, signature info, PDFium preview, convert to/from Office, images, text |
-| Office | 19 | 19 | Excel / Word / PPT view, convert, merge, create; percentage, ETA, IBAN, phone parser, stopwatch, benchmarks |
+| Office | 20 | 20 | Excel / Word / PPT view, convert, merge, create; local document to Markdown; percentage, ETA, IBAN, phone parser, stopwatch, benchmarks |
 | Compress | 3 | 3 | gzip, image compress, PDF compress |
-| **Total** | **199** | **189** | |
+| **Total** | **200** | **190** | |
 
 > Folders under `src/tools` that are not registered are hidden from the home page. README counts follow the registry. The camera recorder lives in the Image category.
 
@@ -110,7 +110,7 @@ SimpleTools/
 ## Notes
 
 - `thirdparty/` (e.g. it-tools, LiYing references) is for comparison only, **must not be imported** by the app, and is not committed; GPL / AGPL projects are referenced for ideas only, never copied.
-- `public/pdfjs/` and `public/offline/` are prepared by the build / asset pipeline and are ignored.
+- `public/pdfjs/` and the `public/offline/` engines copied from node_modules are prepared by the build and are not committed. `public/offline/anydoc/` is the committed document-to-Markdown engine.
 - The code runtime catalog is committed at `src/tools/code-playground/core/runtime-manifest.json`, so normal builds never read `../SimpleCode`. To actually run languages locally, run `node scripts/code-playground-assets.mjs --sync` once to copy WASM from a sibling `../SimpleCode` and refresh the catalog.
 - Each `./build.sh chrome` / `./build.sh vscode` bumps the root, Chrome, and VS Code versions together by 0.0.1.
 
