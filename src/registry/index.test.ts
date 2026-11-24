@@ -25,8 +25,8 @@ describe('registry', () => {
     expect(getTool('visual-selects-board')).toBeUndefined()
   })
   it('pins the hot tools in order without moving them out of their categories', () => {
-    expect(hotTools().map((t) => t.slug)).toEqual(['id-photo', 'agent', 'imagemagick', 'image-ocr', 'ffmpeg'])
-    expect(hotTools().map((t) => t.category)).toEqual(['media', 'ai', 'media', 'media', 'audiovisual'])
+    expect(hotTools().map((t) => t.slug)).toEqual(['id-photo', 'agent', 'imagemagick', 'image-ocr', 'document-to-markdown', 'ffmpeg'])
+    expect(hotTools().map((t) => t.category)).toEqual(['media', 'ai', 'media', 'media', 'office', 'audiovisual'])
     for (const tool of hotTools()) expect(toolsInCategory(tool.category)).toContain(tool)
     expect(hotTools((slug) => (slug === 'ffmpeg' ? undefined : getTool(slug))).map((t) => t.slug)).toEqual(HOT_TOOL_SLUGS.filter((s) => s !== 'ffmpeg'))
   })
